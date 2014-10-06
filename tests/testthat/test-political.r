@@ -10,3 +10,9 @@ test_that("Political API returns list of probabilities for four parties", {
   expect_true(all(names(affilation) %in% political_set))
   expect_equal(sum(unlist(affilation)), 1)
 })
+
+test_that("Throws error on empty text", {
+  expect_error(political())
+  expect_error(political(""))
+  expect_error(political(" "))
+})

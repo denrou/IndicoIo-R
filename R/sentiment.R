@@ -5,7 +5,7 @@
 #' @return Numerical value roughly in the range from 0 to 1 with 0.5 indicating neutral sentiment.
 #' For reference, 0 suggests very negative sentiment and 1 suggests very positive sentiment.
 #' @keywords indico.io machine learning API sentiment analysis
-#' @seealso \code{\link{political}} 
+#' @seealso \code{\link{political}}, \code{\link{language}}
 #' @export
 #' @examples
 #' emotion <- sentiment("Thanks everyone for the birthday wishes!!
@@ -17,7 +17,7 @@
 sentiment <- function(text, local.api = FALSE) {
   
   # Checks parameters
-  if (missing(text)) {
+  if (missing(text) || str_trim(text) == "") {
     stop("No text for analysis provided!")
   }
   

@@ -6,7 +6,7 @@
 #' @param local.api logical, whether use local or remote API
 #' @return List with party probability pairs
 #' @keywords indico.io machine learning API political sentiment analysis
-#' @seealso \code{\link{sentiment}} 
+#' @seealso \code{\link{sentiment}}, \code{\link{language}}
 #' @export
 #' @examples
 #' affilation <- political("I am so proud to stand here today 
@@ -21,7 +21,7 @@
 political <- function(text, local.api = FALSE) {
   
   # Checks parameters
-  if (missing(text)) {
+  if (missing(text) || str_trim(text) == "") {
     stop("No text for analysis provided!")
   }
   

@@ -28,7 +28,7 @@ cat(sprintf("This text is most like \%s and least like \%s",
             most.like, least.like))
 }
 \seealso{
-\code{\link{sentiment}}
+\code{\link{sentiment}}, \code{\link{language}}
 }
 \keyword{API}
 \keyword{analysis}

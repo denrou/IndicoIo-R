@@ -25,7 +25,7 @@ cat(sprintf("This text has \%s tonality",
              ifelse(emotion > 0.5, "positive", "negative")))
 }
 \seealso{
-\code{\link{political}}
+\code{\link{political}}, \code{\link{language}}
 }
 \keyword{API}
 \keyword{analysis}
