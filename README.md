@@ -7,7 +7,7 @@ R-based client for Machine Learning API
 
 ```r
 library(devtools)
-devtools::install_github("redmode/indicoio")
+devtools::install_github("IndicoDataSolutions/IndicoIo-R")
 ```
 
 ## Usage
