@@ -42,7 +42,7 @@ rasterImage(img, xleft = 0, ybottom = 0, xright = 1, ytop = 1)
 face_emotion(img)
 }
 \seealso{
-\code{\link{face_features}}, \code{\link{language}}
+\code{\link{face_features}}, \code{\link{image_features}}
 }
 \keyword{API}
 \keyword{emotions}

@@ -25,7 +25,7 @@ features <- face_features(img)
 length(features)
 }
 \seealso{
-\code{\link{face_emotion}}, \code{\link{language}}
+\code{\link{face_emotion}}, \code{\link{image_features}}
 }
 \keyword{API}
 \keyword{face}

@@ -7,9 +7,9 @@
 #' @inheritParams face_emotion
 #' @return List with face features
 #' @keywords indico.io machine learning API face features recognition
-#' @seealso \code{\link{face_emotion}}, \code{\link{language}}
+#' @seealso \code{\link{face_emotion}}, \code{\link{image_features}}
 #' @export
-#' @import httr rjson stringr png
+#' @import httr rjson stringr
 #' @examples
 #' img <- matrix(runif(48*48, 0, 1), nrow = 48)
 #' features <- face_features(img)

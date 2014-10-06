@@ -7,7 +7,7 @@
 #' @param local.api logical, whether use local or remote API
 #' @return List with face emotions probability pairs
 #' @keywords indico.io machine learning API face emotions recognition
-#' @seealso \code{\link{face_features}}, \code{\link{language}}
+#' @seealso \code{\link{face_features}}, \code{\link{image_features}}
 #' @export
 #' @import httr rjson stringr png
 #' @examples
