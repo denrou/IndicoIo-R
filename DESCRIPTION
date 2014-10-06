@@ -1,9 +1,16 @@
 Package: indicoio
-Title: What the package does (one line)
+Title: A simple R Wrapper for the indico set of APIs - http://indico.io
 Version: 0.1
-Authors@R: "First Last <first.last@example.com> [aut, cre]"
-Description: What the package does (one paragraph)
+Author: Alexander Gedranovich <gedranovich@gmail.com>
+Maintainer: Alexander Gedranovich <gedranovich@gmail.com>
+Description: R-based client for Machine Learning APIs at http://indico.io.
+    Provides wrappers for following APIs: Positive/Negative Sentiment Analysis,
+    Political Sentiment Analysis, Image Feature Extraction, Facial Emotion
+    Recognition, Facial Feature Extraction, Language Detection
 Depends:
-    R (>= 3.1.1)
-License: What license is it under?
+    R (>= 3.0.2),
+    httr,
+    rjson,
+    stringr
+License: MIT
 LazyData: true
