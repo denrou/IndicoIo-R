@@ -1,8 +1,7 @@
 #' Returns a scalar estimate of the sentiment of the text
 #'
 #' Given input text, returns a scalar estimate of the sentiment of that text.
-#' @param text text for analysis
-#' @param local.api logical, whether use local or remote API
+#' @inheritParams political
 #' @return Numerical value roughly in the range from 0 to 1 with 0.5 indicating neutral sentiment.
 #' For reference, 0 suggests very negative sentiment and 1 suggests very positive sentiment.
 #' @keywords indico.io machine learning API sentiment analysis
