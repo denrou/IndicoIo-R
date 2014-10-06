@@ -5,10 +5,9 @@
 #' performance, images should be already sized at 48x48 pixels.
 #' @param img image data
 #' @param local.api logical, whether use local or remote API
-#' @return Numerical value roughly in the range from 0 to 1 with 0.5 indicating neutral sentiment.
-#' For reference, 0 suggests very negative sentiment and 1 suggests very positive sentiment.
+#' @return List with face emotions probability pairs
 #' @keywords indico.io machine learning API face emotions recognition
-#' @seealso \code{\link{political}}, \code{\link{language}}
+#' @seealso \code{\link{face_features}}, \code{\link{language}}
 #' @export
 #' @import httr rjson stringr png
 #' @examples

@@ -11,8 +11,7 @@ face_emotion(img, local.api = FALSE)
 \item{local.api}{logical, whether use local or remote API}
 }
 \value{
-Numerical value roughly in the range from 0 to 1 with 0.5 indicating neutral sentiment.
-For reference, 0 suggests very negative sentiment and 1 suggests very positive sentiment.
+List with face emotions probability pairs
 }
 \description{
 Given a grayscale input image of a face, returns a probability distribution over emotional state.
@@ -43,7 +42,7 @@ rasterImage(img, xleft = 0, ybottom = 0, xright = 1, ytop = 1)
 face_emotion(img)
 }
 \seealso{
-\code{\link{political}}, \code{\link{language}}
+\code{\link{face_features}}, \code{\link{language}}
 }
 \keyword{API}
 \keyword{emotions}
