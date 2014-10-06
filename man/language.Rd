@@ -19,7 +19,7 @@ languages of what language the text was written in.
 }
 \examples{
 languages <- language("Monday: Delightful with mostly sunny skies.
-                      Highs in the low 70s.")
+                            Highs in the low 70s.")
 languages
 most.possible <- sort(unlist(languages), decreasing = TRUE)[1:2]
 cat(sprintf("Detected \%s language with probability \%0.4f.\\n",
