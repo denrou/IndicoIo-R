@@ -7,13 +7,15 @@
 #' @keywords indico.io machine learning API language detection
 #' @seealso \code{\link{political}}, \code{\link{sentiment}}
 #' @export
+#' @import httr rjson stringr
 #' @examples
 #' languages <- language("Monday: Delightful with mostly sunny skies.
 #'                       Highs in the low 70s.")
 #' languages
-#' most.possible <- sort(unlist(languages), decreasing = T)[1:2]
-#' cat(sprintf("Detected %s language with prbability %0.4f.\nNext possible is %s with probability %0.4f.", 
-#'             names(most.possible)[1], most.possible[1],
+#' most.possible <- sort(unlist(languages), decreasing = TRUE)[1:2]
+#' cat(sprintf("Detected %s language with probability %0.4f.\n",
+#'             names(most.possible)[1], most.possible[1]))
+#' cat(sprintf("Next possible is %s with probability %0.4f.", 
 #'             names(most.possible)[2], most.possible[2]))
 #' 
 language <- function(text, local.api = FALSE) {

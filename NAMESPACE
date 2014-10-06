@@ -3,3 +3,6 @@
 export(language)
 export(political)
 export(sentiment)
+import(httr)
+import(rjson)
+import(stringr)

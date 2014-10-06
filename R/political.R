@@ -8,6 +8,7 @@
 #' @keywords indico.io machine learning API political sentiment analysis
 #' @seealso \code{\link{sentiment}}, \code{\link{language}}
 #' @export
+#' @import httr rjson stringr
 #' @examples
 #' affilation <- political("I am so proud to stand here today 
 #'                          as Prime Minister of four nations

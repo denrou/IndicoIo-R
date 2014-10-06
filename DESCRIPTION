@@ -12,7 +12,7 @@ Depends:
     httr,
     rjson,
     stringr
-License: MIT
+License: file LICENSE
 LazyData: true
 Suggests:
     testthat

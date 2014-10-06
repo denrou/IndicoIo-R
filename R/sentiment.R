@@ -7,6 +7,7 @@
 #' @keywords indico.io machine learning API sentiment analysis
 #' @seealso \code{\link{political}}, \code{\link{language}}
 #' @export
+#' @import httr rjson stringr
 #' @examples
 #' emotion <- sentiment("Thanks everyone for the birthday wishes!!
 #'                       It was a crazy few days ><")
