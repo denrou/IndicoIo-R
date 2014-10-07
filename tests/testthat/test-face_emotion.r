@@ -8,7 +8,7 @@ test_that("Face Emotion Detection API returns proper answer", {
   
   expect_is(emotion, "list")
   expect_true(all(names(emotion) %in% fer_set))
-  expect_equal(sum(unlist(emotion)), 1)
+  expect_equal(sum(unlist(emotion)), 2)
 })
 
 test_that("Throws error on empty or wrong image", {
