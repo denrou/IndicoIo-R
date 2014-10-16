@@ -14,7 +14,7 @@ if (!exists(".indicoio")) {
   if (exists(".indicoio")) {
     .indicoio$header <- c("Content-type" = "application/json",
                           "Accept" = "text/plain")
-    .indicoio$remote_api <- "http://api.indico.io/"
+    .indicoio$remote_api <- "http://apiv1.indico.io/"
     .indicoio$local_api  <- "http://localhost:9438/"
   }
 }

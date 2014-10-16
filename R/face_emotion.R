@@ -55,15 +55,16 @@ face_emotion <- function(img, local.api = FALSE) {
   response <- POST(api, 
                    accept_json(),
                    add_headers(.indicoio$header),
-                   body = toJSON(list(face = img))
+                   body = toJSON(list(data = img))
   )
   stop_for_status(response)
   
   # Returns results
   answer <- content(response, as = "parsed", type = "application/json")
-  if (length(answer) < 2) {
-    stop("Invalid result from API!")
+  if ("error" %in% names(answer)) {
+    stop(answer[["error"]])
   }
-  answer
+  answer[["results"]]
+
 }
 
