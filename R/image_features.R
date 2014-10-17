@@ -47,15 +47,15 @@ image_features <- function(img, local.api = FALSE) {
   response <- POST(api, 
                    accept_json(),
                    add_headers(.indicoio$header),
-                   body = toJSON(list(image = img))
+                   body = toJSON(list(data = img))
   )
   stop_for_status(response)
   
   # Returns results
   answer <- content(response, as = "parsed", type = "application/json")
-  if (!"Features" %in% names(answer)) {
-    stop("Invalid result from API!")
+  if ("error" %in% names(answer)) {
+    stop(answer[["error"]])
   }
-  answer[["Features"]]
+  answer[["results"]]
 }
 

@@ -33,14 +33,14 @@ political <- function(text, local.api = FALSE) {
   response <- POST(api, 
               accept_json(),
               add_headers(.indicoio$header),
-              body = toJSON(list(text = text))
+              body = toJSON(list(data = text))
   )
   stop_for_status(response)
   
   # Returns results
   answer <- content(response, as = "parsed", type = "application/json")
-  if (length(answer) < 2) {
-    stop("Invalid result from API!")
+  if ("error" %in% names(answer)) {
+    stop(answer[["error"]])
   }
-  answer
+  answer[["results"]]
 }
