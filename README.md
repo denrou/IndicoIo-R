@@ -10,6 +10,9 @@ library(devtools)
 devtools::install_github("IndicoDataSolutions/IndicoIo-R")
 ```
 
+## Documentation
+We now have [organized documentation](http://indico.readme.io/v1.0/docs)
+
 ## Usage
 
 ```r
