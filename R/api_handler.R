@@ -11,25 +11,23 @@
 #' @import httr rjson stringr
 make_request <- function(data, api, auth = FALSE, cloud = FALSE, batch = FALSE) {
   
-  if (cloud) {
-    private_cloud <- sprintf(.indicoio$private_cloud, cloud)
+  # default to env variables and config file settings
+  if (!cloud) {
+    cloud <- .indicoio$cloud
   }
-
-  base_url <- ifelse(cloud, private_cloud, .indicoio$remote_api)
-  url <- str_c(base_url, api)
-  if (batch) {
-    url <- str_c(url, '/batch')
-  }
-
-  # Makes request
-  headers <- add_headers(.indicoio$header)
-  body <- toJSON(list(data = data))
-
-  if (auth == FALSE) {
+  if (!auth) {
     auth <- .indicoio$auth
   }
 
-  if (is.vector(auth) && (length(auth) == 2)) {
+  # compose the proper request url
+  url <- request_url(cloud, api, batch)
+
+  # configure request headers + body
+  headers <- add_headers(.indicoio$header)
+  body <- toJSON(list(data = data))
+
+  # make request
+  if (is.vector(auth)) {
     auth <- authenticate(auth[1], auth[2], type="basic")
     response <- POST(url, accept_json(), headers, auth, body = body)
   } else {
@@ -45,6 +43,24 @@ make_request <- function(data, api, auth = FALSE, cloud = FALSE, batch = FALSE) 
   }
 
   answer[["results"]]
+}
+
+#' Returns the url for the proper indico API
+#'
+#' Produces the proper url to query with a given request
+#' @param cloud (optional) indico subdomain for private cloud
+#' @param api name of API 
+#' @param batch (logical) does the request contain more than one example?
+#' @return url for API request
+#' @import httr rjson stringr
+request_url <- function(cloud, api, batch) {
+  # compose the proper request url
+  if (cloud != FALSE) {
+    private_cloud <- sprintf(.indicoio$private_cloud, cloud)
+  }
+  base_url <- ifelse(cloud, private_cloud, .indicoio$remote_api)
+  url <- str_c(base_url, api)
+  url <- ifelse(batch, str_c(url, '/batch'), url)
 }
 
 #' Returns a response from the indico API endpoint
