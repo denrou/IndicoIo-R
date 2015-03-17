@@ -1,7 +1,6 @@
 context("Positive/Negative Sentiment Analysis")
 
 test_that("Sentiment API returns numerical value", {
-  
   test_string <- "Worst song ever."
   emotion <- sentiment(test_string)
   
@@ -12,4 +11,12 @@ test_that("Throws error on empty text", {
   expect_error(sentiment())
   expect_error(sentiment(""))
   expect_error(sentiment(" "))
+})
+
+test_that("Batch Sentiment API returns a list of numerical value", {
+  test_string_arr <- c("Worst song ever.")
+  emotion <- batch_sentiment(test_string_arr)
+
+  expect_is(emotion, "list")
+  expect_is(emotion[[1]], "numeric")
 })

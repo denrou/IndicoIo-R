@@ -3,12 +3,12 @@
 \alias{sentiment}
 \title{Returns a scalar estimate of the sentiment of the text}
 \usage{
-sentiment(text, local.api = FALSE)
+sentiment(text, cloud = FALSE)
 }
 \arguments{
 \item{text}{text for analysis}
 
-\item{local.api}{logical, whether use local or remote API}
+\item{cloud}{subdomain of indico private cloud to use}
 }
 \value{
 Numerical value roughly in the range from 0 to 1 with 0.5 indicating neutral sentiment.
