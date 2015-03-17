@@ -8,7 +8,6 @@
 #' @param batch send call to batch endpoint
 #' @return error or response extracted from the indico API response
 #' @keywords indico.io machine learning API
-#' @export
 #' @import httr rjson stringr
 make_request <- function(data, api, auth = FALSE, cloud = FALSE, batch = FALSE) {
   
