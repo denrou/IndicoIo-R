@@ -46,3 +46,32 @@ make_request <- function(data, api, auth = FALSE, cloud = FALSE, batch = FALSE) 
 
   answer[["results"]]
 }
+
+#' Returns a response from the indico API endpoint
+#'
+#' Given an input image, returns a data.frame obj
+#' @param img Image to convert to a data.frame
+#' @return data.frame constructed from image
+#' @import httr rjson stringr
+format_image <- function(img) {
+  # Converts to anonymous data.frame
+  df <- data.frame(img)
+  colnames(df) <- NULL
+  df
+}
+
+#' Returns a list of `data.frame`s given a list of input images
+#'
+#' Given a list of input images, returns a list of `data.frame`s
+#' @param imgs List of images to convert to a `data.frame`s
+#' @return `data.frame`s constructed from list of images
+#' @import httr rjson stringr
+format_images <- function(imgs) {
+  img_list = list()
+  for (i in 1:length(imgs)) {
+    img <- data.frame(imgs[[i]])
+    colnames(img) <- NULL
+    img_list[[i]] = img
+  }
+  img_list
+}

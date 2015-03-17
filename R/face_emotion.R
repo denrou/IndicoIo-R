@@ -44,10 +44,7 @@ face_emotion <- function(img, cloud = FALSE) {
     stop("Image should be represented by two-dimensional structure!")
   }
   
-  # Converts to anonymous data.frame
-  img <- data.frame(img)
-  colnames(img) <- NULL
-  
+  img <- format_image(img)
   make_request(img, 'fer', cloud)
 }
 
@@ -77,15 +74,7 @@ face_emotion <- function(img, cloud = FALSE) {
 #'             names(most.possible)[2], most.possible[2]))
 #' 
 batch_face_emotion <- function(imgs, auth = FALSE, cloud = FALSE) {
-
-  # convert to list of dataframes
-  img_list = list()
-  for (i in 1:length(imgs)) {
-    img <- data.frame(imgs[[i]])
-    colnames(img) <- NULL
-    img_list[[i]] = img
-  }
-
+  img_list <- format_images(imgs)
   make_request(img_list, 'fer', auth, cloud, batch = TRUE)
 }
 

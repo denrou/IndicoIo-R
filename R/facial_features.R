@@ -26,10 +26,7 @@ facial_features <- function(img, cloud = FALSE) {
     stop("Image should be represented by two-dimensional structure!")
   }
   
-  # Converts to anonymous data.frame
-  img <- data.frame(img)
-  colnames(img) <- NULL
-  
+  img <- format_image(img)
   make_request(img, 'facialfeatures', cloud)
 }
 
@@ -53,15 +50,7 @@ facial_features <- function(img, cloud = FALSE) {
 #' length(features[[1]])
 #' 
 batch_facial_features <- function(imgs, auth = FALSE, cloud = FALSE) {
-
-  # convert to list of dataframes
-  img_list = list()
-  for (i in 1:length(imgs)) {
-    img <- data.frame(imgs[[i]])
-    colnames(img) <- NULL
-    img_list[[i]] = img
-  }
-
+  img_list <- format_images(imgs)
   make_request(img_list, 'facialfeatures', auth, cloud, batch = TRUE)
 }
 

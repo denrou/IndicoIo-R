@@ -36,10 +36,7 @@ image_features <- function(img, cloud = FALSE) {
     stop("Image should be represented by two-dimensional structure!")
   }
   
-  # Converts to anonymous data.frame
-  img <- data.frame(img)
-  colnames(img) <- NULL
-
+  img <- format_image(img)
   make_request(img, 'imagefeatures', cloud)
 }
 
@@ -72,12 +69,6 @@ image_features <- function(img, cloud = FALSE) {
 #' sum(unlist(features[[1]]))
 #' 
 batch_image_features <- function(imgs, auth = FALSE, cloud = FALSE) {
-  img_list = list()
-  for (i in 1:length(imgs)) {
-    img <- data.frame(imgs[[i]])
-    colnames(img) <- NULL
-    img_list[[i]] = img
-  }
-
+  img_list <- format_images(imgs)
   make_request(img_list, 'imagefeatures', auth, cloud, batch = TRUE)
 }
