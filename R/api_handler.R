@@ -57,8 +57,10 @@ request_url <- function(cloud, api, batch) {
   # compose the proper request url
   if (cloud != FALSE) {
     private_cloud <- sprintf(.indicoio$private_cloud, cloud)
+    base_url <- private_cloud
+  } else {
+    base_url <- .indicoio$remote_api
   }
-  base_url <- ifelse(cloud, private_cloud, .indicoio$remote_api)
   url <- str_c(base_url, api)
   url <- ifelse(batch, str_c(url, '/batch'), url)
 }

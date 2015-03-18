@@ -20,76 +20,88 @@ if (!exists(".indicoio")) {
     .indicoio$cloud = FALSE
 
     # Paths to search for config files
-    globalPath <- path.expand("~/.indicorc")
-    localPath <- file.path(getwd(), ".indicorc")
+    loadConfiguration()
+  }
+}
 
-    # Load from global configuration file
-    if (file.exists(globalPath)) {
-      globalConfig <- Parse.INI(globalPath)
-      if (valid_auth_config(globalConfig)) {
-        .indicoio$auth <- c(
-          globalConfig$auth$username,
-          globalConfig$auth$password
-        )
-      }
+loadConfiguration <- function() {
+  # Load configuration from files and env variables
+  globalPath <- path.expand("~/.indicorc")
+  localPath <- file.path(getwd(), ".indicorc")
+  globalConfig <- readFile(globalPath)
+  localConfig <- readFile(localPath)
+  loadConfigFile(globalConfig)
+  loadConfigFile(localConfig)
+  loadEnvironmentVars()
+}
 
-      if (valid_private_cloud_config(globalConfig)) {
-        .indicoio$cloud <- globalConfig$private_cloud$cloud
-      }
-    }
+loadEnvironmentVars <- function() {
+  # Load auth from environment variables
+  authDefined <- ((Sys.getenv("INDICO_USERNAME") != "") &&
+                  (Sys.getenv("INDICO_PASSWORD") != ""))
+  if (authDefined) {
+    .indicoio$auth <- c(
+      Sys.getenv("INDICO_USERNAME"),
+      Sys.getenv("INDICO_PASSWORD")
+    )
+  }
 
-    # Load from local configuration file
-    if (file.exists(localPath)) {
-      localConfig <- Parse.INI(localPath)
-      if (valid_auth_config(localConfig)) {
-        .indicoio$auth <- c(
-          localConfig$auth$username,
-          localConfig$auth$password
-        )
-      }
+  # Load subdomain from environment variables
+  cloudDefined <- (Sys.getenv("INDICO_CLOUD") != "")
+  if (cloudDefined) {
+    .indicoio$cloud <- Sys.getenv("INDICO_CLOUD")
+  }
+}
 
-      if (valid_private_cloud_config(localConfig)) {
-        .indicoio$cloud <- localConfig$private_cloud$cloud
-      }
-    }
+readFile <- function(filepath) {
+  # Returns file content or FALSE if the path does not exist
+  if (!file.exists(filepath)) {
+    content <- FALSE
+  } else {
+    connection <- file(filepath) 
+    content  <- readLines(connection) 
+    close(connection)
+  }
+  content
+}
 
-    # Load auth from environment variables
-    authDefined <- ((Sys.getenv("INDICO_USERNAME") != "") &&
-                    (Sys.getenv("INDICO_PASSWORD") != ""))
-    if (authDefined) {
+loadConfigFile <- function(content) {
+  # Load from global configuration file
+  if (is.character(content)) {
+    config <- Parse.INI(content)
+    if (validAuthConfig(config)) {
       .indicoio$auth <- c(
-        Sys.getenv("INDICO_USERNAME"),
-        Sys.getenv("INDICO_PASSWORD")
+        config$auth$username,
+        config$auth$password
       )
     }
 
-    # Load subdomain from environment variables
-    cloudDefined <- (Sys.getenv("INDICO_CLOUD") != "")
-    if (cloudDefined) {
-      .indicoio$cloud <- Sys.getenv("INDICO_CLOUD")
+    if (validPrivateCloudConfig(config)) {
+      .indicoio$cloud <- config$private_cloud$cloud
     }
   }
 }
 
-valid_auth_config <- function(config) {
+validAuthConfig <- function(config) {
   # ensure .ini file contains the proper fields
   return (("auth" %in% names(config)) && 
           ("username" %in% names(config[['auth']])) &&
           ("password" %in% names(config[['auth']])))
 }
 
-valid_private_cloud_config <- function(config) {
+validPrivateCloudConfig <- function(config) {
   # ensure .ini file contains the proper fields
   return (("private_cloud" %in% names(config)) &&
           ("cloud" %in% names(config[['private_cloud']])))
 }
 
-Parse.INI <- function(INI.filename) 
+trim <- function (x) {
+  gsub("^\\s+|\\s+$", "", x)
+}
+
+Parse.INI <- function(Lines) 
 { 
   # Parse .ini style configuration files (.indicorc)
-  connection <- file(INI.filename) 
-  Lines  <- readLines(connection) 
-  close(connection) 
 
   # change section headers 
   Lines <- chartr("[]", "==", Lines)
@@ -103,8 +115,8 @@ Parse.INI <- function(INI.filename)
   d <- subset(transform(d, V3 = V2[which(L)[cumsum(L)]])[1:3], 
                            V1 != "") 
 
-  ToParse  <- paste("INI.list$", d$V3, "$",  d$V1, " <- '", 
-                    d$V2, "'", sep="")
+  value <- sprintf("'%s'", trim(d$V2))
+  ToParse <- paste("INI.list$", d$V3, "$",  d$V1, " <- ", value, sep="")
 
   INI.list <- list() 
   eval(parse(text=ToParse)) 
