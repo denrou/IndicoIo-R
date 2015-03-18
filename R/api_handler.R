@@ -12,10 +12,10 @@
 make_request <- function(data, api, auth = FALSE, cloud = FALSE, batch = FALSE) {
   
   # default to env variables and config file settings
-  if (!cloud) {
+  if (!is.character(cloud) && (cloud == FALSE)) {
     cloud <- .indicoio$cloud
   }
-  if (!auth) {
+  if (!is.character(auth) && (auth == FALSE)) {
     auth <- .indicoio$auth
   }
 

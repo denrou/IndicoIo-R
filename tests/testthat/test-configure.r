@@ -79,8 +79,8 @@ test_that("auth configuration is loaded from the configuration files", {
   expect_equal(.indicoio$auth[[2]], password)
 
   # reset to defaults
-  .indicoio$auth = FALSE
-  .indicoio$cloud = FALSE
+  .indicoio$auth <- FALSE
+  .indicoio$cloud <- FALSE
   loadConfiguration()
 })
 
@@ -91,8 +91,8 @@ test_that("cloud configuration is loaded from the configuration files", {
   expect_equal(.indicoio$cloud, cloud)
 
   # reset to defaults
-  .indicoio$auth = FALSE
-  .indicoio$cloud = FALSE
+  .indicoio$auth <- FALSE
+  .indicoio$cloud <- FALSE
   loadConfiguration()
 })
 
@@ -108,8 +108,8 @@ test_that("env variables take precedence over config files", {
   expect_equal(.indicoio$cloud, env_cloud)
 
   # reset to defaults
-  .indicoio$auth = FALSE
-  .indicoio$cloud = FALSE
+  .indicoio$auth <- FALSE
+  .indicoio$cloud <- FALSE
   Sys.setenv('INDICO_CLOUD' = prev_cloud)
   loadConfiguration()
 })
