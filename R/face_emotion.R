@@ -1,10 +1,10 @@
 #' Detects face emotion
 #'
 #' Given a grayscale input image of a face, returns a probability distribution over emotional state.
-#' Input should be a two-dimensional strucrure (like data.frame or matrix), resizing will be attempted internally but for best
+#' Input should be a two-dimensional structure (like data.frame or matrix), resizing will be attempted internally but for best
 #' performance, images should be already sized at 48x48 pixels.
 #' @param img image data
-#' @param local.api logical, whether use local or remote API
+#' @param cloud subdomain for indico private cloud
 #' @return List with face emotions probability pairs
 #' @keywords indico.io machine learning API face emotions recognition
 #' @seealso \code{\link{face_features}}, \code{\link{image_features}}
@@ -33,7 +33,7 @@
 #' # Detects emotion
 #' face_emotion(img)
 #' 
-face_emotion <- function(img, local.api = FALSE) {
+face_emotion <- function(img, cloud = FALSE) {
   
   # Checks parameters
   if (missing(img)) {
@@ -44,27 +44,39 @@ face_emotion <- function(img, local.api = FALSE) {
     stop("Image should be represented by two-dimensional structure!")
   }
   
-  # Converts to anonymous data.frame
-  img <- data.frame(img)
-  colnames(img) <- NULL
-  
-  api <- ifelse(local.api, .indicoio$local_api, .indicoio$remote_api)
-  api <- str_c(api, "fer")
-  
-  # Makes request
-  response <- POST(api, 
-                   accept_json(),
-                   add_headers(.indicoio$header),
-                   body = toJSON(list(data = img))
-  )
-  stop_for_status(response)
-  
-  # Returns results
-  answer <- content(response, as = "parsed", type = "application/json")
-  if ("error" %in% names(answer)) {
-    stop(answer[["error"]])
-  }
-  answer[["results"]]
-
+  img <- format_image(img)
+  make_request(img, 'fer', cloud)
 }
 
+#' Detects face emotion
+#'
+#' Given a list of grayscale input images of faces, returns a list of probability distributions over emotional state.
+#' Input should be a list of two-dimensional structures (like data.frame or matrix), resizing will be attempted internally but for best
+#' performance, images should be already sized at 48x48 pixels.
+#' @param imgs image data
+#' @param auth Username and password for HTTP Basic Auth
+#' @param cloud subdomain for indico private cloud
+#' @return List of lists with face emotions probability pairs
+#' @keywords indico.io machine learning API face emotions recognition
+#' @seealso \code{\link{face_features}}, \code{\link{image_features}}
+#' @export
+#' @import httr rjson stringr png
+#' @examples
+#' ## Example 1
+#' img_list = list()
+#' img_list[[1]] <- matrix(runif(48*48, 0, 1), nrow = 48)
+#' emotion <- face_emotion(img_list)
+#' 
+#' most.possible <- sort(unlist(emotion[[1]]), decreasing = TRUE)[1:2]
+#' cat(sprintf("Detected '%s' emotion with probability %0.4f.\n",
+#'             names(most.possible)[1], most.possible[1]))
+#' cat(sprintf("Next possible is '%s' emotion with probability %0.4f.", 
+#'             names(most.possible)[2], most.possible[2]))
+#' 
+batch_face_emotion <- function(imgs, auth = FALSE, cloud = FALSE) {
+  img_list <- format_images(imgs)
+  make_request(img_list, 'fer', auth, cloud, batch = TRUE)
+}
+
+fer <- face_emotion
+batch_fer <- batch_face_emotion

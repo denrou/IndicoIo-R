@@ -18,28 +18,36 @@
 #' cat(sprintf("Next possible is %s with probability %0.4f.", 
 #'             names(most.possible)[2], most.possible[2]))
 #' 
-language <- function(text, local.api = FALSE) {
+language <- function(text, cloud = FALSE) {
   
   # Checks parameters
   if (missing(text) || str_trim(text) == "") {
     stop("No text for analysis provided!")
   }
   
-  api <- ifelse(local.api, .indicoio$local_api, .indicoio$remote_api)
-  api <- str_c(api, "language")
-  
-  # Makes request
-  response <- POST(api, 
-              accept_json(),
-              add_headers(.indicoio$header),
-              body = toJSON(list(data = text))
-  )
-  stop_for_status(response)
-  
-  # Returns results
-  answer <- content(response, as = "parsed", type = "application/json")
-  if ("error" %in% names(answer)) {
-    stop(answer[["error"]])
-  }
-  answer[["results"]]
+  make_request(text, 'language', cloud)
+}
+
+#' Detects language of the given documents
+#'
+#' Given a list of documents, returns a list of probability distributions over 33 possible
+#' languages
+#' @inheritParams batch_political
+#' @return List of lists with language probability pairs
+#' @keywords indico.io machine learning API language detection
+#' @seealso \code{\link{political}}, \code{\link{sentiment}}
+#' @export
+#' @import httr rjson stringr
+#' @examples
+#' languages <- language(c("Monday: Delightful with mostly sunny skies.
+#'                          Highs in the low 70s."))
+#' languages
+#' most.possible <- sort(unlist(languages[[1]]), decreasing = TRUE)[1:2]
+#' cat(sprintf("Detected %s language with probability %0.4f.\n",
+#'             names(most.possible)[1], most.possible[1]))
+#' cat(sprintf("Next possible is %s with probability %0.4f.", 
+#'             names(most.possible)[2], most.possible[2]))
+#' 
+batch_language <- function(text, auth = FALSE, cloud = FALSE) {
+  make_request(text, 'language', auth, cloud, batch = TRUE)
 }
