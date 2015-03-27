@@ -17,14 +17,14 @@
 #' cat(sprintf("Next possible is %s with probability %0.4f.", 
 #'             names(most.possible)[2], most.possible[2]))
 #' 
-text_tags <- function(text, cloud = FALSE) {
+text_tags <- function(text, api_key = FALSE, cloud = FALSE) {
   
   # Checks parameters
   if (missing(text) || str_trim(text) == "") {
     stop("No text for analysis provided!")
   }
   
-  make_request(text, 'texttags', cloud)
+  make_request(text, 'texttags', api_key, cloud)
 }
 
 #' Tags text with likely categories
@@ -47,6 +47,6 @@ text_tags <- function(text, cloud = FALSE) {
 #' cat(sprintf("Next possible is %s with probability %0.4f.", 
 #'             names(most.possible)[2], most.possible[2]))
 #' 
-batch_text_tags <- function(text, auth = FALSE, cloud = FALSE) {
-  make_request(text, 'texttags', auth, cloud, batch = TRUE)
+batch_text_tags <- function(text, api_key = FALSE, cloud = FALSE) {
+  make_request(text, 'texttags', api_key, cloud, batch = TRUE)
 }

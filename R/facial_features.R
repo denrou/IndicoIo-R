@@ -15,7 +15,7 @@
 #' features <- facial_features(img)
 #' length(features)
 #' 
-facial_features <- function(img, cloud = FALSE) {
+facial_features <- function(img, api_key = FALSE, cloud = FALSE) {
   
   # Checks parameters
   if (missing(img)) {
@@ -27,7 +27,7 @@ facial_features <- function(img, cloud = FALSE) {
   }
   
   img <- format_image(img)
-  make_request(img, 'facialfeatures', cloud)
+  make_request(img, 'facialfeatures', api_key, cloud)
 }
 
 #' Detects facial features
@@ -49,9 +49,9 @@ facial_features <- function(img, cloud = FALSE) {
 #' length(features)
 #' length(features[[1]])
 #' 
-batch_facial_features <- function(imgs, auth = FALSE, cloud = FALSE) {
+batch_facial_features <- function(imgs, api_key = FALSE, cloud = FALSE) {
   img_list <- format_images(imgs)
-  make_request(img_list, 'facialfeatures', auth, cloud, batch = TRUE)
+  make_request(img_list, 'facialfeatures', api_key, cloud, batch = TRUE)
 }
 
 face_features <- facial_features

@@ -1,21 +1,21 @@
 context("Utility function tests")
 
 test_that("request_url functions as expected", {
-  url <- request_url(cloud = FALSE, api = "sentiment", batch = FALSE)
-  expect_equal(url, "http://apiv1.indico.io/sentiment")
+  url <- request_url(cloud = FALSE, api = "sentiment", batch = FALSE, api_key = "key")
+  expect_equal(url, "https://apiv2.indico.io/sentiment?key=key")
 
-  url <- request_url(cloud = FALSE, api = "sentiment", batch = TRUE)
-  expect_equal(url, "http://apiv1.indico.io/sentiment/batch")
+  url <- request_url(cloud = FALSE, api = "sentiment", batch = TRUE, api_key = "key")
+  expect_equal(url, "https://apiv2.indico.io/sentiment/batch?key=key")
 
-  url <- request_url(cloud = FALSE, api = "political", batch = TRUE)
-  expect_equal(url, "http://apiv1.indico.io/political/batch")
+  url <- request_url(cloud = FALSE, api = "political", batch = TRUE, api_key = "key")
+  expect_equal(url, "https://apiv2.indico.io/political/batch?key=key")
 
-  url <- request_url(cloud = "testing", api = "political", batch = TRUE)
-  expect_equal(url, "http://testing.indico.domains/political/batch")
+  url <- request_url(cloud = "testing", api = "political", batch = TRUE, api_key = "key")
+  expect_equal(url, "https://testing.indico.domains/political/batch?key=key")
 
-  .indicoio$private_cloud = "http://%s.indico.com/"
-  url <- request_url(cloud = "testing", api = "political", batch = TRUE)
-  expect_equal(url, "http://testing.indico.com/political/batch")
+  .indicoio$private_cloud = "https://%s.indico.com/"
+  url <- request_url(cloud = "testing", api = "political", batch = TRUE, api_key = "key")
+  expect_equal(url, "https://testing.indico.domains/political/batch?key=key")
 })
 
 test_that("format_image functions as expected", {
@@ -37,18 +37,15 @@ test_that("format_images functions as expected", {
 
 test_that("auth configuration is loaded from environment variables", {
   # store previous config
-  prev_username <- Sys.getenv("INDICO_USERNAME", unset = FALSE)
-  prev_password <- Sys.getenv("INDICO_PASSWORD", unset = FALSE)
+  prev_api_key <- Sys.getenv("INDICO_API_KEY", unset = FALSE)
 
-  username <- "env-username"
-  password <- "env-password"
-  Sys.setenv('INDICO_USERNAME' = username, 'INDICO_PASSWORD' = password)
+  api_key <- "env-api-key"
+  Sys.setenv('INDICO_API_KEY' = api_key)
   loadEnvironmentVars()
-  expect_equal(.indicoio$auth[[1]], username)
-  expect_equal(.indicoio$auth[[2]], password)
+  expect_equal(.indicoio$api_key, api_key)
 
   # restore after testing
-  Sys.setenv('INDICO_USERNAME' = prev_username, 'INDICO_PASSWORD' = prev_password)
+  Sys.setenv('INDICO_API_KEY' = prev_api_key)
   loadEnvironmentVars()
 })
 
@@ -67,19 +64,16 @@ test_that("cloud configuration is loaded from environment variables", {
 })
 
 test_that("auth configuration is loaded from the configuration files", {
-  username <- "file-username"
-  password <- "file-password" 
+  api_key <- "file-api-key"
   content <- sprintf(
-    "[auth]\nusername = %s\npassword = %s", 
-    username, 
-    password
+    "[auth]\napi_key = %s", 
+    api_key
   )
   loadConfigFile(content)
-  expect_equal(.indicoio$auth[[1]], username)
-  expect_equal(.indicoio$auth[[2]], password)
+  expect_equal(.indicoio$api_key, api_key)
 
   # reset to defaults
-  .indicoio$auth <- FALSE
+  .indicoio$api_key <- FALSE
   .indicoio$cloud <- FALSE
   loadConfiguration()
 })

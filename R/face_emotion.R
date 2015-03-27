@@ -4,6 +4,7 @@
 #' Input should be a two-dimensional structure (like data.frame or matrix), resizing will be attempted internally but for best
 #' performance, images should be already sized at 48x48 pixels.
 #' @param img image data
+#' @param api_key your personal indico API key
 #' @param cloud subdomain for indico private cloud
 #' @return List with face emotions probability pairs
 #' @keywords indico.io machine learning API face emotions recognition
@@ -33,7 +34,7 @@
 #' # Detects emotion
 #' face_emotion(img)
 #' 
-face_emotion <- function(img, cloud = FALSE) {
+face_emotion <- function(img, api_key = FALSE, cloud = FALSE) {
   
   # Checks parameters
   if (missing(img)) {
@@ -45,7 +46,7 @@ face_emotion <- function(img, cloud = FALSE) {
   }
   
   img <- format_image(img)
-  make_request(img, 'fer', cloud)
+  make_request(img, 'fer', api_key, cloud)
 }
 
 #' Detects face emotion
@@ -54,7 +55,7 @@ face_emotion <- function(img, cloud = FALSE) {
 #' Input should be a list of two-dimensional structures (like data.frame or matrix), resizing will be attempted internally but for best
 #' performance, images should be already sized at 48x48 pixels.
 #' @param imgs image data
-#' @param auth Username and password for HTTP Basic Auth
+#' @param api_key your personal indico API key
 #' @param cloud subdomain for indico private cloud
 #' @return List of lists with face emotions probability pairs
 #' @keywords indico.io machine learning API face emotions recognition
@@ -73,9 +74,9 @@ face_emotion <- function(img, cloud = FALSE) {
 #' cat(sprintf("Next possible is '%s' emotion with probability %0.4f.", 
 #'             names(most.possible)[2], most.possible[2]))
 #' 
-batch_face_emotion <- function(imgs, auth = FALSE, cloud = FALSE) {
+batch_face_emotion <- function(imgs, api_key = FALSE, cloud = FALSE) {
   img_list <- format_images(imgs)
-  make_request(img_list, 'fer', auth, cloud, batch = TRUE)
+  make_request(img_list, 'fer', api_key, cloud, batch = TRUE)
 }
 
 fer <- face_emotion
