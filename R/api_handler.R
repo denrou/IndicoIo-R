@@ -27,7 +27,7 @@ make_request <- function(data, api, auth = FALSE, cloud = FALSE, batch = FALSE) 
   body <- toJSON(list(data = data))
 
   # make request
-  if (is.vector(auth)) {
+  if (is.vector(auth) && length(auth) == 2) {
     auth <- authenticate(auth[1], auth[2], type="basic")
     response <- POST(url, accept_json(), headers, auth, body = body)
   } else {

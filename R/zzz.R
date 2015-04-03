@@ -59,7 +59,7 @@ readFile <- function(filepath) {
     content <- FALSE
   } else {
     connection <- file(filepath) 
-    content  <- readLines(connection) 
+    content <- readLines(connection)
     close(connection)
   }
   content
