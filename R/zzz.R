@@ -55,7 +55,7 @@ loadEnvironmentVars <- function() {
 
 readFile <- function(filepath) {
   # Returns file content or FALSE if the path does not exist
-  if (!file.exists(filepath)) {
+  if (!file.exists(filepath) && file.info(filepath)$size != 0) {
     content <- FALSE
   } else {
     connection <- file(filepath) 
