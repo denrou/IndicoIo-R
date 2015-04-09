@@ -32,7 +32,7 @@ image_features <- function(img, api_key = FALSE, cloud = FALSE) {
     stop("No image for analysis provided!")
   }
   
-  if (length(dim(img)) != 2) {
+  if (!is.character(img) && length(dim(img)) != 2) {
     stop("Image should be represented by two-dimensional structure!")
   }
   

@@ -73,9 +73,13 @@ request_url <- function(cloud, api, batch, api_key) {
 #' @import httr rjson stringr
 format_image <- function(img) {
   # Converts to anonymous data.frame
-  df <- data.frame(img)
-  colnames(df) <- NULL
-  df
+  if (!is.character(img)) {
+    df <- data.frame(img)
+    colnames(df) <- NULL
+    df
+  } else {
+    img
+  }
 }
 
 #' Returns a list of `data.frame`s given a list of input images
@@ -87,8 +91,7 @@ format_image <- function(img) {
 format_images <- function(imgs) {
   img_list = list()
   for (i in 1:length(imgs)) {
-    img <- data.frame(imgs[[i]])
-    colnames(img) <- NULL
+    img <- format_image(imgs[[i]])
     img_list[[i]] = img
   }
   img_list

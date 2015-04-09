@@ -90,42 +90,32 @@ cat(sprintf("Next possible is \%s with probability \%0.4f.",
 ### Face Emotion Detection
 
 ```r
+
 ## Example 1
-img <- matrix(runif(48*48, 0, 1), nrow = 48)
-emotion <- face_emotion(img)
+library(base64enc)
+img <- file(filepath, "rb", raw=TRUE)
+data <- base64encode(img)
+
+emotion <- face_emotion(data)
 
 most.possible <- sort(unlist(emotion), decreasing = TRUE)[1:2]
 cat(sprintf("Detected '%s' emotion with probability %0.4f.\n",
             names(most.possible)[1], most.possible[1]))
 cat(sprintf("Next possible is '%s' emotion with probability %0.4f.", 
             names(most.possible)[2], most.possible[2]))
-
-## Example 2
-# Reads PNG file
-file.face <- system.file("extdata", "face1.png", package = "indicoio")
-img <- readPNG(file.face)
-# Converts to grayscale
-img <- 0.2126 * img[, , 1] + 0.7152 * img[, , 2] + 0.0722 * img[, , 3]
-# Plots image
-plot(0:1, 0:1, xlab = "", ylab = "", axes = FALSE, col = "white")
-rasterImage(img, xleft = 0, ybottom = 0, xright = 1, ytop = 1)
-# Detects emotion
-face_emotion(img)
 ```
 
 ### Face Features Detection
 
 ```r
-img <- matrix(runif(48*48, 0, 1), nrow = 48)
-features <- face_features(img)
+features <- face_features(data)
 length(features)
 ```
 
 ### Image Features Detection
 
 ```r
-img <- matrix(runif(64*64, 0, 1), nrow = 64)
-features <- image_features(img)
+features <- image_features(data)
 
 length(features)
 min(unlist(features))
