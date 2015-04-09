@@ -14,9 +14,9 @@ if (!exists(".indicoio")) {
   if (exists(".indicoio")) {
     .indicoio$header <- c("Content-type" = "application/json",
                           "Accept" = "text/plain")
-    .indicoio$remote_api <- "http://apiv1.indico.io/"
-    .indicoio$private_cloud <- "http://%s.indico.domains/"
-    .indicoio$auth = FALSE
+    .indicoio$remote_api <- "https://apiv2.indico.io/"
+    .indicoio$private_cloud <- FALSE
+    .indicoio$api_key = FALSE
     .indicoio$cloud = FALSE
 
     # Paths to search for config files
@@ -37,17 +37,13 @@ loadConfiguration <- function() {
 
 loadEnvironmentVars <- function() {
   # Load auth from environment variables
-  authDefined <- ((Sys.getenv("INDICO_USERNAME") != "") &&
-                  (Sys.getenv("INDICO_PASSWORD") != ""))
+  authDefined <- (Sys.getenv("INDICO_API_KEY") != FALSE)
   if (authDefined) {
-    .indicoio$auth <- c(
-      Sys.getenv("INDICO_USERNAME"),
-      Sys.getenv("INDICO_PASSWORD")
-    )
+    .indicoio$api_key <- Sys.getenv("INDICO_API_KEY")
   }
 
   # Load subdomain from environment variables
-  cloudDefined <- (Sys.getenv("INDICO_CLOUD") != "")
+  cloudDefined <- (Sys.getenv("INDICO_CLOUD") != FALSE)
   if (cloudDefined) {
     .indicoio$cloud <- Sys.getenv("INDICO_CLOUD")
   }
@@ -58,8 +54,12 @@ readFile <- function(filepath) {
   if (!file.exists(filepath)) {
     content <- FALSE
   } else {
-    connection <- file(filepath) 
-    content <- readLines(connection)
+    connection <- file(filepath)
+    content  <- readLines(connection)
+    if (content == "") {
+      content <- FALSE
+    }
+
     close(connection)
   }
   content
@@ -70,10 +70,7 @@ loadConfigFile <- function(content) {
   if (is.character(content)) {
     config <- Parse.INI(content)
     if (validAuthConfig(config)) {
-      .indicoio$auth <- c(
-        config$auth$username,
-        config$auth$password
-      )
+      .indicoio$api_key <- config$auth$api_key
     }
 
     if (validPrivateCloudConfig(config)) {
@@ -84,9 +81,8 @@ loadConfigFile <- function(content) {
 
 validAuthConfig <- function(config) {
   # ensure .ini file contains the proper fields
-  return (("auth" %in% names(config)) && 
-          ("username" %in% names(config[['auth']])) &&
-          ("password" %in% names(config[['auth']])))
+  return (("auth" %in% names(config)) &&
+          ("api_key" %in% names(config[['auth']])))
 }
 
 validPrivateCloudConfig <- function(config) {
@@ -99,27 +95,27 @@ trim <- function (x) {
   gsub("^\\s+|\\s+$", "", x)
 }
 
-Parse.INI <- function(Lines) 
-{ 
+Parse.INI <- function(Lines)
+{
   # Parse .ini style configuration files (.indicorc)
 
-  # change section headers 
+  # change section headers
   Lines <- chartr("[]", "==", Lines)
 
-  connection <- textConnection(Lines) 
-  d <- read.table(connection, as.is = TRUE, sep = "=", fill = TRUE) 
-  close(connection) 
+  connection <- textConnection(Lines)
+  d <- read.table(connection, as.is = TRUE, sep = "=", fill = TRUE)
+  close(connection)
 
-  # location of section breaks 
-  L <- d$V1 == "" 
-  d <- subset(transform(d, V3 = V2[which(L)[cumsum(L)]])[1:3], 
-                           V1 != "") 
+  # location of section breaks
+  L <- d$V1 == ""
+  d <- subset(transform(d, V3 = V2[which(L)[cumsum(L)]])[1:3],
+                           V1 != "")
 
   value <- sprintf("'%s'", trim(d$V2))
   ToParse <- paste("INI.list$", d$V3, "$",  d$V1, " <- ", value, sep="")
 
-  INI.list <- list() 
-  eval(parse(text=ToParse)) 
+  INI.list <- list()
+  eval(parse(text=ToParse))
 
-  return(INI.list) 
+  return(INI.list)
 }

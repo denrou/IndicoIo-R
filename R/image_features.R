@@ -25,19 +25,19 @@
 #' max(unlist(features))
 #' sum(unlist(features))
 #' 
-image_features <- function(img, cloud = FALSE) {
+image_features <- function(img, api_key = FALSE, cloud = FALSE) {
   
   # Checks parameters
   if (missing(img)) {
     stop("No image for analysis provided!")
   }
   
-  if (length(dim(img)) != 2) {
+  if (!is.character(img) && length(dim(img)) != 2) {
     stop("Image should be represented by two-dimensional structure!")
   }
   
   img <- format_image(img)
-  make_request(img, 'imagefeatures', cloud)
+  make_request(img, 'imagefeatures', api_key, cloud)
 }
 
 #' Detects image features for a list of images
@@ -68,7 +68,7 @@ image_features <- function(img, cloud = FALSE) {
 #' max(unlist(features[[1]]))
 #' sum(unlist(features[[1]]))
 #' 
-batch_image_features <- function(imgs, auth = FALSE, cloud = FALSE) {
+batch_image_features <- function(imgs, api_key = FALSE, cloud = FALSE) {
   img_list <- format_images(imgs)
-  make_request(img_list, 'imagefeatures', auth, cloud, batch = TRUE)
+  make_request(img_list, 'imagefeatures', api_key, cloud, batch = TRUE)
 }
