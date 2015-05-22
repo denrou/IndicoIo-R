@@ -40,7 +40,7 @@ language_set <- c(
 test_that("Language API returns list of probabilities for the list of languages", {
   test_string <- "Clearly an English sentence."
   languages <- language(test_string)
-  
+
   expect_is(languages, "list")
   expect_true(all(names(languages) %in% language_set))
   expect_equal(sum(unlist(languages)), 1)
@@ -53,9 +53,9 @@ test_that("Throws error on empty text", {
 })
 
 test_that("Batch Language API returns list of list of probabilities for the list of languages", {
-  test_string_arr <- c("Clearly an English sentence.")
+  test_string_arr <- c("Clearly an English sentence.", "Clearly not an English sentence.")
   languages <- batch_language(test_string_arr)
-  
+
   expect_is(languages, "list")
   expect_is(languages[[1]], "list")
   expect_true(all(names(languages[[1]]) %in% language_set))
