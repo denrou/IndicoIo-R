@@ -12,7 +12,8 @@ Depends:
     httr,
     rjson,
     stringr,
-    png
+    png,
+    EBImage
 License: file LICENSE
 LazyData: true
 Suggests:
