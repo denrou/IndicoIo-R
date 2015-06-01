@@ -45,7 +45,7 @@ face_emotion <- function(img, api_key = FALSE, cloud = FALSE) {
     stop("Image should be represented by two-dimensional structure!")
   }
 
-  img <- format_image(img)
+  img <- format_image(img, 48)
   make_request(img, 'fer', api_key, cloud)
 }
 
@@ -75,7 +75,7 @@ face_emotion <- function(img, api_key = FALSE, cloud = FALSE) {
 #'             names(most.possible)[2], most.possible[2]))
 #'
 batch_face_emotion <- function(imgs, api_key = FALSE, cloud = FALSE) {
-  img_list <- format_images(imgs)
+  img_list <- format_images(imgs, 48)
   make_request(img_list, 'fer', api_key, cloud, batch = TRUE)
 }
 

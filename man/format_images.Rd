@@ -4,10 +4,12 @@
 \alias{format_images}
 \title{Returns a list of `data.frame`s given a list of input images}
 \usage{
-format_images(imgs)
+format_images(imgs, size)
 }
 \arguments{
 \item{imgs}{List of images to convert to a `data.frame`s}
+
+\item{size}{integer pixel size to resize images down to}
 }
 \value{
 `data.frame`s constructed from list of images

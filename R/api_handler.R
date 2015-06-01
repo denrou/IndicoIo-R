@@ -69,10 +69,12 @@ request_url <- function(cloud, api, batch, api_key) {
 #'
 #' Given an input image, returns a data.frame obj
 #' @param img Image to convert to a data.frame
+#' @param size integer pixel size to resize images down to
 #' @return data.frame constructed from image
 #' @import httr rjson stringr
-format_image <- function(img) {
+format_image <- function(img, size) {
   # Converts to anonymous data.frame
+  img <- resizePixels(img, size, size)
   if (!is.character(img)) {
     df <- data.frame(img)
     colnames(df) <- NULL
@@ -86,13 +88,43 @@ format_image <- function(img) {
 #'
 #' Given a list of input images, returns a list of `data.frame`s
 #' @param imgs List of images to convert to a `data.frame`s
+#' @param size integer pixel size to resize images down to
 #' @return `data.frame`s constructed from list of images
 #' @import httr rjson stringr
-format_images <- function(imgs) {
+format_images <- function(imgs, size) {
   img_list = list()
   for (i in 1:length(imgs)) {
-    img <- format_image(imgs[[i]])
+    img <- format_image(imgs[[i]], size)
     img_list[[i]] = img
   }
   img_list
+}
+
+resizePixels <- function(im, w, h) {
+  pixels = as.vector(im)
+  # initial width/height
+  w1 = nrow(im)
+  h1 = ncol(im)
+
+  # target width/height
+  w2 = w
+  h2 = h
+  # Create empty vector
+  temp = vector('numeric', w2*h2)
+
+  # Compute ratios
+  x_ratio = w1/w2
+  y_ratio = h1/h2
+
+  # Do resizing
+  for (i in 0:(h2-1)) {
+    for (j in 0:(w2-1)) {
+      px = floor(j*x_ratio)
+      py = floor(i*y_ratio)
+      temp[(i*w2)+j] = pixels[(py*w1)+px]
+    }
+  }
+
+  m = matrix(temp, h2, w2)
+  return(m)
 }

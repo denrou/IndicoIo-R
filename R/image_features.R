@@ -36,7 +36,7 @@ image_features <- function(img, api_key = FALSE, cloud = FALSE) {
     stop("Image should be represented by two-dimensional structure!")
   }
 
-  img <- format_image(img)
+  img <- format_image(img, 64)
   make_request(img, 'imagefeatures', api_key, cloud)
 }
 
@@ -70,6 +70,6 @@ image_features <- function(img, api_key = FALSE, cloud = FALSE) {
 #' sum(unlist(features[[1]]))
 #'
 batch_image_features <- function(imgs, api_key = FALSE, cloud = FALSE) {
-  img_list <- format_images(imgs)
+  img_list <- format_images(imgs, 64)
   make_request(img_list, 'imagefeatures', api_key, cloud, batch = TRUE)
 }
