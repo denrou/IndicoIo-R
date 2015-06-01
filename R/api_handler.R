@@ -74,14 +74,33 @@ request_url <- function(cloud, api, batch, api_key) {
 #' @import httr rjson stringr
 format_image <- function(img, size) {
   # Converts to anonymous data.frame
-  img <- resizePixels(img, size, size)
-  if (!is.character(img)) {
-    df <- data.frame(img)
-    colnames(df) <- NULL
-    df
-  } else {
-    img
+  if (is.character(img)) {
+    if (file.exists(img)) {
+      img <- readPNG(img)
+    } else { # is already base64
+      img <- base64decode(img)
+      img <- readPNG(img)
+    }
   }
+
+  if (is.matrix(img) || is.data.frame(img)) {
+    warning("Image input as matrices and dataframes will be deprecated in the next major release");
+  }
+
+  if (!is.character(img) && max(img) <= 1.0) {
+    img <- img * 255
+  }
+
+  if (nrow(img) > size && ncol(img) > size) {
+    img <- resizePixels(img, size, size)
+  }
+
+  if (any(is.na(img))) {
+      stop("Invalid input!")
+  }
+  vector <- writePNG(img)
+  b64 <- base64encode(vector)
+  b64
 }
 
 #' Returns a list of `data.frame`s given a list of input images

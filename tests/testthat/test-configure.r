@@ -21,18 +21,16 @@ test_that("request_url functions as expected", {
 test_that("format_image functions as expected", {
   img <- matrix(runif(48*48, 0, 1), nrow = 48)
   result <- format_image(img, 48)
-  expect_is(result, "data.frame")
-  expect_equal(length(result), 48)
+  expect_is(result, "character")
 });
 
 test_that("format_images functions as expected", {
   img_list = list()
   img_list[[1]] = matrix(runif(48*48, 0, 1), nrow = 48)
-  result <- format_images(img_list, 24)
+  result <- format_images(img_list, 48)
   expect_is(result, "list")
   expect_equal(length(result), 1)
-  expect_is(result[[1]], "data.frame")
-  expect_equal(length(result[[1]]), 24)
+  expect_is(result[[1]], "character")
 });
 
 test_that("auth configuration is loaded from environment variables", {
