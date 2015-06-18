@@ -20,14 +20,14 @@
 #' cat(sprintf("This text is most like %s and least like %s", 
 #'             most.like, least.like))
 #' 
-political <- function(text, api_key = FALSE, cloud = FALSE) {
+political <- function(text, api_key = FALSE, cloud = FALSE, ...) {
   
   # Checks parameters
   if (missing(text) || str_trim(text) == "") {
     stop("No text for analysis provided!")
   }
   
-  make_request(text, 'political', api_key, cloud)
+  make_request(text, 'political', api_key, cloud, ...)
 }
 
 #' Returns a list of probability distributions over the political alignments of the speakers
@@ -53,6 +53,6 @@ political <- function(text, api_key = FALSE, cloud = FALSE) {
 #' cat(sprintf("This text is most like %s and least like %s", 
 #'             most.like, least.like))
 #' 
-batch_political <- function(text, api_key = FALSE, cloud = FALSE) {
-  make_request(text, 'political', api_key, cloud, batch = TRUE)
+batch_political <- function(text, api_key = FALSE, cloud = FALSE, ...) {
+  make_request(text, 'political', api_key, cloud, batch = TRUE, ...)
 }

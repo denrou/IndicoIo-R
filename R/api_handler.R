@@ -9,7 +9,7 @@
 #' @return error or response extracted from the indico API response
 #' @keywords indico.io machine learning API
 #' @import httr rjson stringr
-make_request <- function(data, api, api_key = FALSE, cloud = FALSE, batch = FALSE) {
+make_request <- function(data, api, api_key = FALSE, cloud = FALSE, batch = FALSE, ...) {
   
   # default to env variables and config file settings
   if (!is.character(cloud) && (cloud == FALSE)) {
@@ -24,7 +24,7 @@ make_request <- function(data, api, api_key = FALSE, cloud = FALSE, batch = FALS
 
   # configure request headers + body
   headers <- add_headers(.indicoio$header)
-  body <- toJSON(list(data = data))
+  body <- toJSON(list(data = data, ...))
 
   response <- POST(url, accept_json(), headers, body = body)
   

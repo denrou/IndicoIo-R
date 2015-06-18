@@ -34,7 +34,7 @@
 #' # Detects emotion
 #' face_emotion(img)
 #' 
-face_emotion <- function(img, api_key = FALSE, cloud = FALSE) {
+face_emotion <- function(img, api_key = FALSE, cloud = FALSE, ...) {
   
   # Checks parameters
   if (missing(img)) {
@@ -46,7 +46,7 @@ face_emotion <- function(img, api_key = FALSE, cloud = FALSE) {
   }
   
   img <- format_image(img)
-  make_request(img, 'fer', api_key, cloud)
+  make_request(img, 'fer', api_key, cloud, ...)
 }
 
 #' Detects face emotion
@@ -74,9 +74,9 @@ face_emotion <- function(img, api_key = FALSE, cloud = FALSE) {
 #' cat(sprintf("Next possible is '%s' emotion with probability %0.4f.", 
 #'             names(most.possible)[2], most.possible[2]))
 #' 
-batch_face_emotion <- function(imgs, api_key = FALSE, cloud = FALSE) {
+batch_face_emotion <- function(imgs, api_key = FALSE, cloud = FALSE, ...) {
   img_list <- format_images(imgs)
-  make_request(img_list, 'fer', api_key, cloud, batch = TRUE)
+  make_request(img_list, 'fer', api_key, cloud, batch = TRUE, ...)
 }
 
 fer <- face_emotion
