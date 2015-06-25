@@ -36,8 +36,10 @@ sentiment <- function(text, api_key = FALSE, cloud = FALSE) {
 #' @export
 #' @import httr rjson stringr
 #' @examples
-#' emotion <- batch_sentiment(c("Thanks everyone for the birthday wishes!!
-#'                               It was a crazy few days ><"))
+#' text_list <- list()
+#' text_list[[1]] <- "Thanks everyone for the birthday wishes!!
+#'                               It was a crazy few days ><"
+#' emotion <- batch_sentiment(text_list)
 #' emotion
 #' cat(sprintf("This text has %s tonality", 
 #'              ifelse(emotion[[1]] > 0.5, "positive", "negative")))

@@ -8,20 +8,20 @@
 #' @param cloud subdomain for indico private cloud
 #' @return List with face emotions probability pairs
 #' @keywords indico.io machine learning API face emotions recognition
-#' @seealso \code{\link{face_features}}, \code{\link{image_features}}
+#' @seealso \code{\link{facial_features}}, \code{\link{image_features}}
 #' @export
 #' @import httr rjson stringr png
 #' @examples
 #' ## Example 1
 #' img <- matrix(runif(48*48, 0, 1), nrow = 48)
 #' emotion <- face_emotion(img)
-#' 
+#'
 #' most.possible <- sort(unlist(emotion), decreasing = TRUE)[1:2]
 #' cat(sprintf("Detected '%s' emotion with probability %0.4f.\n",
 #'             names(most.possible)[1], most.possible[1]))
-#' cat(sprintf("Next possible is '%s' emotion with probability %0.4f.", 
+#' cat(sprintf("Next possible is '%s' emotion with probability %0.4f.",
 #'             names(most.possible)[2], most.possible[2]))
-#' 
+#'
 #' ## Example 2
 #' # Reads PNG file
 #' file.face <- system.file("extdata", "face1.png", package = "indicoio")
@@ -33,9 +33,9 @@
 #' rasterImage(img, xleft = 0, ybottom = 0, xright = 1, ytop = 1)
 #' # Detects emotion
 #' face_emotion(img)
-#' 
+#'
 face_emotion <- function(img, api_key = FALSE, cloud = FALSE) {
-  
+
   # Checks parameters
   if (missing(img)) {
     stop("No image for analysis provided!")
@@ -44,7 +44,7 @@ face_emotion <- function(img, api_key = FALSE, cloud = FALSE) {
   if (!is.character(img) && length(dim(img)) != 2) {
     stop("Image should be represented by two-dimensional structure!")
   }
-  
+
   img <- format_image(img)
   make_request(img, 'fer', api_key, cloud)
 }
@@ -59,21 +59,21 @@ face_emotion <- function(img, api_key = FALSE, cloud = FALSE) {
 #' @param cloud subdomain for indico private cloud
 #' @return List of lists with face emotions probability pairs
 #' @keywords indico.io machine learning API face emotions recognition
-#' @seealso \code{\link{face_features}}, \code{\link{image_features}}
+#' @seealso \code{\link{facial_features}}, \code{\link{image_features}}
 #' @export
 #' @import httr rjson stringr png
 #' @examples
 #' ## Example 1
 #' img_list = list()
 #' img_list[[1]] <- matrix(runif(48*48, 0, 1), nrow = 48)
-#' emotion <- face_emotion(img_list)
-#' 
+#' emotion <- batch_face_emotion(img_list)
+#'
 #' most.possible <- sort(unlist(emotion[[1]]), decreasing = TRUE)[1:2]
 #' cat(sprintf("Detected '%s' emotion with probability %0.4f.\n",
 #'             names(most.possible)[1], most.possible[1]))
-#' cat(sprintf("Next possible is '%s' emotion with probability %0.4f.", 
+#' cat(sprintf("Next possible is '%s' emotion with probability %0.4f.",
 #'             names(most.possible)[2], most.possible[2]))
-#' 
+#'
 batch_face_emotion <- function(imgs, api_key = FALSE, cloud = FALSE) {
   img_list <- format_images(imgs)
   make_request(img_list, 'fer', api_key, cloud, batch = TRUE)

@@ -14,18 +14,18 @@
 #' img <- matrix(runif(48*48, 0, 1), nrow = 48)
 #' features <- facial_features(img)
 #' length(features)
-#' 
+#'
 facial_features <- function(img, api_key = FALSE, cloud = FALSE) {
-  
+
   # Checks parameters
   if (missing(img)) {
     stop("No image for analysis provided!")
   }
-  
+
   if (!is.character(img) && length(dim(img)) != 2) {
     stop("Image should be represented by two-dimensional structure!")
   }
-  
+
   img <- format_image(img)
   make_request(img, 'facialfeatures', api_key, cloud)
 }
@@ -45,10 +45,10 @@ facial_features <- function(img, api_key = FALSE, cloud = FALSE) {
 #' @examples
 #' img_list = list()
 #' img_list[[1]] = matrix(runif(48*48, 0, 1), nrow = 48)
-#' features <- facial_features(img_list)
+#' features <- batch_facial_features(img_list)
 #' length(features)
 #' length(features[[1]])
-#' 
+#'
 batch_facial_features <- function(imgs, api_key = FALSE, cloud = FALSE) {
   img_list <- format_images(imgs)
   make_request(img_list, 'facialfeatures', api_key, cloud, batch = TRUE)

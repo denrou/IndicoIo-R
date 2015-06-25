@@ -28,7 +28,7 @@ Supported APIs:
 - Facial Feature Extraction
 - Language Detection
 - Text Topic Tagging
-- 
+-
 
 Examples
 --------
@@ -42,20 +42,20 @@ library(indicoio)
 emotion <- sentiment("Thanks everyone for the birthday wishes!!
                       It was a crazy few days ><")
 emotion
-cat(sprintf("This text has %s tonality", 
+cat(sprintf("This text has %s tonality",
              ifelse(emotion > 0.5, "positive", "negative")))
 ```
 
 ### Political Sentiment Analysis
 
 ```r
-affilation <- political("I am so proud to stand here today 
+affilation <- political("I am so proud to stand here today
                          as Prime Minister of four nations
                          in one United Kingdom.")
 affilation
 most.like <- names(affilation[which.max(unlist(affilation))])
 least.like <- names(affilation[which.min(unlist(affilation))])
-cat(sprintf("This text is most like %s and least like %s", 
+cat(sprintf("This text is most like %s and least like %s",
             most.like, least.like))
 
 ```
@@ -69,7 +69,7 @@ languages
 most.possible <- sort(unlist(languages), decreasing = TRUE)[1:2]
 cat(sprintf("Detected %s language with probability %0.4f.\n",
             names(most.possible)[1], most.possible[1]))
-cat(sprintf("Next possible is %s with probability %0.4f.", 
+cat(sprintf("Next possible is %s with probability %0.4f.",
             names(most.possible)[2], most.possible[2]))
 ```
 
@@ -101,7 +101,7 @@ emotion <- face_emotion(data)
 most.possible <- sort(unlist(emotion), decreasing = TRUE)[1:2]
 cat(sprintf("Detected '%s' emotion with probability %0.4f.\n",
             names(most.possible)[1], most.possible[1]))
-cat(sprintf("Next possible is '%s' emotion with probability %0.4f.", 
+cat(sprintf("Next possible is '%s' emotion with probability %0.4f.",
             names(most.possible)[2], most.possible[2]))
 ```
 
@@ -122,7 +122,7 @@ min(unlist(features))
 max(unlist(features))
 sum(unlist(features))
 ```
-Batch API 
+Batch API
 ---------------
 ---------
 Each `indicoio` function has a corresponding batch function for analyzing many examples with a single request. Simply pass in a list of inputs and receive a list of results in return.

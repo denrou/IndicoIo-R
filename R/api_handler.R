@@ -10,10 +10,10 @@
 #' @keywords indico.io machine learning API
 #' @import httr rjson stringr
 make_request <- function(data, api, api_key = FALSE, cloud = FALSE, batch = FALSE) {
-  
+
   # default to env variables and config file settings
   if (!is.character(cloud) && (cloud == FALSE)) {
-    cloud <- .indicoio$cloud 
+    cloud <- .indicoio$cloud
   }
   if (!is.character(api_key) && (api_key == FALSE)) {
     api_key <- .indicoio$api_key
@@ -27,9 +27,9 @@ make_request <- function(data, api, api_key = FALSE, cloud = FALSE, batch = FALS
   body <- toJSON(list(data = data))
 
   response <- POST(url, accept_json(), headers, body = body)
-  
+
   stop_for_status(response)
-  
+
   # Returns results
   answer <- content(response, as = "parsed", type = "application/json")
   if ("error" %in% names(answer)) {
@@ -43,7 +43,7 @@ make_request <- function(data, api, api_key = FALSE, cloud = FALSE, batch = FALS
 #'
 #' Produces the proper url to query with a given request
 #' @param cloud (optional) indico subdomain for private cloud
-#' @param api name of API 
+#' @param api name of API
 #' @param batch (logical) does the request contain more than one example?
 #' @param api_key your personal indico API key
 #' @return url for API request
