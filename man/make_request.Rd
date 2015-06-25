@@ -4,7 +4,8 @@
 \alias{make_request}
 \title{Returns a response from the indico API endpoint}
 \usage{
-make_request(data, api, api_key = FALSE, cloud = FALSE, batch = FALSE)
+make_request(data, api, api_key = FALSE, cloud = FALSE, batch = FALSE,
+  ...)
 }
 \arguments{
 \item{data}{data for analysis}
@@ -16,6 +17,8 @@ make_request(data, api, api_key = FALSE, cloud = FALSE, batch = FALSE)
 \item{cloud}{subdomain for indico private cloud}
 
 \item{batch}{send call to batch endpoint}
+
+\item{...}{additional arguments to passed to request}
 }
 \value{
 error or response extracted from the indico API response

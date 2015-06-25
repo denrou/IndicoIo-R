@@ -6,6 +6,7 @@
 #' @param img image data
 #' @param api_key your personal indico API key
 #' @param cloud subdomain for indico private cloud
+#' @param ... additional arguments to passed to request
 #' @return List with face emotions probability pairs
 #' @keywords indico.io machine learning API face emotions recognition
 #' @seealso \code{\link{facial_features}}, \code{\link{image_features}}
@@ -34,15 +35,14 @@
 #' # Detects emotion
 #' face_emotion(img)
 #'
-face_emotion <- function(img, api_key = FALSE, cloud = FALSE) {
-
+face_emotion <- function(img, api_key = FALSE, cloud = FALSE, ...) {
   # Checks parameters
   if (missing(img)) {
     stop("No image for analysis provided!")
   }
 
   img <- format_image(img, 64)
-  make_request(img, 'fer', api_key, cloud)
+  make_request(img, 'fer', api_key, cloud, ...)
 }
 
 #' Detects face emotion
@@ -53,6 +53,7 @@ face_emotion <- function(img, api_key = FALSE, cloud = FALSE) {
 #' @param imgs image data
 #' @param api_key your personal indico API key
 #' @param cloud subdomain for indico private cloud
+#' @param ... additional arguments to passed to request
 #' @return List of lists with face emotions probability pairs
 #' @keywords indico.io machine learning API face emotions recognition
 #' @seealso \code{\link{facial_features}}, \code{\link{image_features}}
@@ -69,10 +70,9 @@ face_emotion <- function(img, api_key = FALSE, cloud = FALSE) {
 #'             names(most.possible)[1], most.possible[1]))
 #' cat(sprintf("Next possible is '%s' emotion with probability %0.4f.",
 #'             names(most.possible)[2], most.possible[2]))
-#'
-batch_face_emotion <- function(imgs, api_key = FALSE, cloud = FALSE) {
+batch_face_emotion <- function(imgs, api_key = FALSE, cloud = FALSE, ...) {
   img_list <- format_images(imgs, 64)
-  make_request(img_list, 'fer', api_key, cloud, batch = TRUE)
+  make_request(img_list, 'fer', api_key, cloud, batch = TRUE, ...)
 }
 
 fer <- face_emotion

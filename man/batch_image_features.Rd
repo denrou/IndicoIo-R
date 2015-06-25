@@ -4,7 +4,7 @@
 \alias{batch_image_features}
 \title{Detects image features for a list of images}
 \usage{
-batch_image_features(imgs, api_key = FALSE, cloud = FALSE)
+batch_image_features(imgs, api_key = FALSE, cloud = FALSE, ...)
 }
 \arguments{
 \item{imgs}{image data}
@@ -12,6 +12,8 @@ batch_image_features(imgs, api_key = FALSE, cloud = FALSE)
 \item{api_key}{your personal indico API key}
 
 \item{cloud}{subdomain for indico private cloud}
+
+\item{...}{additional arguments to passed to request}
 }
 \value{
 List of lists with image features
