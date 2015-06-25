@@ -69,9 +69,9 @@ request_url <- function(cloud, api, batch, api_key) {
 #'
 #' Given an input image, returns a data.frame obj
 #' @param img Image to convert to a data.frame
-#' @param size integer pixel size to resize images down to
-#' @return data.frame constructed from image
-#' @import httr rjson stringr
+#' @param size Size of image to resize to
+#' @return string base64 encoding of resized image
+#' @import httr rjson stringr base64enc
 format_image <- function(img, size) {
   # Converts to anonymous data.frame
   if (is.character(img)) {
@@ -105,11 +105,11 @@ format_image <- function(img, size) {
 
 #' Returns a list of `data.frame`s given a list of input images
 #'
-#' Given a list of input images, returns a list of `data.frame`s
-#' @param imgs List of images to convert to a `data.frame`s
-#' @param size integer pixel size to resize images down to
-#' @return `data.frame`s constructed from list of images
-#' @import httr rjson stringr
+#' Given a list of input images, returns a list of `string`s
+#' @param imgs List of images to convert to a `string`s
+#' @param size Size of image to resize to
+#' @return `String`s constructed from list of images as base64 encoded
+#' @import httr rjson stringr base64enc
 format_images <- function(imgs, size) {
   img_list = list()
   for (i in 1:length(imgs)) {

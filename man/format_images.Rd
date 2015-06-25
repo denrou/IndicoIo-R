@@ -7,14 +7,14 @@
 format_images(imgs, size)
 }
 \arguments{
-\item{imgs}{List of images to convert to a `data.frame`s}
+\item{imgs}{List of images to convert to a `string`s}
 
-\item{size}{integer pixel size to resize images down to}
+\item{size}{Size of image to resize to}
 }
 \value{
-`data.frame`s constructed from list of images
+`String`s constructed from list of images as base64 encoded
 }
 \description{
-Given a list of input images, returns a list of `data.frame`s
+Given a list of input images, returns a list of `string`s
 }
 
