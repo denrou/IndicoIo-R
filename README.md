@@ -6,6 +6,9 @@ R client library for [indico's API](http://indico.io).
 ## Installation
 
 ```r
+source("http://bioconductor.org/biocLite.R")
+biocLite("EBImage")
+
 library(devtools)
 devtools::install_github("IndicoDataSolutions/IndicoIo-R")
 ```
