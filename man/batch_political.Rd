@@ -4,7 +4,7 @@
 \alias{batch_political}
 \title{Returns a list of probability distributions over the political alignments of the speakers}
 \usage{
-batch_political(text, api_key = FALSE, cloud = FALSE)
+batch_political(text, api_key = FALSE, cloud = FALSE, ...)
 }
 \arguments{
 \item{text}{array of documents for analysis}
@@ -12,6 +12,8 @@ batch_political(text, api_key = FALSE, cloud = FALSE)
 \item{api_key}{your personal indico API key}
 
 \item{cloud}{subdomain for indico private cloud}
+
+\item{...}{additional arguments to passed to request}
 }
 \value{
 List of lists with party probability pairs

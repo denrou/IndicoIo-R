@@ -5,6 +5,7 @@
 #' @param text text for analysis
 #' @param api_key your personal indico API key
 #' @param cloud subdomain for indico private cloud
+#' @param ... additional arguments to passed to request
 #' @return List with party probability pairs
 #' @keywords indico.io machine learning API political sentiment analysis
 #' @seealso \code{\link{sentiment}}, \code{\link{language}}
@@ -20,14 +21,14 @@
 #' cat(sprintf("This text is most like %s and least like %s",
 #'             most.like, least.like))
 #'
-political <- function(text, api_key = FALSE, cloud = FALSE) {
+political <- function(text, api_key = FALSE, cloud = FALSE, ...) {
 
   # Checks parameters
   if (missing(text) || str_trim(text) == "") {
     stop("No text for analysis provided!")
   }
 
-  make_request(text, 'political', api_key, cloud)
+  make_request(text, 'political', api_key, cloud, ...)
 }
 
 #' Returns a list of probability distributions over the political alignments of the speakers
@@ -37,6 +38,7 @@ political <- function(text, api_key = FALSE, cloud = FALSE) {
 #' @param text array of documents for analysis
 #' @param api_key your personal indico API key
 #' @param cloud subdomain for indico private cloud
+#' @param ... additional arguments to passed to request
 #' @return List of lists with party probability pairs
 #' @keywords indico.io machine learning API political sentiment analysis
 #' @seealso \code{\link{sentiment}}, \code{\link{language}}
@@ -54,6 +56,6 @@ political <- function(text, api_key = FALSE, cloud = FALSE) {
 #' cat(sprintf("This text is most like %s and least like %s",
 #'             most.like, least.like))
 #'
-batch_political <- function(text, api_key = FALSE, cloud = FALSE) {
-  make_request(text, 'political', api_key, cloud, batch = TRUE)
+batch_political <- function(text, api_key = FALSE, cloud = FALSE, ...) {
+  make_request(text, 'political', api_key, cloud, batch = TRUE, ...)
 }

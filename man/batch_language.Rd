@@ -4,7 +4,7 @@
 \alias{batch_language}
 \title{Detects language of the given documents}
 \usage{
-batch_language(text, api_key = FALSE, cloud = FALSE)
+batch_language(text, api_key = FALSE, cloud = FALSE, ...)
 }
 \arguments{
 \item{text}{array of documents for analysis}
@@ -12,6 +12,8 @@ batch_language(text, api_key = FALSE, cloud = FALSE)
 \item{api_key}{your personal indico API key}
 
 \item{cloud}{subdomain for indico private cloud}
+
+\item{...}{additional arguments to passed to request}
 }
 \value{
 List of lists with language probability pairs

@@ -4,7 +4,7 @@
 \alias{facial_features}
 \title{Detects facial features}
 \usage{
-facial_features(img, api_key = FALSE, cloud = FALSE)
+facial_features(img, api_key = FALSE, cloud = FALSE, ...)
 }
 \arguments{
 \item{img}{image data}
@@ -12,6 +12,8 @@ facial_features(img, api_key = FALSE, cloud = FALSE)
 \item{api_key}{your personal indico API key}
 
 \item{cloud}{subdomain for indico private cloud}
+
+\item{...}{additional arguments to passed to request}
 }
 \value{
 List with face features

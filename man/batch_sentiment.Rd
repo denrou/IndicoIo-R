@@ -4,7 +4,7 @@
 \alias{batch_sentiment}
 \title{Returns a list of scalar sentiment estimates}
 \usage{
-batch_sentiment(text, api_key = FALSE, cloud = FALSE)
+batch_sentiment(text, api_key = FALSE, cloud = FALSE, ...)
 }
 \arguments{
 \item{text}{array of documents for analysis}
@@ -12,6 +12,8 @@ batch_sentiment(text, api_key = FALSE, cloud = FALSE)
 \item{api_key}{your personal indico API key}
 
 \item{cloud}{subdomain for indico private cloud}
+
+\item{...}{additional arguments to passed to request}
 }
 \value{
 List of numerical values roughly in the range from 0 to 1 with 0.5 indicating neutral sentiment.

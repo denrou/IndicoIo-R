@@ -4,7 +4,7 @@
 \alias{batch_text_tags}
 \title{Tags text with likely categories}
 \usage{
-batch_text_tags(text, api_key = FALSE, cloud = FALSE)
+batch_text_tags(text, api_key = FALSE, cloud = FALSE, ...)
 }
 \arguments{
 \item{text}{text for analysis}
@@ -12,6 +12,8 @@ batch_text_tags(text, api_key = FALSE, cloud = FALSE)
 \item{api_key}{your personal indico API key}
 
 \item{cloud}{subdomain for indico private cloud}
+
+\item{...}{additional arguments to passed to request}
 }
 \value{
 List of lists with text tag probability pairs

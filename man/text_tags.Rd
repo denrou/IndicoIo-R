@@ -4,7 +4,7 @@
 \alias{text_tags}
 \title{Tags text with likely categories}
 \usage{
-text_tags(text, api_key = FALSE, cloud = FALSE)
+text_tags(text, api_key = FALSE, cloud = FALSE, ...)
 }
 \arguments{
 \item{text}{text for analysis}
@@ -12,6 +12,8 @@ text_tags(text, api_key = FALSE, cloud = FALSE)
 \item{api_key}{your personal indico API key}
 
 \item{cloud}{subdomain for indico private cloud}
+
+\item{...}{additional arguments to passed to request}
 }
 \value{
 List with text tag probability pairs
