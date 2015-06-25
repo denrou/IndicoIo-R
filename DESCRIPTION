@@ -13,7 +13,8 @@ Depends:
     rjson,
     stringr,
     png,
-    base64enc
+    base64enc,
+    EBImage
 License: file LICENSE
 LazyData: true
 Suggests:

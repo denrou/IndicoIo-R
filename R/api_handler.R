@@ -71,7 +71,7 @@ request_url <- function(cloud, api, batch, api_key) {
 #' @param img Image to convert to a data.frame
 #' @param size Size of image to resize to
 #' @return string base64 encoding of resized image
-#' @import httr rjson stringr base64enc
+#' @import httr rjson stringr base64enc EBImage
 format_image <- function(img, size) {
   # Converts to anonymous data.frame
   if (is.character(img)) {
@@ -87,12 +87,8 @@ format_image <- function(img, size) {
     warning("Image input as matrices and dataframes will be deprecated in the next major release");
   }
 
-  if (!is.character(img) && max(img) <= 1.0) {
-    img <- img * 255
-  }
-
   if (nrow(img) > size && ncol(img) > size) {
-    img <- resizePixels(img, size, size)
+    img <- resize(img, size, size)
   }
 
   if (any(is.na(img))) {
@@ -109,7 +105,7 @@ format_image <- function(img, size) {
 #' @param imgs List of images to convert to a `string`s
 #' @param size Size of image to resize to
 #' @return `String`s constructed from list of images as base64 encoded
-#' @import httr rjson stringr base64enc
+#' @import httr rjson stringr base64enc EBImage
 format_images <- function(imgs, size) {
   img_list = list()
   for (i in 1:length(imgs)) {
@@ -117,33 +113,4 @@ format_images <- function(imgs, size) {
     img_list[[i]] = img
   }
   img_list
-}
-
-resizePixels <- function(im, w, h) {
-  pixels = as.vector(im)
-  # initial width/height
-  w1 = nrow(im)
-  h1 = ncol(im)
-
-  # target width/height
-  w2 = w
-  h2 = h
-  # Create empty vector
-  temp = vector('numeric', w2*h2)
-
-  # Compute ratios
-  x_ratio = w1/w2
-  y_ratio = h1/h2
-
-  # Do resizing
-  for (i in 0:(h2-1)) {
-    for (j in 0:(w2-1)) {
-      px = floor(j*x_ratio)
-      py = floor(i*y_ratio)
-      temp[(i*w2)+j] = pixels[(py*w1)+px]
-    }
-  }
-
-  m = matrix(temp, h2, w2)
-  return(m)
 }
