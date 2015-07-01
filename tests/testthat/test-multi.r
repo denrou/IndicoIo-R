@@ -23,7 +23,6 @@ test_that("Batch Predict Text returns appropriate response", {
     expect_is(results, "list")
     expect_true("sentiment" %in% names(results))
     expect_true("language" %in% names(results))
-    # print(results[["language"]])
     expect_equal(length(results[["sentiment"]]), 2)
     expect_equal(length(results[["language"]]), 2)
 })
