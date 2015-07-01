@@ -20,7 +20,7 @@ make_request <- function(data, api, api_key = FALSE, cloud = FALSE, batch = FALS
   }
 
   # compose the proper request url
-  url <- request_url(cloud, api, batch, api_key)
+  url <- request_url(cloud, api, batch, api_key, ...)
 
   # configure request headers + body
   headers <- add_headers(.indicoio$header)
@@ -46,9 +46,11 @@ make_request <- function(data, api, api_key = FALSE, cloud = FALSE, batch = FALS
 #' @param api name of API
 #' @param batch (logical) does the request contain more than one example?
 #' @param api_key your personal indico API key
+#' @param apis possible list of apis url paramater for multi qpi requests
+#' @param ... additional possible arguments to passed as url parameters
 #' @return url for API request
 #' @import httr rjson stringr
-request_url <- function(cloud, api, batch, api_key) {
+request_url <- function(cloud, api, batch, api_key, apis=NULL, ...) {
   # compose the proper request url
   if (cloud != FALSE && cloud != "") {
     private_cloud <- sprintf("https://%s.indico.domains/", cloud)
@@ -63,6 +65,13 @@ request_url <- function(cloud, api, batch, api_key) {
   url <- str_c(base_url, api)
   url <- ifelse(batch, str_c(url, '/batch'), url)
   url <- str_c(url, '?key=', api_key)
+
+  if (!is.null(apis)) {
+      url <- str_c(url, '&apis=')
+      url <- str_c(url, paste(apis, collapse=","))
+  }
+
+  url
 }
 
 #' Returns a response from the indico API endpoint
