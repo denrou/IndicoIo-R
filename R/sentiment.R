@@ -14,6 +14,7 @@
 #' emotion
 #' cat(sprintf("This text has %s tonality",
 #'              ifelse(emotion > 0.5, "positive", "negative")))
+#'
 
 sentiment <- function(text, api_key = FALSE, cloud = FALSE, ...) {
   # Checks parameters

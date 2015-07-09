@@ -14,7 +14,7 @@ test_that("Throws error on empty or wrong image", {
   expect_error(content_filtering(array(10)))
 })
 
-test_that("Batch Image Features Detection API returns proper answer", {
+test_that("Batch Content Filtering API returns proper answer", {
 
   test_image_arr <- list()
   test_image_arr[[1]] = matrix(runif(64*64, 0, 1), nrow = 64)

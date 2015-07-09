@@ -70,6 +70,7 @@ face_emotion <- function(img, api_key = FALSE, cloud = FALSE, ...) {
 #'             names(most.possible)[1], most.possible[1]))
 #' cat(sprintf("Next possible is '%s' emotion with probability %0.4f.",
 #'             names(most.possible)[2], most.possible[2]))
+#'
 batch_face_emotion <- function(imgs, api_key = FALSE, cloud = FALSE, ...) {
   img_list <- format_images(imgs, 64)
   make_request(img_list, 'fer', api_key, cloud, batch = TRUE, ...)
