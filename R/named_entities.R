@@ -34,7 +34,7 @@ named_entities <- function(text, api_key = FALSE, cloud = FALSE, ...) {
 #' @examples
 #' text_list <- list()
 #' text_list[[1]] <- "London Undergroud's boss Mike Brown warned of the strike..."
-#' entities <- named_entities(text_list)
+#' entities <- batch_named_entities(text_list)
 #  entities
 
 batch_named_entities <- function(text, api_key = FALSE, cloud = FALSE, ...) {
