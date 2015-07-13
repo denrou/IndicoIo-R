@@ -4,13 +4,15 @@
 \alias{format_image}
 \title{Returns a response from the indico API endpoint}
 \usage{
-format_image(img)
+format_image(img, size)
 }
 \arguments{
 \item{img}{Image to convert to a data.frame}
+
+\item{size}{Size of image to resize to}
 }
 \value{
-data.frame constructed from image
+string base64 encoding of resized image
 }
 \description{
 Given an input image, returns a data.frame obj

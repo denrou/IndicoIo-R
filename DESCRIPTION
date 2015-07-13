@@ -12,7 +12,9 @@ Depends:
     httr,
     rjson,
     stringr,
-    png
+    png,
+    base64enc,
+    EBImage
 License: file LICENSE
 LazyData: true
 Suggests:

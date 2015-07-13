@@ -78,29 +78,45 @@ request_url <- function(cloud, api, batch, api_key, apis=NULL, ...) {
 #'
 #' Given an input image, returns a data.frame obj
 #' @param img Image to convert to a data.frame
-#' @return data.frame constructed from image
-#' @import httr rjson stringr
-format_image <- function(img) {
+#' @param size Size of image to resize to
+#' @return string base64 encoding of resized image
+#' @import httr rjson stringr base64enc EBImage
+format_image <- function(img, size) {
   # Converts to anonymous data.frame
-  if (!is.character(img)) {
-    df <- data.frame(img)
-    colnames(df) <- NULL
-    df
-  } else {
-    img
+  if (is.character(img)) {
+    if (file.exists(img)) {
+      img <- readPNG(img)
+    } else { # is already base64
+      img <- base64decode(img)
+      img <- readPNG(img)
+    }
+  } else if (is.matrix(img) || is.data.frame(img)) {
+    warning("Image input as matrices and dataframes will be deprecated in the next major release");
   }
+
+  if (nrow(img) > size && ncol(img) > size) {
+    img <- resize(img, size, size)
+  }
+
+  if (any(is.na(img))) {
+      stop("Invalid input!")
+  }
+  vector <- writePNG(img)
+  b64 <- base64encode(vector)
+  b64
 }
 
 #' Returns a list of `data.frame`s given a list of input images
 #'
-#' Given a list of input images, returns a list of `data.frame`s
-#' @param imgs List of images to convert to a `data.frame`s
-#' @return `data.frame`s constructed from list of images
-#' @import httr rjson stringr
-format_images <- function(imgs) {
+#' Given a list of input images, returns a list of `string`s
+#' @param imgs List of images to convert to a `string`s
+#' @param size Size of image to resize to
+#' @return `String`s constructed from list of images as base64 encoded
+#' @import httr rjson stringr base64enc EBImage
+format_images <- function(imgs, size) {
   img_list = list()
   for (i in 1:length(imgs)) {
-    img <- format_image(imgs[[i]])
+    img <- format_image(imgs[[i]], size)
     img_list[[i]] = img
   }
   img_list

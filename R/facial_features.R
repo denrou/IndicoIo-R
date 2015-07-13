@@ -25,7 +25,7 @@ facial_features <- function(img, api_key = FALSE, cloud = FALSE, ...) {
     stop("Image should be represented by two-dimensional structure!")
   }
 
-  img <- format_image(img)
+  img <- format_image(img, 48)
   make_request(img, 'facialfeatures', api_key, cloud, ...)
 }
 
@@ -49,7 +49,7 @@ facial_features <- function(img, api_key = FALSE, cloud = FALSE, ...) {
 #' length(features[[1]])
 #'
 batch_facial_features <- function(imgs, api_key = FALSE, cloud = FALSE, ...) {
-  img_list <- format_images(imgs)
+  img_list <- format_images(imgs, 48)
   make_request(img_list, 'facialfeatures', api_key, cloud, batch = TRUE, ...)
 }
 
