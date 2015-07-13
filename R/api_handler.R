@@ -81,9 +81,7 @@ format_image <- function(img, size) {
       img <- base64decode(img)
       img <- readPNG(img)
     }
-  }
-
-  if (is.matrix(img) || is.data.frame(img)) {
+  } else if (is.matrix(img) || is.data.frame(img)) {
     warning("Image input as matrices and dataframes will be deprecated in the next major release");
   }
 
