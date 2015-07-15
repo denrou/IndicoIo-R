@@ -128,7 +128,7 @@ predict_image <- function(img, apis = c("facial_features", "face_emotion", "imag
     }
 
     converted_apis <- filter_map(apis, IMAGE_APIS)
-    img <- format_image(img, 48)
+    img <- format_image(img, 128)
     results <- make_request(img, "apis", api_key, cloud, apis=converted_apis, ...)
     results <- convert_results(results, apis)
 }
@@ -153,7 +153,7 @@ predict_image <- function(img, apis = c("facial_features", "face_emotion", "imag
 #'
 batch_predict_image <- function(imgs, apis = c("facial_features", "face_emotion", "image_features"), api_key = FALSE, cloud = FALSE, ...) {
     converted_apis <- filter_map(apis, IMAGE_APIS)
-    img_list <- format_images(imgs, 48)
+    img_list <- format_images(imgs, 128)
     results <- make_request(img_list, "apis", api_key, cloud, batch=TRUE, apis=converted_apis, ...)
     results <- convert_results(results, apis)
 }
