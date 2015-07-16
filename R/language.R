@@ -15,16 +15,16 @@
 #' most.possible <- sort(unlist(languages), decreasing = TRUE)[1:2]
 #' cat(sprintf("Detected %s language with probability %0.4f.\n",
 #'             names(most.possible)[1], most.possible[1]))
-#' cat(sprintf("Next possible is %s with probability %0.4f.", 
+#' cat(sprintf("Next possible is %s with probability %0.4f.",
 #'             names(most.possible)[2], most.possible[2]))
-#' 
+#'
 language <- function(text, api_key = FALSE, cloud = FALSE, ...) {
-  
+
   # Checks parameters
   if (missing(text) || str_trim(text) == "") {
     stop("No text for analysis provided!")
   }
-  
+
   make_request(text, 'language', api_key, cloud, ...)
 }
 
@@ -45,9 +45,9 @@ language <- function(text, api_key = FALSE, cloud = FALSE, ...) {
 #' most.possible <- sort(unlist(languages[[1]]), decreasing = TRUE)[1:2]
 #' cat(sprintf("Detected %s language with probability %0.4f.\n",
 #'             names(most.possible)[1], most.possible[1]))
-#' cat(sprintf("Next possible is %s with probability %0.4f.", 
+#' cat(sprintf("Next possible is %s with probability %0.4f.",
 #'             names(most.possible)[2], most.possible[2]))
-#' 
+#'
 batch_language <- function(text, api_key = FALSE, cloud = FALSE, ...) {
   make_request(text, 'language', api_key, cloud, batch = TRUE, ...)
 }

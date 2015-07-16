@@ -1,7 +1,6 @@
-#' Detects image features
+#' Detects NSFW content in an image
 #'
-#' Given an input image, returns a 2048 dimensional sparse feature vector explaining that image.
-#' Useful as a form of feature engineering for image oriented tasks.
+#' Given an input image, returns a float probability between 0 and 1 that content is NSFW
 #'
 #' * Input can be either grayscale or rgb color and should either be a numpy array or nested list format.
 #'
@@ -11,21 +10,16 @@
 #'
 #' * For ideal performance, images should be square aspect ratio but non-square aspect ratios are supported as well.
 #' @inheritParams face_emotion
-#' @return List with image features
-#' @keywords indico.io machine learning API image features recognition
+#' @return Float with probability of NSFW
+#' @keywords indico.io machine learning API image content filtering
 #' @seealso \code{\link{face_emotion}}, \code{\link{facial_features}}
 #' @export
 #' @import httr rjson stringr
 #' @examples
 #' img <- matrix(runif(64*64, 0, 1), nrow = 64)
-#' features <- image_features(img)
+#' probabilities <- content_filtering(img)
 #'
-#' length(features)
-#' min(unlist(features))
-#' max(unlist(features))
-#' sum(unlist(features))
-#'
-image_features <- function(img, api_key = FALSE, cloud = FALSE, ...) {
+content_filtering <- function(img, api_key = FALSE, cloud = FALSE, ...) {
   # Checks parameters
   if (missing(img)) {
     stop("No image for analysis provided!")
@@ -35,14 +29,13 @@ image_features <- function(img, api_key = FALSE, cloud = FALSE, ...) {
     stop("Image should be represented by two-dimensional structure!")
   }
 
-  img <- format_image(img, 64)
-  make_request(img, 'imagefeatures', api_key, cloud, ...)
+  img <- format_image(img, 128)
+  make_request(img, 'contentfiltering', api_key, cloud, ...)
 }
 
-#' Detects image features for a list of images
+#' Detects NSFW content in a list of mages
 #'
-#' Given a list of input images, returns a list of 2048 dimensional sparse feature vectors explaining that image.
-#' Useful as a form of feature engineering for image oriented tasks.
+#' Given a list of input images,  returns a list of float probabilities between 0 and 1 that content is NSFW
 #'
 #' * Input can be either grayscale or rgb color and should either be a numpy array or nested list format.
 #'
@@ -52,23 +45,17 @@ image_features <- function(img, api_key = FALSE, cloud = FALSE, ...) {
 #'
 #' * For ideal performance, images should be square aspect ratio but non-square aspect ratios are supported as well.
 #' @inheritParams batch_face_emotion
-#' @return List of lists with image features
-#' @keywords indico.io machine learning API image features recognition
+#' @return List of Floats with probabilities of NSFW
+#' @keywords indico.io machine learning API image content filtering
 #' @seealso \code{\link{face_emotion}}, \code{\link{facial_features}}
 #' @export
 #' @import httr rjson stringr
 #' @examples
 #' img_list = list()
 #' img_list[[1]] = matrix(runif(64*64, 0, 1), nrow = 64)
-#' features <- batch_image_features(img_list)
+#' probabilities <- batch_content_filtering(img_list)
 #'
-#' length(features)
-#' length(features[[1]])
-#' min(unlist(features[[1]]))
-#' max(unlist(features[[1]]))
-#' sum(unlist(features[[1]]))
-#'
-batch_image_features <- function(imgs, api_key = FALSE, cloud = FALSE, ...) {
-  img_list <- format_images(imgs, 64)
-  make_request(img_list, 'imagefeatures', api_key, cloud, batch = TRUE, ...)
+batch_content_filtering <- function(imgs, api_key = FALSE, cloud = FALSE, ...) {
+  img_list <- format_images(imgs, 128)
+  make_request(img_list, 'contentfiltering', api_key, cloud, batch = TRUE, ...)
 }

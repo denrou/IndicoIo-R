@@ -20,19 +20,17 @@ test_that("request_url functions as expected", {
 
 test_that("format_image functions as expected", {
   img <- matrix(runif(48*48, 0, 1), nrow = 48)
-  result <- format_image(img)
-  expect_is(result, "data.frame")
-  expect_equal(length(result), 48)
+  result <- format_image(img, 48)
+  expect_is(result, "character")
 });
 
 test_that("format_images functions as expected", {
   img_list = list()
   img_list[[1]] = matrix(runif(48*48, 0, 1), nrow = 48)
-  result <- format_images(img_list)
+  result <- format_images(img_list, 48)
   expect_is(result, "list")
   expect_equal(length(result), 1)
-  expect_is(result[[1]], "data.frame")
-  expect_equal(length(result[[1]]), 48)
+  expect_is(result[[1]], "character")
 });
 
 test_that("auth configuration is loaded from environment variables", {
@@ -50,7 +48,7 @@ test_that("auth configuration is loaded from environment variables", {
 })
 
 test_that("cloud configuration is loaded from environment variables", {
-  # store previous config 
+  # store previous config
   prev_cloud <- Sys.getenv("INDICO_CLOUD", unset = FALSE)
 
   cloud <- "env-cloud"
@@ -66,7 +64,7 @@ test_that("cloud configuration is loaded from environment variables", {
 test_that("auth configuration is loaded from the configuration files", {
   api_key <- "file-api-key"
   content <- sprintf(
-    "[auth]\napi_key = %s", 
+    "[auth]\napi_key = %s",
     api_key
   )
   loadConfigFile(content)
