@@ -25,7 +25,7 @@ content_filtering <- function(img, api_key = FALSE, cloud = FALSE, ...) {
     stop("No image for analysis provided!")
   }
 
-  img <- format_image(img, 128)
+  img <- format_image(img, 128, TRUE)
   make_request(img, 'contentfiltering', api_key, cloud, ...)
 }
 
