@@ -14,7 +14,7 @@ test_that("Throws error on empty text", {
   expect_error(language(" "))
 })
 
-test_that("Batch Text Tags API returns list of list of probabilities for the list of topics", {
+test_that("Batch Keywords API returns list of list of probabilities for the list of topics", {
   test_string_arr <- c("Hoping for sunshine tomorrow.", "Hoping for rain tomorrow.")
   keywords <- keywords(test_string_arr)
 

@@ -86,6 +86,10 @@ request_url <- function(cloud, api, batch, api_key, apis=NULL, ...) {
 #' @import httr rjson stringr base64enc EBImage
 format_image <- function(img, size, min_axis=FALSE) {
   # Converts to anonymous data.frame
+  if (typeof(img) == "list" || length(img) > 1) {
+      return(format_images(img, size));
+  }
+  
   if (is.character(img)) {
     if (file.exists(img)) {
       img <- readPNG(img)
@@ -93,8 +97,6 @@ format_image <- function(img, size, min_axis=FALSE) {
       img <- base64decode(img)
       img <- readPNG(img)
     }
-  } else if (typeof(img) == "list" || length(img) > 1) {
-      return(format_images(img, size));
   } else {
       stop("Only base64 encoded strings and filepaths are supported for image input.")
   }
