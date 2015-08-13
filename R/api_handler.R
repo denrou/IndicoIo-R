@@ -26,7 +26,11 @@ make_request <- function(data, api, api_key = FALSE, cloud = FALSE, ...) {
 
   # configure request headers + body
   headers <- add_headers(.indicoio$header)
-  body <- toJSON(list(data = data, ...))
+
+  kwargs <- list(...)
+  kwargs[["apis"]] <- NULL
+  kwargs[["data"]] <- data
+  body <- toJSON(kwargs) 
 
   response <- POST(url, accept_json(), headers, body = body)
 
@@ -40,7 +44,7 @@ make_request <- function(data, api, api_key = FALSE, cloud = FALSE, ...) {
 
   answer[["results"]]
 }
-
+ 
 #' Returns the url for the proper indico API
 #'
 #' Produces the proper url to query with a given request

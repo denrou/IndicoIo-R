@@ -1,29 +1,41 @@
-TEXT_APIS <- c("sentiment", "text_tags", "political", "language")
-IMAGE_APIS <- c("facial_features", "face_emotion", "image_features")
+TEXT_APIS <- c("sentiment", "text_tags", "political", "language", "twitter_engagement", "keywords", "named_entities")
+IMAGE_APIS <- c("facial_features", "fer", "image_features", "content_filtering", "facial_localization")
 APIS_MAP <- list(
-                sentiment="sentiment",
-                text_tags="texttags",
-                political="political",
-                language="language",
-                facial_features="facialfeatures",
-                face_emotion="fer",
-                image_features="imagefeatures"
-            )
+    sentiment="sentiment",
+    text_tags="texttags",
+    political="political",
+    language="language",
+    facial_features="facialfeatures",
+    facial_localization="faciallocalization",
+    face_emotion="fer",
+    fer="fer",
+    image_features="imagefeatures",
+    twitter_engagement="twitterengagement",
+    keywords="keywords",
+    named_entities="namedentities",
+    content_filtering="contentfiltering"
+)
 
-#' Checks if api is allowed and maps it to the REST Api name
-#'
-#' Given vector of input apis and vector of accepted APIs, returns vector of mapped apis
-#' @param input vector of string api names
-#' @param allowed vector of acceptable string api names
-#' @return vector of converted api names
-filter_map <- function(input, allowed) {
+api_types <- function() {
+    L = list()
+    for (api in TEXT_APIS) {
+        L[[api]] <- "text"
+    }
+    for (api in IMAGE_APIS) {
+        L[[api]] <- "image"
+    }
+    L
+}
+
+API_TYPES = api_types()
+
+filter_apis <- function(input, allowed) {
     lapply(input, function (api) {
         if (!is.element(api, allowed)) {
             stop(str_c("Given API is not allowed! Please use ", paste(allowed, collapse=", ")))
         }
-
-        APIS_MAP[[api]]
     });
+    input
 }
 #' Converts response list to one that uses user inputted api names
 #'
@@ -34,16 +46,39 @@ filter_map <- function(input, allowed) {
 convert_results <- function(results, apis) {
     converted_results <- list()
     for (api in apis) {
-        response <- results[[APIS_MAP[[api]]]];
+        response <- results[[api]];
         if ("results" %in% names(response)) {
             converted_results[[api]] <- response[["results"]]
         } else {
             converted_results[[api]] <- response[["error"]]
         }
     }
-
     converted_results
 }
+
+
+#' Returns strength of correlation between API results
+#' 
+#' Given an array of data and a vector of apis, returns a nested associate array of correlation strengths
+#' @param data input data
+#' @param apis vector of provided string api names
+#' @return nested associated array of correlation strengths
+intersections <- function(data, apis = FALSE, api_key = FALSE, cloud = FALSE, ...) {
+
+    if (length(apis) != 2) {
+        stop("Argument 'apis' must be of length 2")
+    }
+    if (!(typeof(data) == "list") && length(data) < 3) {
+        stop("At least 3 examples are required to use the intersections API.")
+    }
+    if (API_TYPES[[apis[1]]] != API_TYPES[[apis[2]]]) {
+        stop("Both 'apis' must accept the same kind of input to use the intersections API")
+    }
+
+    results <- make_request(data, "apis/intersections", api_key, cloud, apis=apis, ...)
+}
+
+
 
 #' Returns multiple text API results in a single request / response
 #'
@@ -58,28 +93,28 @@ convert_results <- function(results, apis) {
 #' @export
 #' @import httr rjson stringr
 #' @examples
-#' results <- predict_text("Thanks everyone for the birthday wishes!!
+#' results <- analyze_text("Thanks everyone for the birthday wishes!!
 #'                       It was a crazy few days ><", apis=c("sentiment", "political"))
 #' results
 #' cat(sprintf("This text has %s tonality",
 #'              ifelse(results[["sentiment"]] > 0.5, "positive", "negative")))
 #'
-predict_text <- function(text, apis = c("sentiment", "text_tags", "political", "language"), api_key = FALSE, cloud = FALSE, ...) {
+analyze_text <- function(text, apis = c("sentiment", "text_tags", "political", "language", "keywords", "twitter_engagement", "named_entities"), api_key = FALSE, cloud = FALSE, ...) {
     # Checks parameters
     if (missing(text) || str_trim(text) == "") {
         stop("No text for analysis provided!")
     }
-    converted_apis <- filter_map(apis, TEXT_APIS)
+    apis <- filter_apis(apis, TEXT_APIS)
 
-    results <- make_request(text, "apis", api_key, cloud, apis=converted_apis, ...)
+    results <- make_request(text, "apis", api_key, cloud, apis=apis, ...)
     results <- convert_results(results, apis)
 }
 
 #'@export
-batch_predict_text <- function(text, ...) {
-    warning("The `batch_predict_text` function will be deprecated in the next major upgrade. " +
-      "Please call `predict_text` instead with the same arguments")
-    predict_text(text, ...)
+batch_analyze_text <- function(text, ...) {
+    warning("The `batch_analyze_text` function will be deprecated in the next major upgrade. " +
+      "Please call `analyze_text` instead with the same arguments")
+    analyze_text(text, ...)
 }
 
 
@@ -99,23 +134,23 @@ batch_predict_text <- function(text, ...) {
 #' @examples
 #' ## Example 1
 #' img <- "../tests/testthat/image/image.png"
-#' emotion <- predict_image(img, apis=c("face_emotion"))
+#' emotion <- analyze_image(img, apis=c("fer"))
 #'
-predict_image <- function(img, apis = c("facial_features", "face_emotion", "image_features"), api_key = FALSE, cloud = FALSE, ...) {
+analyze_image <- function(img, apis = c("facial_features", "fer", "image_features", "facial_localization", "content_filtering"), api_key = FALSE, cloud = FALSE, ...) {
     # Checks parameters
     if (missing(img)) {
       stop("No image for analysis provided!")
     }
 
-    converted_apis <- filter_map(apis, IMAGE_APIS)
+    apis <- filter_apis(apis, IMAGE_APIS)
     img <- format_image(img, 128)
-    results <- make_request(img, "apis", api_key, cloud, apis=converted_apis, ...)
+    results <- make_request(img, "apis", api_key, cloud, apis=apis, ...)
     results <- convert_results(results, apis)
 }
 
 #'@export
-batch_predict_image <- function(text, ...) {
-    warning("The `batch_predict_image` function will be deprecated in the next major upgrade. " +
-      "Please call `predict_image` instead with the same arguments")
-    predict_image(text, ...)
+batch_analyze_image <- function(text, ...) {
+    warning("The `batch_analyze_image` function will be deprecated in the next major upgrade. " +
+      "Please call `analyze_image` instead with the same arguments")
+    analyze_image(text, ...)
 }
