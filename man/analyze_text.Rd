@@ -6,7 +6,7 @@
 \usage{
 analyze_text(text, apis = c("sentiment", "text_tags", "political", "language",
   "keywords", "twitter_engagement", "named_entities"), api_key = FALSE,
-  cloud = FALSE, ...)
+  cloud = FALSE, version = NULL, ...)
 }
 \arguments{
 \item{text}{text for analysis}
@@ -16,6 +16,8 @@ analyze_text(text, apis = c("sentiment", "text_tags", "political", "language",
 \item{api_key}{your personal indico API key}
 
 \item{cloud}{subdomain for indico private cloud}
+
+\item{version}{for api version}
 
 \item{...}{additional arguments to passed to request}
 }

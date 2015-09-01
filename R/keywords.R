@@ -17,7 +17,7 @@
 #' cat(sprintf("Next possible is %s with a score %0.4f.",
 #'             names(most.possible)[2], most.possible[2]))
 #'
-keywords <- function(text, api_key = FALSE, cloud = FALSE, ...) {
+keywords <- function(text,  api_key = FALSE, cloud = FALSE, version = NULL, ...) {
 
   # Checks parameters
   if (missing(text) || str_trim(text) == "") {

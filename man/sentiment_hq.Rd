@@ -4,7 +4,7 @@
 \alias{sentiment_hq}
 \title{Returns a scalar estimate of the sentiment of the text}
 \usage{
-sentiment_hq(text, api_key = FALSE, cloud = FALSE)
+sentiment_hq(text, api_key = FALSE, cloud = FALSE, version = NULL, ...)
 }
 \arguments{
 \item{text}{text for analysis}
@@ -12,6 +12,10 @@ sentiment_hq(text, api_key = FALSE, cloud = FALSE)
 \item{api_key}{your personal indico API key}
 
 \item{cloud}{subdomain for indico private cloud}
+
+\item{version}{for api version}
+
+\item{...}{additional arguments to passed to request}
 }
 \value{
 Numerical value roughly in the range from 0 to 1 with 0.5 indicating neutral sentiment.

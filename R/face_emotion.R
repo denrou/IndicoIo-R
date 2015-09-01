@@ -6,6 +6,7 @@
 #' @param img image data
 #' @param api_key your personal indico API key
 #' @param cloud subdomain for indico private cloud
+#' @param version for api version
 #' @param ... additional arguments to passed to request
 #' @return List with face emotions probability pairs
 #' @keywords indico.io machine learning API face emotions recognition
@@ -24,7 +25,7 @@
 #'             names(most.possible)[2], most.possible[2]))
 #'
 #'
-face_emotion <- function(img, api_key = FALSE, cloud = FALSE, ...) {
+face_emotion <- function(img,  api_key = FALSE, cloud = FALSE, version = NULL, ...) {
   # Checks parameters
   if (missing(img)) {
     stop("No image for analysis provided!")

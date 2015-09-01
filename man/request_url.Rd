@@ -4,7 +4,7 @@
 \alias{request_url}
 \title{Returns the url for the proper indico API}
 \usage{
-request_url(cloud, api, batch, api_key, apis = NULL, ...)
+request_url(cloud, api, batch, api_key, version = NULL, apis = NULL, ...)
 }
 \arguments{
 \item{cloud}{(optional) indico subdomain for private cloud}
@@ -14,6 +14,8 @@ request_url(cloud, api, batch, api_key, apis = NULL, ...)
 \item{batch}{(logical) does the request contain more than one example?}
 
 \item{api_key}{your personal indico API key}
+
+\item{version}{for api version}
 
 \item{apis}{possible list of apis url paramater for multi qpi requests}
 
