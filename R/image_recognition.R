@@ -1,7 +1,6 @@
-#' Detects image features
+#' Detects image recognition
 #'
-#' Given an input image, returns a 2048 dimensional sparse feature vector explaining that image.
-#' Useful as a form of feature engineering for image oriented tasks.
+#' Given an input image, returns a series of image classifications and associated scores
 #'
 #' * Input can be either grayscale or rgb color and should either be a numpy array or nested list format.
 #'
@@ -11,33 +10,26 @@
 #'
 #' * For ideal performance, images should be square aspect ratio but non-square aspect ratios are supported as well.
 #' @inheritParams face_emotion
-#' @return List with image features
-#' @keywords indico.io machine learning API image features recognition
+#' @return List with image recognition
+#' @keywords indico.io machine learning API image recognition recognition
 #' @seealso \code{\link{face_emotion}}, \code{\link{facial_features}}
 #' @export
 #' @import httr rjson stringr
 #' @examples
 #' img <- "../tests/testthat/image/image.png"
-#' features <- image_features(img)
+#' features <- image_recognition(img)
 #'
 #' length(features)
 #' min(unlist(features))
 #' max(unlist(features))
 #' sum(unlist(features))
 #'
-image_features <- function(img,  api_key = FALSE, cloud = FALSE, version = NULL, ...) {
+image_recognition <- function(img,  api_key = FALSE, cloud = FALSE, version = NULL, ...) {
   # Checks parameters
   if (missing(img)) {
     stop("No image for analysis provided!")
   }
 
   img <- format_image(img, 144, TRUE)
-  make_request(img, 'imagefeatures', api_key, cloud, ...)
-}
-
-#'@export
-batch_image_features <- function(text, ...) {
-    warning("The `batch_image_features` function will be deprecated in the next major upgrade. " +
-      "Please call `image_features` instead with the same arguments")
-    image_features(text, ...)
+  make_request(img, 'imagerecognition', api_key, cloud, ...)
 }
