@@ -15,7 +15,7 @@
 #' features <- facial_features(img)
 #' length(features)
 #'
-facial_features <- function(img, api_key = FALSE, cloud = FALSE, ...) {
+facial_features <- function(img,  api_key = FALSE, cloud = FALSE, version = NULL, ...) {
   # Checks parameters
   if (missing(img)) {
     stop("No image for analysis provided!")

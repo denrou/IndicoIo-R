@@ -5,6 +5,7 @@
 #' @param text text for analysis
 #' @param api_key your personal indico API key
 #' @param cloud subdomain for indico private cloud
+#' @param version for api version
 #' @param ... additional arguments to passed to request
 #' @return List with party probability pairs
 #' @keywords indico.io machine learning API political sentiment analysis
@@ -21,7 +22,7 @@
 #' cat(sprintf("This text is most like %s and least like %s",
 #'             most.like, least.like))
 #'
-political <- function(text, api_key = FALSE, cloud = FALSE, ...) {
+political <- function(text,  api_key = FALSE, cloud = FALSE, version = NULL, ...) {
 
   # Checks parameters
   if (missing(text) || str_trim(text) == "") {

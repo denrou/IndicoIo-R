@@ -4,7 +4,7 @@
 \alias{keywords}
 \title{Tags text with likely keywords}
 \usage{
-keywords(text, api_key = FALSE, cloud = FALSE, ...)
+keywords(text, api_key = FALSE, cloud = FALSE, version = NULL, ...)
 }
 \arguments{
 \item{text}{text for analysis}
@@ -12,6 +12,8 @@ keywords(text, api_key = FALSE, cloud = FALSE, ...)
 \item{api_key}{your personal indico API key}
 
 \item{cloud}{subdomain for indico private cloud}
+
+\item{version}{for api version}
 
 \item{...}{additional arguments to passed to request}
 }

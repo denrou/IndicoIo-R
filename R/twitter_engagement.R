@@ -2,10 +2,7 @@
 #'
 #' Given input text, returns a probability distribution over the political
 #' alignment of the speaker.
-#' @param text text for analysis
-#' @param api_key your personal indico API key
-#' @param cloud subdomain for indico private cloud
-#' @param ... additional arguments to passed to request
+#' @inheritParams political
 #' @return float engagement score
 #' @keywords indico.io machine learning API twitter engagement analysis
 #' @seealso \code{\link{sentiment}}, \code{\link{language}}
@@ -19,7 +16,7 @@
 #' cat(sprintf("This text has twitter engagement of %f",
 #'             engagement))
 #'
-twitter_engagement <- function(text, api_key = FALSE, cloud = FALSE, ...) {
+twitter_engagement <- function(text,  api_key = FALSE, cloud = FALSE, version = NULL, ...) {
 
   # Checks parameters
   if (missing(text) || str_trim(text) == "") {

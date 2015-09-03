@@ -4,7 +4,7 @@
 \alias{political}
 \title{Returns a probability distribution over the political alignment of the speaker}
 \usage{
-political(text, api_key = FALSE, cloud = FALSE, ...)
+political(text, api_key = FALSE, cloud = FALSE, version = NULL, ...)
 }
 \arguments{
 \item{text}{text for analysis}
@@ -12,6 +12,8 @@ political(text, api_key = FALSE, cloud = FALSE, ...)
 \item{api_key}{your personal indico API key}
 
 \item{cloud}{subdomain for indico private cloud}
+
+\item{version}{for api version}
 
 \item{...}{additional arguments to passed to request}
 }
