@@ -23,5 +23,5 @@ facial_localization <- function(img,  api_key = FALSE, cloud = FALSE, version = 
   options <- list(...)
   img <- format_image(img, FALSE, FALSE)
 
-  make_request(img, 'faciallocalization', api_key, cloud, ...)
+  make_request(img, 'faciallocalization', api_key, cloud, version, ...)
 }

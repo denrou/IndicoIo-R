@@ -9,7 +9,17 @@ analyze_image(img, apis = c("facial_features", "fer", "image_features",
   cloud = FALSE, version = NULL, ...)
 }
 \arguments{
+\item{img}{image data}
+
 \item{apis}{vector / array of API names as strings}
+
+\item{api_key}{your personal indico API key}
+
+\item{cloud}{subdomain for indico private cloud}
+
+\item{version}{for api version}
+
+\item{...}{additional arguments to passed to request}
 }
 \value{
 map of apis as keys to their results as values

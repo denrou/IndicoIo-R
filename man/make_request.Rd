@@ -19,10 +19,6 @@ make_request(data, api, api_key = FALSE, cloud = FALSE, version = NULL,
 \item{version}{for api version}
 
 \item{...}{additional arguments to passed to request}
-
-\item{batch}{to make a batched request}
-
-\item{batch}{send call to batch endpoint}
 }
 \value{
 error or response extracted from the indico API response

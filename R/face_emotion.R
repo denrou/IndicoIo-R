@@ -36,7 +36,7 @@ face_emotion <- function(img,  api_key = FALSE, cloud = FALSE, version = NULL, .
       if(exists("detect", options) && options["detect"]==TRUE) 48 else FALSE
   )
 
-  make_request(img, 'fer', api_key, cloud, ...)
+  make_request(img, 'fer', api_key, cloud, version, ...)
 }
 
 #'@export

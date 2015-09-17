@@ -26,7 +26,7 @@ content_filtering <- function(img,  api_key = FALSE, cloud = FALSE, version = NU
   }
 
   img <- format_image(img, 128, TRUE)
-  make_request(img, 'contentfiltering', api_key, cloud, ...)
+  make_request(img, 'contentfiltering', api_key, cloud, version, ...)
 }
 
 

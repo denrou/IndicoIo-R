@@ -22,7 +22,7 @@ facial_features <- function(img,  api_key = FALSE, cloud = FALSE, version = NULL
   }
 
   img <- format_image(img, 48)
-  make_request(img, 'facialfeatures', api_key, cloud, ...)
+  make_request(img, 'facialfeatures', api_key, cloud, version, ...)
 }
 
 #'@export

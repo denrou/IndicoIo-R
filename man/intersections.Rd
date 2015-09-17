@@ -17,6 +17,8 @@ intersections(data, apis = FALSE, api_key = FALSE, cloud = FALSE,
 \item{cloud}{subdomain for indico private cloud}
 
 \item{version}{- api version}
+
+\item{...}{additional arguments to passed to request}
 }
 \value{
 nested associated array of correlation strengths

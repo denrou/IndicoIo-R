@@ -23,7 +23,7 @@ twitter_engagement <- function(text,  api_key = FALSE, cloud = FALSE, version = 
     stop("No text for analysis provided!")
   }
 
-  make_request(text, 'twitterengagement', api_key, cloud, ...)
+  make_request(text, 'twitterengagement', api_key, cloud, version, ...)
 }
 
 #'@export

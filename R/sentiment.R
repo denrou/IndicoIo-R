@@ -21,7 +21,7 @@ sentiment <- function(text,  api_key = FALSE, cloud = FALSE, version = NULL, ...
     stop("No text for analysis provided!")
   }
 
-  make_request(text, "sentiment", api_key, cloud, ...)
+  make_request(text, "sentiment", api_key, cloud, version, ...)
 }
 #'@export
 batch_sentiment <- function(text, ...) {
