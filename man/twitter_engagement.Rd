@@ -4,7 +4,8 @@
 \alias{twitter_engagement}
 \title{Returns a float indicating engagement score for the text}
 \usage{
-twitter_engagement(text, api_key = FALSE, cloud = FALSE, ...)
+twitter_engagement(text, api_key = FALSE, cloud = FALSE, version = NULL,
+  ...)
 }
 \arguments{
 \item{text}{text for analysis}
@@ -12,6 +13,8 @@ twitter_engagement(text, api_key = FALSE, cloud = FALSE, ...)
 \item{api_key}{your personal indico API key}
 
 \item{cloud}{subdomain for indico private cloud}
+
+\item{version}{for api version}
 
 \item{...}{additional arguments to passed to request}
 }

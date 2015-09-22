@@ -18,14 +18,14 @@
 #' cat(sprintf("Next possible is %s with probability %0.4f.",
 #'             names(most.possible)[2], most.possible[2]))
 #'
-language <- function(text, api_key = FALSE, cloud = FALSE, ...) {
+language <- function(text,  api_key = FALSE, cloud = FALSE, version = NULL, ...) {
 
   # Checks parameters
   if (missing(text) || str_trim(text) == "") {
     stop("No text for analysis provided!")
   }
 
-  make_request(text, 'language', api_key, cloud, ...)
+  make_request(text, 'language', api_key, cloud, version, ...)
 }
 
 #'@export

@@ -2,10 +2,10 @@ context("keywords")
 
 test_that("Keywords API returns list of scores for the list of keywords", {
   test_string <- "Hoping for sunshine tomorrow."
-  keywords <- keywords(test_string)
+  keywords <- keywords(test_string, top_n = 1)
 
   expect_is(keywords, "list")
-  expect_equal(length(keywords), 3)
+  expect_equal(length(keywords), 1)
 })
 
 test_that("Multilingual Autodetect Keywords API returns list of scores for the list of keywords", {

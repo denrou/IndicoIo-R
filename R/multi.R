@@ -58,12 +58,16 @@ convert_results <- function(results, apis) {
 
 
 #' Returns strength of correlation between API results
-#' 
+#'
 #' Given an array of data and a vector of apis, returns a nested associate array of correlation strengths
 #' @param data input data
+#' @param api_key your personal indico API key
+#' @param cloud subdomain for indico private cloud
 #' @param apis vector of provided string api names
+#' @param version - api version
+#' @param ... additional arguments to passed to request
 #' @return nested associated array of correlation strengths
-intersections <- function(data, apis = FALSE, api_key = FALSE, cloud = FALSE, ...) {
+intersections <- function(data, apis = FALSE,  api_key = FALSE, cloud = FALSE, version = NULL, ...) {
 
     if (length(apis) != 2) {
         stop("Argument 'apis' must be of length 2")
@@ -83,11 +87,8 @@ intersections <- function(data, apis = FALSE, api_key = FALSE, cloud = FALSE, ..
 #' Returns multiple text API results in a single request / response
 #'
 #' Given input text and a vector of API names, returns aggregated results of the apis.
-#' @param text text for analysis
+#' @inheritParams political
 #' @param apis vector / array of API names as strings
-#' @param api_key your personal indico API key
-#' @param cloud subdomain for indico private cloud
-#' @param ... additional arguments to passed to request
 #' @return map of apis as keys to their results as values
 #' @keywords indico.io machine learning API multi API analysis
 #' @export
@@ -99,7 +100,7 @@ intersections <- function(data, apis = FALSE, api_key = FALSE, cloud = FALSE, ..
 #' cat(sprintf("This text has %s tonality",
 #'              ifelse(results[["sentiment"]] > 0.5, "positive", "negative")))
 #'
-analyze_text <- function(text, apis = c("sentiment", "text_tags", "political", "language", "keywords", "twitter_engagement", "named_entities"), api_key = FALSE, cloud = FALSE, ...) {
+analyze_text <- function(text, apis = c("sentiment", "text_tags", "political", "language", "keywords", "twitter_engagement", "named_entities"),  api_key = FALSE, cloud = FALSE, version = NULL, ...) {
     # Checks parameters
     if (missing(text) || str_trim(text) == "") {
         stop("No text for analysis provided!")
@@ -122,11 +123,8 @@ batch_analyze_text <- function(text, ...) {
 #' Returns multiple image API results in a single request / response
 #'
 #' Given input text and a vector of API names, returns aggregated results of the apis.
-#' @param img image data
+#' @inheritParams face_emotion
 #' @param apis vector / array of API names as strings
-#' @param api_key your personal indico API key
-#' @param cloud subdomain for indico private cloud
-#' @param ... additional arguments to passed to request
 #' @return map of apis as keys to their results as values
 #' @keywords indico.io machine learning API multi API analysis
 #' @export
@@ -136,7 +134,7 @@ batch_analyze_text <- function(text, ...) {
 #' img <- "../tests/testthat/image/image.png"
 #' emotion <- analyze_image(img, apis=c("fer"))
 #'
-analyze_image <- function(img, apis = c("facial_features", "fer", "image_features", "facial_localization", "content_filtering"), api_key = FALSE, cloud = FALSE, ...) {
+analyze_image <- function(img, apis = c("facial_features", "fer", "image_features", "facial_localization", "content_filtering"),  api_key = FALSE, cloud = FALSE, version = NULL, ...) {
     # Checks parameters
     if (missing(img)) {
       stop("No image for analysis provided!")

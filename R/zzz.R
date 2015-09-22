@@ -15,7 +15,7 @@ if (!exists(".indicoio")) {
     .indicoio$header <- c("Content-type" = "application/json",
                           "Accept" = "application/json",
                           "client-lib" = "R",
-                          "version-number" = "0.7")
+                          "version-number" = "0.7.2")
     .indicoio$remote_api <- "https://apiv2.indico.io/"
     .indicoio$private_cloud <- FALSE
     .indicoio$api_key = FALSE

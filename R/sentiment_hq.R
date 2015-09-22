@@ -15,17 +15,17 @@
 #' cat(sprintf("This text has %s tonality",
 #'              ifelse(emotion > 0.5, "positive", "negative")))
 #'
-sentiment_hq <- function(text, api_key = FALSE, cloud = FALSE) {
+sentiment_hq <- function(text, api_key=FALSE, cloud=FALSE, version=NULL, ...) {
 
   # Checks parameters
   if (missing(text) || str_trim(text) == "") {
     stop("No text for analysis provided!")
   }
 
-  make_request(text, "sentimenthq", api_key, cloud)
+  make_request(text, "sentimenthq", api_key, cloud, version, ...)
 }
 #'@export
-batch_sentiment_hq <- function(text, ...) {
+batch_sentiment_hq <- function(text, api_key=FALSE, cloud=FALSE, ...) {
     warning("The `batch_sentiment_hq` function will be deprecated in the next major upgrade. " +
       "Please call `sentiment_hq` instead with the same arguments")
     sentiment_hq(text, ...)

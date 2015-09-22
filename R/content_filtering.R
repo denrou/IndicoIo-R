@@ -19,14 +19,14 @@
 #' img <- "../tests/testthat/image/image.png"
 #' probabilities <- content_filtering(img)
 #'
-content_filtering <- function(img, api_key = FALSE, cloud = FALSE, ...) {
+content_filtering <- function(img,  api_key = FALSE, cloud = FALSE, version = NULL, ...) {
   # Checks parameters
   if (missing(img)) {
     stop("No image for analysis provided!")
   }
 
   img <- format_image(img, 128, TRUE)
-  make_request(img, 'contentfiltering', api_key, cloud, ...)
+  make_request(img, 'contentfiltering', api_key, cloud, version, ...)
 }
 
 

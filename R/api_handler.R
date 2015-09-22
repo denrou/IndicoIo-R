@@ -5,12 +5,12 @@
 #' @param api api to call
 #' @param api_key your personal indico API key
 #' @param cloud subdomain for indico private cloud
-#' @param batch send call to batch endpoint
+#' @param version for api version
 #' @param ... additional arguments to passed to request
 #' @return error or response extracted from the indico API response
 #' @keywords indico.io machine learning API
 #' @import httr rjson stringr
-make_request <- function(data, api, api_key = FALSE, cloud = FALSE, ...) {
+make_request <- function(data, api,  api_key = FALSE, cloud = FALSE, version = NULL, ...) {
   # default to env variables and config file settings
   if (!is.character(cloud) && (cloud == FALSE)) {
     cloud <- .indicoio$cloud
@@ -22,7 +22,7 @@ make_request <- function(data, api, api_key = FALSE, cloud = FALSE, ...) {
   batch <- typeof(data) == "list" || length(data) > 1
 
   # compose the proper request url
-  url <- request_url(cloud, api, batch, api_key, ...)
+  url <- request_url(cloud, api, batch, api_key, version, ...)
 
   # configure request headers + body
   headers <- add_headers(.indicoio$header)
@@ -30,7 +30,7 @@ make_request <- function(data, api, api_key = FALSE, cloud = FALSE, ...) {
   kwargs <- list(...)
   kwargs[["apis"]] <- NULL
   kwargs[["data"]] <- data
-  body <- toJSON(kwargs) 
+  body <- toJSON(kwargs)
 
   response <- POST(url, accept_json(), headers, body = body)
 
@@ -44,19 +44,20 @@ make_request <- function(data, api, api_key = FALSE, cloud = FALSE, ...) {
 
   answer[["results"]]
 }
- 
+
 #' Returns the url for the proper indico API
 #'
 #' Produces the proper url to query with a given request
 #' @param cloud (optional) indico subdomain for private cloud
 #' @param api name of API
 #' @param batch (logical) does the request contain more than one example?
+#' @param version for api version
 #' @param api_key your personal indico API key
 #' @param apis possible list of apis url paramater for multi qpi requests
 #' @param ... additional possible arguments to passed as url parameters
 #' @return url for API request
 #' @import httr rjson stringr
-request_url <- function(cloud, api, batch, api_key, apis=NULL, ...) {
+request_url <- function(cloud, api, batch, api_key, version=NULL, apis=NULL, ...) {
   # compose the proper request url
   if (cloud != FALSE && cloud != "") {
     private_cloud <- sprintf("https://%s.indico.domains/", cloud)
@@ -77,6 +78,10 @@ request_url <- function(cloud, api, batch, api_key, apis=NULL, ...) {
       url <- str_c(url, paste(apis, collapse=","))
   }
 
+  if (!is.null(version)) {
+      url <- str_c(url, '&version=', paste(version))
+  }
+
   url
 }
 
@@ -93,7 +98,7 @@ format_image <- function(img, size, min_axis=FALSE) {
   if (typeof(img) == "list" || length(img) > 1) {
       return(format_images(img, size));
   }
-  
+
   if (is.character(img)) {
     if (file.exists(img)) {
       img <- readPNG(img)

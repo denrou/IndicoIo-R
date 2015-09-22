@@ -11,14 +11,14 @@
 #' entities <- named_entities("London Undergroud's boss Mike Brown warned of the strike...")
 #' entities
 
-named_entities <- function(text, api_key = FALSE, cloud = FALSE, ...) {
+named_entities <- function(text,  api_key = FALSE, cloud = FALSE, version = NULL, ...) {
 
   # Checks parameters
   if (missing(text) || str_trim(text) == "") {
     stop("No text for analysis provided!")
   }
 
-  make_request(text, 'namedentities', api_key, cloud, ...)
+  make_request(text, 'namedentities', api_key, cloud, version, ...)
 }
 
 #'@export

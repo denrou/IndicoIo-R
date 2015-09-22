@@ -15,13 +15,13 @@
 #' cat(sprintf("This text has %s tonality",
 #'              ifelse(emotion > 0.5, "positive", "negative")))
 #
-sentiment <- function(text, api_key = FALSE, cloud = FALSE, ...) {
+sentiment <- function(text,  api_key = FALSE, cloud = FALSE, version = NULL, ...) {
   # Checks parameters
   if (missing(text) || str_trim(text) == "") {
     stop("No text for analysis provided!")
   }
 
-  make_request(text, "sentiment", api_key, cloud, ...)
+  make_request(text, "sentiment", api_key, cloud, version, ...)
 }
 #'@export
 batch_sentiment <- function(text, ...) {

@@ -4,12 +4,21 @@
 \alias{intersections}
 \title{Returns strength of correlation between API results}
 \usage{
-intersections(data, apis = FALSE, api_key = FALSE, cloud = FALSE, ...)
+intersections(data, apis = FALSE, api_key = FALSE, cloud = FALSE,
+  version = NULL, ...)
 }
 \arguments{
 \item{data}{input data}
 
 \item{apis}{vector of provided string api names}
+
+\item{api_key}{your personal indico API key}
+
+\item{cloud}{subdomain for indico private cloud}
+
+\item{version}{- api version}
+
+\item{...}{additional arguments to passed to request}
 }
 \value{
 nested associated array of correlation strengths
