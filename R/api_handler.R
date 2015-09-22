@@ -79,7 +79,7 @@ request_url <- function(cloud, api, batch, api_key, version=NULL, apis=NULL, ...
   }
 
   if (!is.null(version)) {
-      url <- str_c(url, '&version=' + paste(version))
+      url <- str_c(url, '&version=', paste(version))
   }
 
   url

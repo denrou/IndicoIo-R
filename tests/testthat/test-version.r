@@ -10,9 +10,7 @@ test_that("Specifying a version still works", {
 
 test_that("Specifying a version for image features v2", {
   test_image <- paste(readLines("image/base64.txt"), collapse=" ")
-  faces <- image_features(test_image, version="2")
-  print(faces);
-  print(length(faces));
-  expect_is(faces, "list")
-  expect_true(length(faces) == 4096)
+  features <- image_features(test_image, version="2")
+  expect_is(features, "list")
+  expect_true(length(features) == 4096)
 })
