@@ -103,7 +103,7 @@ format_image <- function(img, size, min_axis=FALSE) {
     if (file.exists(img)) {
       img <- readPNG(img)
     } else { # is already base64
-      result <- try(readPNG(base64decode(img))) 
+      result <- try(readPNG(base64decode(img)), silent=TRUE) 
       if (class(result) == "try-error") {
         return(img) # likely a url
       } else {
