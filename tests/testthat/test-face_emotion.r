@@ -10,6 +10,16 @@ test_that("Face Emotion Detection API returns proper answer", {
   expect_equal(sum(unlist(emotion)), 1)
 })
 
+test_that("URLs are supported as inputs", {
+  fer_set <- c("Angry", "Sad", "Neutral", "Surprise", "Fear", "Happy")
+  test_image <- "https://s3-us-west-2.amazonaws.com/indico-test-data/face.jpg"
+  emotion <- face_emotion(test_image)
+  
+  expect_is(emotion, "list")
+  expect_true(all(names(emotion) %in% fer_set))
+  expect_equal(sum(unlist(emotion)), 1)
+})
+
 test_that("FER alias returns proper answer", {
   fer_set <- c("Angry", "Sad", "Neutral", "Surprise", "Fear", "Happy")
   test_image <- paste(readLines("image/base64.txt"), collapse=" ")

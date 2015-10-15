@@ -103,8 +103,12 @@ format_image <- function(img, size, min_axis=FALSE) {
     if (file.exists(img)) {
       img <- readPNG(img)
     } else { # is already base64
-      img <- base64decode(img)
-      img <- readPNG(img)
+      result <- try(readPNG(base64decode(img))) 
+      if (class(result) == "try-error") {
+        return(img) # likely a url
+      } else {
+        img <- result;
+      }
     }
   } else {
       stop("Only base64 encoded strings and filepaths are supported for image input.")
