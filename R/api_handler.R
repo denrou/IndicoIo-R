@@ -34,6 +34,11 @@ make_request <- function(data, api,  api_key = FALSE, cloud = FALSE, version = N
 
   response <- POST(url, accept_json(), headers, body = body)
 
+  x_warning <- response[["headers"]][["x-warning"]]
+  if (!is.null(x_warning)) {
+    warning(x_warning)
+  }
+
   stop_for_status(response)
 
   # Returns results
