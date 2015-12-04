@@ -24,14 +24,25 @@ Detailed documentation and further code examples are available at [indico.reame.
 Supported APIs:
 ------------
 
-- Positive/Negative Sentiment Analysis
+- Content Filtering
+- Keywords
+- Language Detection
+- Text Topic Tagging
+- Sentiment
+- Sentiment HQ
 - Political Sentiment Analysis
+- Named Entity Recognition
+- Twitter Engagement
+- Intersections
+- Analyze Text
 - Image Feature Extraction
 - Facial Emotion Recognition
 - Facial Feature Extraction
-- Language Detection
-- Text Topic Tagging
--
+- Facial Localization
+- Content Filtering
+- Image Recognition
+- Analyze Image
+- Custom Trained Apis (private cloud only)
 
 Examples
 --------
