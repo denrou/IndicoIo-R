@@ -1,4 +1,4 @@
-context("personality")
+context("Personality")
 
 categories <-c(
   "openness",

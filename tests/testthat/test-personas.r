@@ -1,4 +1,4 @@
-context("personas")
+context("Personas")
 
 test_that("personas API returns dict with correct categories", {
   test_string <- "I love my friends!"
