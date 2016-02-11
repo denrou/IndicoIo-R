@@ -31,7 +31,7 @@ image_features <- function(img,  api_key = FALSE, cloud = FALSE, version = 3, ..
     stop("No image for analysis provided!")
   }
 
-  img <- format_image(img, 144, TRUE)
+  img <- format_image(img, 512, TRUE)
   make_request(img, 'imagefeatures', api_key, cloud, version, ...)
 }
 
