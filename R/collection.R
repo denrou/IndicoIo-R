@@ -176,14 +176,18 @@ setGeneric(name="wait",
 setMethod(f="wait",
           signature="Collection",
           definition=function(collection_object, interval = 1, timeout=60, api_key = FALSE, cloud = FALSE, version = NULL, ...) {
-                for (i in 1:ceiling(timeout/interval)) {
-                    if(info(collection_object, api_key, cloud, version, ...)[['status']] != "ready") {
-                        Sys.sleep(interval)
-                    } else {
-                        return(TRUE)
-                    }
-                }
-                stop('Timeout error in wait')
+            for (i in 1:ceiling(timeout/interval)) {
+              status <- info(collection_object, api_key, cloud, version, ...)[['status']]
+              if (status == "ready") {
+                  return(TRUE)
+              }
+              if (status != "training") {
+                  stop(collection_object@name + " failed with error: " + status)
+                  return(FALSE)
+              }
+              Sys.sleep(interval)
+            }
+            stop('Timeout error in wait')
           }
           )
 
