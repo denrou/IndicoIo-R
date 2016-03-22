@@ -1,3 +1,6 @@
+#' @return Collection object
+#' @export
+#' @import httr rjson stringr
 Collection <- setClass(
     "Collection",
 
