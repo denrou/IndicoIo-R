@@ -9,7 +9,7 @@
 #' @import httr rjson stringr
 #' @examples
 #' result <- people("Barack Obama is scheduled to give a talk next Saturday at the White House.")
-#' cat(sprintf("%s is mentioned in the input text" % result[0]['text']))
+#' cat(sprintf("%s is mentioned in the input text", result[0]['text']))
 #'
 people <- function(text,  api_key = FALSE, cloud = FALSE, version = NULL, ...) {
 
