@@ -26,7 +26,7 @@ Determines how relevant a query string is to a given document
 }
 \examples{
 result <- relevance("Barack Obama", "president")
-cat(sprintf("\%s is mentioned in the input text" \% result[0]['text']))
+cat(sprintf("\%s is mentioned in the input text", result[0]['text']))
 
 }
 \seealso{

@@ -7,7 +7,7 @@
 #' @export
 #' @import httr rjson stringr
 #' @examples
-#' features <- text_features(text)
+#' features <- text_features("Some text for testing this awesome text features api.")
 #'
 #' length(features) # 300
 #'

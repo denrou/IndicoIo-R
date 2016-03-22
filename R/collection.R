@@ -1,6 +1,9 @@
 #' @return Collection object
-#' @export
 #' @import httr rjson stringr
+#' A class description
+#'
+#' @export Collection
+#' @exportClass Collection
 Collection <- setClass(
     "Collection",
 
@@ -138,9 +141,9 @@ setGeneric(name="info",
 #' collection <- Collection(name='example')
 #' status = info(collection)
 #' cat(sprintf("This collection is a %s model trained on %s data with %i examples",
-#'             status[[model_type]],
-#'             status[[input_type]],
-#'             status[[number_of_examples]])
+#'             status[["model_type"]],
+#'             status[["input_type"]],
+#'             status[["number_of_examples"]]))
 setMethod(f="info",
           signature="Collection",
           definition=function(collection_object, api_key = FALSE, cloud = FALSE, version = NULL, ...) {
@@ -226,9 +229,9 @@ setGeneric(name="predict",
 #' addData(collection, test_data)
 #' train(collection)
 #' wait(collection)
-#' res = train("I love my friends!")
+#' res <- predict(collection, "I love my friends!")
 #' cat(sprintf("The likelihood the author was an extrovert is \%0.4f.",
-#'             res[["extrovert"]])
+#'             res[["extrovert"]]))
 setMethod(f="predict",
           signature="Collection",
           definition=function(collection_object, data, api_key = FALSE, cloud = FALSE, version = NULL, domain = NULL, ...) {
@@ -287,9 +290,8 @@ setMethod(f="remove_example",
 #' @import httr rjson stringr
 #' @examples
 #' collections <- collections()
-#'
 #' cat(sprintf("There are currently %i collections",
-#'             length(collections))
+#'             length(collections)))
 collections <- function(api_key = FALSE, cloud = FALSE, version = NULL, ...) {
   make_request(NULL, 'custom', api_key, cloud, version, method = "collections", ...)
 }

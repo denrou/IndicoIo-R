@@ -45,8 +45,8 @@ test_data <- list(list("I love my friends!", "extrovert"),
 addData(collection, test_data)
 train(collection)
 wait(collection)
-res = train("I love my friends!")
+res <- predict(collection, "I love my friends!")
 cat(sprintf("The likelihood the author was an extrovert is \\\%0.4f.",
-            res[["extrovert"]])
+            res[["extrovert"]]))
 }
 

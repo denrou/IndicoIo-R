@@ -29,8 +29,8 @@ Return the current state of the model associated with a given collection
 collection <- Collection(name='example')
 status = info(collection)
 cat(sprintf("This collection is a \%s model trained on \%s data with \%i examples",
-            status[[model_type]],
-            status[[input_type]],
-            status[[number_of_examples]])
+            status[["model_type"]],
+            status[["input_type"]],
+            status[["number_of_examples"]]))
 }
 
