@@ -25,8 +25,7 @@ well as some basic statistics on their accuracies. See docs for more information
 }
 \examples{
 collections <- collections()
-
 cat(sprintf("There are currently \%i collections",
-            length(collections))
+            length(collections)))
 }
 

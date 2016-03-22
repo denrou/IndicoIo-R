@@ -25,10 +25,8 @@ Given input text, returns a probability distribution over 33 possible
 languages of what language the text was written in.
 }
 \examples{
-emotions <- emotion("Monday: Delightful with mostly sunny skies.
-                            Highs in the low 70s.")
-emotions
-most.possible <- sort(unlist(emotion), decreasing = TRUE)[1:2]
+emotions <- emotion("Monday: Delightful with mostly sunny skies. Highs in the low 70s.")
+most.possible <- sort(unlist(emotions), decreasing = TRUE)[1:2]
 cat(sprintf("Detected \%s emotion with probability \%0.4f.\\n",
             names(most.possible)[1], most.possible[1]))
 cat(sprintf("Next possible is \%s with probability \%0.4f.",

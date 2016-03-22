@@ -25,7 +25,7 @@ Finds the names and titles of people in the input text
 }
 \examples{
 result <- people("Barack Obama is scheduled to give a talk next Saturday at the White House.")
-cat(sprintf("\%s is mentioned in the input text" \% result[0]['text']))
+cat(sprintf("\%s is mentioned in the input text", result[0]['text']))
 
 }
 \seealso{
