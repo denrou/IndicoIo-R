@@ -1,6 +1,6 @@
 #' @return Collection object
 #' @import httr rjson stringr
-#' A class description
+#' @title A class description
 #'
 #' @export Collection
 #' @exportClass Collection
