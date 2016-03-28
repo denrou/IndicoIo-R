@@ -31,12 +31,10 @@ make_request <- function(data, api, api_key = FALSE, cloud = FALSE, version = NU
 
   # configure request headers + body
   headers <- add_headers(.indicoio$header)
-
+  headers <- add_headers(c('X-ApiKey' = api_key))
   kwargs[["apis"]] <- NULL
   kwargs[["data"]] <- data
   body <- toJSON(kwargs)
-
-
 
   response <- POST(url, accept_json(), headers, body = body)
 
@@ -83,17 +81,19 @@ request_url <- function(cloud, api, batch, api_key, version=NULL, apis=NULL, met
   url <- str_c(base_url, api)
   url <- ifelse(batch, str_c(url, '/batch'), url)
   url <- ifelse(is.null(method), url, str_c(url, '/', method))
-  url <- str_c(url, '?key=', api_key)
 
+  config <- c()
   if (!is.null(apis)) {
-      url <- str_c(url, '&apis=')
-      url <- str_c(url, paste(apis, collapse=","))
+    config <- c(config, str_c("apis=", paste(apis, collapse=",")))
   }
 
   if (!is.null(version)) {
-      url <- str_c(url, '&version=', paste(version))
+    config <- c(config, str_c("version=", version))
   }
 
+  if (length(config) != 0) {
+      url <- str_c(url, "?", paste(config, collapse="&"))
+  }
   url
 }
 

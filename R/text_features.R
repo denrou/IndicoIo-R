@@ -19,5 +19,5 @@ text_features <- function(text,  api_key = FALSE, cloud = FALSE, version = NULL,
     stop("No text for analysis provided!")
   }
 
-  make_request(text, 'textfeatures', api_key, cloud, version, persona = TRUE, ...)
+  make_request(text, 'textfeatures', api_key, cloud, version, ...)
 }
