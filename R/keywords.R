@@ -17,19 +17,14 @@
 #' cat(sprintf("Next possible is %s with a score %0.4f.",
 #'             names(most.possible)[2], most.possible[2]))
 #'
-keywords <- function(text,  api_key = FALSE, cloud = FALSE, version = NULL, ...) {
-
+keywords <- function(text, version = 2, language="english", ...) {
+  if (language != "english") {
+      version = 1
+  }
   # Checks parameters
   if (missing(text) || str_trim(text) == "") {
     stop("No text for analysis provided!")
   }
 
-  make_request(text, 'keywords', api_key, cloud, version, ...)
-}
-
-#'@export
-batch_keywords <- function(text, ...) {
-    warning("The `batch_keywords` function will be deprecated in the next major upgrade. " +
-      "Please call `keywords` instead with the same arguments")
-    keywords(text, ...)
+  make_request(text, 'keywords', version, ...)
 }

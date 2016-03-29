@@ -10,7 +10,7 @@
 #' @return error or response extracted from the indico API response
 #' @keywords indico.io machine learning API
 #' @import httr rjson stringr
-make_request <- function(data, api, api_key = FALSE, cloud = FALSE, version = NULL, ...) {
+make_request <- function(data, api, version = NULL, apis = NULL, method = NULL, api_key = FALSE, cloud = FALSE, ...) {
   # default to env variables and config file settings
   if (!is.character(cloud) && (cloud == FALSE)) {
     cloud <- .indicoio$cloud
@@ -22,18 +22,20 @@ make_request <- function(data, api, api_key = FALSE, cloud = FALSE, version = NU
   batch <- typeof(data) == "list" || length(data) > 1
 
   kwargs <- list(...)
-  if (api == "custom" && kwargs[['method']] == "add_data") {
+
+  if (api == "custom" && method == "add_data") {
     batch <- typeof(data[[1]]) == "list" || length(data[[1]]) > 1
   }
 
   # compose the proper request url
-  url <- request_url(cloud, api, batch, api_key, version, ...)
+  url <- request_url(cloud, api, batch, api_key, version, apis, method, ...)
 
   # configure request headers + body
   headers <- add_headers(.indicoio$header)
   headers <- add_headers(c('X-ApiKey' = api_key))
-  kwargs[["apis"]] <- NULL
+
   kwargs[["data"]] <- data
+  kwargs[["method"]] <- NULL
   body <- toJSON(kwargs)
 
   response <- POST(url, accept_json(), headers, body = body)
@@ -44,6 +46,7 @@ make_request <- function(data, api, api_key = FALSE, cloud = FALSE, version = NU
   }
 
   stop_for_status(response)
+
 
   # Returns results
   answer <- content(response, as = "parsed", type = "application/json")
