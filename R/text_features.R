@@ -19,5 +19,5 @@ text_features <- function(text, version = NULL, ...) {
     stop("No text for analysis provided!")
   }
 
-  make_request(text, 'textfeatures', version, ...)
+  make_request(text, 'textfeatures', version, synonyms = FALSE, ...)
 }
