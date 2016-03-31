@@ -18,5 +18,5 @@ relevance <- function(text, queries, version = NULL, ...) {
     stop("No text for analysis provided!")
   }
 
-  make_request(text, 'relevance', version, queries = queries, ...)
+  make_request(text, 'relevance', version, queries = queries, synonyms = FALSE, ...)
 }
