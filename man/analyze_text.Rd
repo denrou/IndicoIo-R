@@ -5,7 +5,7 @@
 \title{Returns multiple text API results in a single request / response}
 \usage{
 analyze_text(text, apis = c("sentiment", "text_tags", "political", "language",
-  "keywords", "twitter_engagement", "named_entities"), version = NULL, ...)
+  "keywords", "twitter_engagement"), version = NULL, ...)
 }
 \arguments{
 \item{text}{text for analysis}
