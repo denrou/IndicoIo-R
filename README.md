@@ -31,7 +31,6 @@ Supported APIs:
 - Sentiment
 - Sentiment HQ
 - Political Sentiment Analysis
-- Named Entity Recognition
 - Twitter Engagement
 - Intersections
 - Analyze Text

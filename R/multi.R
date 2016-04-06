@@ -1,4 +1,4 @@
-TEXT_APIS <- c("sentiment", "text_tags", "political", "language", "twitter_engagement", "keywords", "named_entities", "personality")
+TEXT_APIS <- c("sentiment", "text_tags", "political", "language", "twitter_engagement", "keywords", "personality")
 IMAGE_APIS <- c("facial_features", "fer", "image_features", "content_filtering", "facial_localization")
 APIS_MAP <- list(
     sentiment="sentiment",
@@ -12,7 +12,6 @@ APIS_MAP <- list(
     image_features="imagefeatures",
     twitter_engagement="twitterengagement",
     keywords="keywords",
-    named_entities="namedentities",
     content_filtering="contentfiltering",
     personality="personality"
 )
@@ -101,7 +100,7 @@ intersections <- function(data, apis=NULL, version = NULL, ...) {
 #' cat(sprintf("This text has %s tonality",
 #'              ifelse(results[["sentiment"]] > 0.5, "positive", "negative")))
 #'
-analyze_text <- function(text, apis = c("sentiment", "text_tags", "political", "language", "keywords", "twitter_engagement", "named_entities"), version = NULL, ...) {
+analyze_text <- function(text, apis = c("sentiment", "text_tags", "political", "language", "keywords", "twitter_engagement"), version = NULL, ...) {
     # Checks parameters
     if (missing(text) || str_trim(text) == "") {
         stop("No text for analysis provided!")
