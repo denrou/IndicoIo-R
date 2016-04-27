@@ -147,8 +147,7 @@ setGeneric(name="info",
 setMethod(f="info",
           signature="Collection",
           definition=function(collection_object, version = NULL, ...) {
-              collections_info <- collections(version=version, ...)
-              collections_info[[collection_object@name]]
+              make_request(NULL, 'custom', version=version, collection = collection_object@name, method = "info", ...)
           }
           )
 
