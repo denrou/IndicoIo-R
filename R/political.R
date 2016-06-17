@@ -22,7 +22,7 @@
 #' cat(sprintf("This text is most like %s and least like %s",
 #'             most.like, least.like))
 #'
-political <- function(text, version = NULL, ...) {
+political <- function(text, version = 2, ...) {
 
   # Checks parameters
   if (missing(text) || str_trim(text) == "") {
