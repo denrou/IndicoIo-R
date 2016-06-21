@@ -4,7 +4,7 @@
 \alias{organizations}
 \title{Finds the names of organizations in the input text}
 \usage{
-organizations(text, version = NULL, ...)
+organizations(text, version = 2, ...)
 }
 \arguments{
 \item{text}{text for analysis}
