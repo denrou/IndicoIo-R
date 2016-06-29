@@ -4,7 +4,7 @@
 \alias{people}
 \title{Finds the names and titles of people in the input text}
 \usage{
-people(text, version = NULL, ...)
+people(text, version = 2, ...)
 }
 \arguments{
 \item{text}{text for analysis}
