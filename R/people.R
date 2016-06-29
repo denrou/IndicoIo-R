@@ -11,7 +11,7 @@
 #' result <- people("Barack Obama is scheduled to give a talk next Saturday at the White House.")
 #' cat(sprintf("%s is mentioned in the input text", result[0]['text']))
 #'
-people <- function(text, version = NULL, ...) {
+people <- function(text, version = 2, ...) {
 
   # Checks parameters
   if (missing(text) || str_trim(text) == "") {

@@ -50,8 +50,11 @@ setGeneric(name="addData",
 #' addData(collection, test_data)
 setMethod(f="addData",
           signature="Collection",
-          definition=function(collection_object, data, version = NULL, domain = NULL, ...) {
-                collection_object@domain <- ifelse(domain!=NULL, domain, collection_object@domain)
+          definition=function(collection_object, data, version = NULL, domain=NULL, ...) {
+                if (! is.null(domain)) {
+                    collection_object@domain <- domain
+                }
+
                 batch <- typeof(data[[1]]) == "list" || length(data[[1]]) > 1
                 if (batch) {
                     image_process <- function(data_pair) {
@@ -96,7 +99,7 @@ setMethod(f="clear",
           )
 
 setGeneric(name="train",
-           def=function(collection_object, version = NULL, ...) {
+           def=function(collection_object, version = NULL, domain=NULL,  ...) {
               standardGeneric("train")
            }
            )
@@ -116,8 +119,11 @@ setGeneric(name="train",
 #' train(collection)
 setMethod(f="train",
           signature="Collection",
-          definition=function(collection_object, version = NULL, ...) {
-              make_request(NULL, 'custom', version=version, collection = collection_object@name, method = "train", ...)
+          definition=function(collection_object, version = NULL, domain=NULL, ...) {
+              if (! is.null(domain)) {
+                collection_object@domain <- domain
+              }
+              make_request(NULL, 'custom', version=version, collection = collection_object@name, method = "train", domain=collection_object@domain, ...)
           }
           )
 
@@ -235,8 +241,10 @@ setMethod(f="predict",
           signature="Collection",
           definition=function(collection_object, data, version = NULL, domain = NULL, ...) {
                 data = format_image(data, 48)
-                collection_object@domain <- ifelse(domain!=NULL, domain, collection_object@domain)
-                make_request(data, 'custom', version=version, collection = collection_object@name, method='predict', domain= collection_object@domain, ...)
+                if (! is.null(domain)) {
+                    collection_object@domain <- domain
+                }
+                make_request(data, 'custom', version=version, collection = collection_object@name, method='predict', domain=collection_object@domain, ...)
           }
           )
 

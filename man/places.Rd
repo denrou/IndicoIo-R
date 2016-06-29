@@ -4,7 +4,7 @@
 \alias{places}
 \title{Finds the names of places in the input text}
 \usage{
-places(text, version = NULL, ...)
+places(text, version = 2, ...)
 }
 \arguments{
 \item{text}{text for analysis}

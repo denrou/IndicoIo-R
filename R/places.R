@@ -11,7 +11,7 @@
 #' result <- places("Lets all go to Virginia Beach before it gets too cold to wander outside.)
 #' cat(sprintf("%s is mentioned in the input text" % result[0]['text']))
 #'
-places <- function(text, version = NULL, ...) {
+places <- function(text, version = 2, ...) {
 
   # Checks parameters
   if (missing(text) || str_trim(text) == "") {

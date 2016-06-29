@@ -11,7 +11,7 @@
 #' result <- organizations("A year ago, the New York Times published confidential comments about ISIS' ideology by Major General Michael K. Nagata, then U.S. Special Operations commander in the Middle East.")
 #' cat(sprintf("%s is mentioned in the input text", result[[1]]["text"]))
 #'
-organizations <- function(text, version = NULL, ...) {
+organizations <- function(text, version = 2, ...) {
 
   # Checks parameters
   if (missing(text) || str_trim(text) == "") {
