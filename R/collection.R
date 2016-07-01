@@ -157,6 +157,148 @@ setMethod(f="info",
           }
           )
 
+setGeneric(name="rename",
+           def=function(collection_object, name, version = NULL, ...) {
+              standardGeneric("rename")
+           }
+           )
+
+#' Rename the current model to a new name.
+#'
+#' @param collection the collection object for this model
+#' @param name the new name to be used to access this collection
+#' @param api_key your personal indico API key
+#' @param cloud subdomain for indico private cloud
+#' @param version for api version
+#' @param ... additional arguments to passed to request
+#' @return Boolean that indicates success or failure
+#' @export
+#' @import httr rjson stringr
+#' @examples
+#' collection <- Collection(name='example')
+#' success = rename(collection, 'new-example')
+setMethod(f="rename",
+          signature="Collection",
+          definition=function(collection_object, name, version = NULL, ...) {
+            previous_name <- collection_object@name
+            if (!is.null(name)) {
+              collection_object@name <- name
+            } else {
+              stop("NULL is not a valid collection name.")
+            }
+            make_request(NULL, 'custom', version = version, collection = previous_name, name = collection_object@name, method = "rename", ...)
+            collection_object
+          }
+          )
+
+setGeneric(name="register",
+           def=function(collection_object, version = NULL, ...) {
+              standardGeneric("register")
+           }
+           )
+
+#' Register the current collection so that the collection can be shared with other users.
+#'
+#' @param collection the collection object for this model
+#' @param api_key your personal indico API key
+#' @param cloud subdomain for indico private cloud
+#' @param version for api version
+#' @param ... additional arguments to passed to request
+#' @return Boolean that indicates success or failure
+#' @export
+#' @import httr rjson stringr
+#' @examples
+#' collection <- Collection(name='example')
+#' success = register(collection)
+setMethod(f="register",
+          signature="Collection",
+          definition=function(collection_object, version = NULL, ...) {
+            make_request(NULL, 'custom', version=version, collection = collection_object@name, method = "register", ...)
+          }
+          )
+
+setGeneric(name="deregister",
+           def=function(collection_object, version = NULL, ...) {
+              standardGeneric("deregister")
+           }
+           )
+
+#' Deregister the current collection so that the collection is no longer shared with other users.
+#'
+#' @param collection the collection object for this model
+#' @param api_key your personal indico API key
+#' @param cloud subdomain for indico private cloud
+#' @param version for api version
+#' @param ... additional arguments to passed to request
+#' @return Boolean that indicates success or failure
+#' @export
+#' @import httr rjson stringr
+#' @examples
+#' collection <- Collection(name='example')
+#' success = deregister(collection)
+setMethod(f="deregister",
+          signature="Collection",
+          definition=function(collection_object, version = NULL, ...) {
+            make_request(NULL, 'custom', version = version, collection = collection_object@name, method = "deregister", ...)
+          }
+          )
+
+setGeneric(name="authorize",
+           def=function(collection_object, email, permission_type = 'read', version = NULL, ...) {
+              standardGeneric("authorize")
+           }
+           )
+
+#' Authorize a given user to access the current collection
+#'
+#' @param collection the collection object for this model
+#' @param email the email of the user you'd like to give access to
+#' @param permission_type read / write -- the type of permission to give the authorized user
+#' @param api_key your personal indico API key
+#' @param cloud subdomain for indico private cloud
+#' @param version for api version
+#' @param ... additional arguments to passed to request
+#' @return Boolean that indicates success or failure
+#' @export
+#' @import httr rjson stringr
+#' @examples
+#' collection <- Collection(name='example')
+#' success = authorize(collection, 'contact@indico.io')
+setMethod(f="authorize",
+          signature="Collection",
+          definition=function(collection_object, email, permission_type = 'read', version = NULL, ...) {
+            make_request(NULL, 'custom', version=version, collection = collection_object@name, email = email, method = "authorize", permission_type = permission_type, ...)
+          }
+          )
+
+
+setGeneric(name="deauthorize",
+           def=function(collection_object, email, version = NULL, ...) {
+              standardGeneric("deauthorize")
+           }
+           )
+
+#' Remove a given user's access to the current collection
+#'
+#' @param collection the collection object for this model
+#' @param email the email of the user you'd like to remove access from
+#' @param api_key your personal indico API key
+#' @param cloud subdomain for indico private cloud
+#' @param version for api version
+#' @param ... additional arguments to passed to request
+#' @return Boolean that indicates success or failure
+#' @export
+#' @import httr rjson stringr
+#' @examples
+#' collection <- Collection(name='example')
+#' success = deauthorize(collection, 'contact@indico.io')
+setMethod(f="deauthorize",
+          signature="Collection",
+          definition=function(collection_object, email, version = NULL, ...) {
+            make_request(NULL, 'custom', version=version, collection = collection_object@name, email = email, method = "deauthorize", ...)
+          }
+          )
+
 setGeneric(name="wait",
            def=function(collection_object, interval = 1, timeout=60, version = NULL, ...) {
               standardGeneric("wait")
