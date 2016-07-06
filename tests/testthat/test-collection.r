@@ -101,6 +101,7 @@ test_that("collection can be renamed", {
   wait(collection)
   collection <- rename(collection, alternate_name)
   info(collection)
+  info(alternateCollection)
   clear(collection)
 })
 

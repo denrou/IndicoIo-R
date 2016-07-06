@@ -9,14 +9,32 @@ Collection <- setClass(
 
     slots = c(
               name = "character",
-              domain = "ANY"
+              domain = "ANY",
+              shared = "logical"
              ),
              # Set the default values for the slots. (optional)
    prototype=list(
            name="custom_collection",
-           domain=NULL
+           domain=NULL,
+           shared=FALSE
            ),
     )
+
+setGeneric(name="make_custom_request",
+           def=function(collection_object, data, api, version = NULL, apis = NULL, method = NULL, api_key = FALSE, cloud = FALSE, ...) {
+              standardGeneric("make_custom_request")
+           }
+           )
+setMethod(f="make_custom_request", 
+          signature="Collection",
+          definition=function(collection_object, data, api, version = NULL, apis = NULL, method = NULL, api_key = FALSE, cloud = FALSE, ...) {
+            make_request(
+              data, 'custom', version=version, collection = collection_object@name, 
+              method = method, domain=collection_object@domain, shared=collection_object@shared, ...
+            )
+          }
+          )
+
 
 setGeneric(name="addData",
            def=function(collection_object, data, version = NULL, domain = NULL, ...) {
@@ -51,10 +69,6 @@ setGeneric(name="addData",
 setMethod(f="addData",
           signature="Collection",
           definition=function(collection_object, data, version = NULL, domain=NULL, ...) {
-                if (! is.null(domain)) {
-                    collection_object@domain <- domain
-                }
-
                 batch <- typeof(data[[1]]) == "list" || length(data[[1]]) > 1
                 if (batch) {
                     image_process <- function(data_pair) {
@@ -65,7 +79,7 @@ setMethod(f="addData",
                 } else {
                     data[1] = format_image(data[[1]], 48)
                 }
-                make_request(data, 'custom', version=version, collection = collection_object@name, method = "add_data", domain=collection_object@domain, ...)
+                make_custom_request(collection_object, data, 'custom', version=version, method = "add_data", ...)
           }
           )
 
@@ -94,7 +108,7 @@ setGeneric(name="clear",
 setMethod(f="clear",
           signature="Collection",
           definition=function(collection_object, version = NULL, ...) {
-              make_request(NULL, 'custom', version=version, collection = collection_object@name, method = "clear_collection", ...)
+              make_custom_request(collection_object, NULL, 'custom', version=version, method = "clear_collection", ...)
           }
           )
 
@@ -120,10 +134,7 @@ setGeneric(name="train",
 setMethod(f="train",
           signature="Collection",
           definition=function(collection_object, version = NULL, domain=NULL, ...) {
-              if (! is.null(domain)) {
-                collection_object@domain <- domain
-              }
-              make_request(NULL, 'custom', version=version, collection = collection_object@name, method = "train", domain=collection_object@domain, ...)
+             make_custom_request(collection_object, NULL, 'custom', version=version, method = "train", ...)
           }
           )
 
@@ -153,7 +164,7 @@ setGeneric(name="info",
 setMethod(f="info",
           signature="Collection",
           definition=function(collection_object, version = NULL, ...) {
-              make_request(NULL, 'custom', version=version, collection = collection_object@name, method = "info", ...)
+              make_custom_request(collection_object, NULL, 'custom', version=version, method = "info", ...)
           }
           )
 
@@ -180,13 +191,11 @@ setGeneric(name="rename",
 setMethod(f="rename",
           signature="Collection",
           definition=function(collection_object, name, version = NULL, ...) {
-            previous_name <- collection_object@name
-            if (!is.null(name)) {
-              collection_object@name <- name
-            } else {
+            if (is.null(name)) {
               stop("NULL is not a valid collection name.")
             }
-            make_request(NULL, 'custom', version = version, collection = previous_name, name = collection_object@name, method = "rename", ...)
+            make_custom_request(collection_object, NULL, 'custom', version = version, name = name, method = "rename", ...)
+            collection_object@name <- name
             collection_object
           }
           )
@@ -213,7 +222,7 @@ setGeneric(name="register",
 setMethod(f="register",
           signature="Collection",
           definition=function(collection_object, version = NULL, ...) {
-            make_request(NULL, 'custom', version=version, collection = collection_object@name, method = "register", ...)
+            make_custom_request(collection_object, NULL, 'custom', version=version, method = "register", ...)
           }
           )
 
@@ -239,7 +248,7 @@ setGeneric(name="deregister",
 setMethod(f="deregister",
           signature="Collection",
           definition=function(collection_object, version = NULL, ...) {
-            make_request(NULL, 'custom', version = version, collection = collection_object@name, method = "deregister", ...)
+            make_custom_request(collection_object, NULL, 'custom', version = version, method = "deregister", ...)
           }
           )
 
@@ -267,7 +276,7 @@ setGeneric(name="authorize",
 setMethod(f="authorize",
           signature="Collection",
           definition=function(collection_object, email, permission_type = 'read', version = NULL, ...) {
-            make_request(NULL, 'custom', version=version, collection = collection_object@name, email = email, method = "authorize", permission_type = permission_type, ...)
+            make_custom_request(collection_object, NULL, 'custom', version=version, email = email, method = "authorize", permission_type = permission_type, ...)
           }
           )
 
@@ -295,7 +304,7 @@ setGeneric(name="deauthorize",
 setMethod(f="deauthorize",
           signature="Collection",
           definition=function(collection_object, email, version = NULL, ...) {
-            make_request(NULL, 'custom', version=version, collection = collection_object@name, email = email, method = "deauthorize", ...)
+            make_custom_request(collection_object, NULL, 'custom', version=version, email = email, method = "deauthorize", ...)
           }
           )
 
@@ -386,7 +395,7 @@ setMethod(f="predict",
                 if (! is.null(domain)) {
                     collection_object@domain <- domain
                 }
-                make_request(data, 'custom', version=version, collection = collection_object@name, method='predict', domain=collection_object@domain, ...)
+                make_custom_request(collection_object, data, 'custom', version=version, method='predict', ...)
           }
           )
 
@@ -422,7 +431,7 @@ setMethod(f="remove_example",
           signature="Collection",
           definition=function(collection_object, data, version = NULL, ...) {
                 data = format_image(data, 48)
-                make_request(data, 'custom', version=version, collection = collection_object@name, method='remove_example', ...)
+                make_custom_request(collection_object, data, 'custom', version=version, method='remove_example', ...)
           }
           )
 
