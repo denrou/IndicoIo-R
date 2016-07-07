@@ -34,7 +34,9 @@ make_request <- function(data, api, version = NULL, apis = NULL, method = NULL, 
   headers <- add_headers(.indicoio$header)
   headers <- add_headers(c('X-ApiKey' = api_key))
 
-  kwargs[["data"]] <- data
+  if (!is.null(data)) {
+    kwargs[["data"]] <- data
+  }
   kwargs[["method"]] <- NULL
   body <- toJSON(kwargs)
 
@@ -45,15 +47,13 @@ make_request <- function(data, api, version = NULL, apis = NULL, method = NULL, 
     warning(x_warning)
   }
 
-  stop_for_status(response)
-
-
   # Returns results
   answer <- content(response, as = "parsed", type = "application/json")
   if ("error" %in% names(answer)) {
     stop(answer[["error"]])
   }
 
+  stop_for_status(response)
   answer[["results"]]
 }
 
