@@ -21,8 +21,6 @@
 provided does not match a known piece of text then this will fail. Again, this is required if
 an id is not provided, and vice-versa.}
 
-\item{api_key}{your personal indico API key}
-
 \item{cloud}{subdomain for indico private cloud}
 }
 \value{

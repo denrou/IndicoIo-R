@@ -7,7 +7,7 @@
  analysis.}
 \usage{
 \S4method{predict}{Collection}(collection_object, data, version = NULL,
-  domain = NULL, ...)
+  domain = NULL, api_key = FALSE, ...)
 }
 \arguments{
 \item{data}{the text example being provided to the API. As a general rule, the data should be as
@@ -21,12 +21,12 @@ text content are all valid.}
 \item{domain}{String: This is an identifier that helps determine the appropriate techniques for indico
 to use behind the scenes to train your model.  One of {"standard", "topics"}}
 
+\item{api_key}{your personal indico API key}
+
 \item{...}{additional arguments to passed to request}
 
 \item{collection}{the collection object for this model
 the response format for the given label will match the format of the training examples}
-
-\item{api_key}{your personal indico API key}
 
 \item{cloud}{subdomain for indico private cloud}
 }

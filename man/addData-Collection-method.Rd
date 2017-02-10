@@ -7,7 +7,7 @@
 or numeric, this endpoint will train a new model given the additional piece of information.}
 \usage{
 \S4method{addData}{Collection}(collection_object, data, version = NULL,
-  domain = NULL, ...)
+  domain = NULL, api_key = FALSE, ...)
 }
 \arguments{
 \item{data}{the text and collection/score associated with it. The length of the text (string) should ideally
@@ -20,11 +20,11 @@ received). However it can only be one or another within a given label.}
 
 \item{version}{for api version}
 
+\item{api_key}{your personal indico API key}
+
 \item{...}{additional arguments to passed to request}
 
 \item{collection}{the collection object for this model}
-
-\item{api_key}{your personal indico API key}
 
 \item{cloud}{subdomain for indico private cloud}
 }

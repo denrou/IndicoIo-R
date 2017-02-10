@@ -16,8 +16,6 @@
 
 \item{collection}{the collection object for this model}
 
-\item{api_key}{your personal indico API key}
-
 \item{cloud}{subdomain for indico private cloud}
 }
 \value{

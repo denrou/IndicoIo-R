@@ -12,8 +12,6 @@ collections(version = NULL, ...)
 
 \item{...}{additional arguments to passed to request}
 
-\item{api_key}{your personal indico API key}
-
 \item{cloud}{subdomain for indico private cloud}
 }
 \value{
