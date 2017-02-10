@@ -40,4 +40,3 @@ addData(collection, test_data)
 train(collection)
 wait(collection)
 }
-

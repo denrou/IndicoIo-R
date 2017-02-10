@@ -41,4 +41,3 @@ test_data <- list(list("I love my friends!", "extrovert"),
 addData(collection, test_data)
 remove_example(collection, test_data[[1]][[1]])
 }
-

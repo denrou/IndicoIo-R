@@ -42,4 +42,3 @@ test_data <- list(list("I love my friends!", "extrovert"),
                   list("I have mixed feelings on people", "ambivert"))
 addData(collection, test_data)
 }
-

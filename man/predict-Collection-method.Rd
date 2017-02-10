@@ -49,4 +49,3 @@ res <- predict(collection, "I love my friends!")
 cat(sprintf("The likelihood the author was an extrovert is \\\%0.4f.",
             res[["extrovert"]]))
 }
-

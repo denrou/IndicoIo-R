@@ -34,4 +34,3 @@ reversible.
 collection <- Collection(name='example')
 clear(collection)
 }
-

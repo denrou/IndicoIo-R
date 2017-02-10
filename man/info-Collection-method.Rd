@@ -32,4 +32,3 @@ cat(sprintf("This collection is a \%s model trained on \%s data with \%i example
             status[["input_type"]],
             status[["number_of_examples"]]))
 }
-

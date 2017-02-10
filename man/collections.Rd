@@ -28,4 +28,3 @@ collections <- collections()
 cat(sprintf("There are currently \%i collections",
             length(collections)))
 }
-
