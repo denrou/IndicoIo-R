@@ -39,13 +39,13 @@ loadConfiguration <- function() {
 
 loadEnvironmentVars <- function() {
   # Load auth from environment variables
-  authDefined <- (Sys.getenv("INDICO_API_KEY") != FALSE)
+  authDefined <- (Sys.getenv("INDICO_API_KEY") != "")
   if (authDefined) {
     .indicoio$api_key <- Sys.getenv("INDICO_API_KEY")
   }
 
   # Load subdomain from environment variables
-  cloudDefined <- (Sys.getenv("INDICO_CLOUD") != FALSE)
+  cloudDefined <- (Sys.getenv("INDICO_CLOUD") != "")
   if (cloudDefined) {
     .indicoio$cloud <- Sys.getenv("INDICO_CLOUD")
   }
