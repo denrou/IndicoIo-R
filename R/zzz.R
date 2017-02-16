@@ -58,10 +58,9 @@ readFile <- function(filepath) {
   } else {
     connection <- file(filepath)
     content  <- readLines(connection)
-    if (content == "") {
+    if (length(content) == 0L) {
       content <- FALSE
     }
-
     close(connection)
   }
   content
