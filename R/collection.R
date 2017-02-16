@@ -5,44 +5,44 @@
 #' @export Collection
 #' @exportClass Collection
 Collection <- setClass(
-    "Collection",
+  "Collection",
+  
+  slots = c(
+    name = "character",
+    domain = "ANY",
+    shared = "logical",
+    api_key = "ANY"
+  ),
+  # Set the default values for the slots. (optional)
+  prototype = list(
+    name = "custom_collection",
+    domain = NULL,
+    shared = FALSE,
+    api_key = FALSE
+  )
+)
 
-    slots = c(
-              name = "character",
-              domain = "ANY",
-              shared = "logical",
-              api_key = "ANY"
-             ),
-             # Set the default values for the slots. (optional)
-   prototype=list(
-           name="custom_collection",
-           domain=NULL,
-           shared=FALSE,
-           api_key = FALSE
-           )
-    )
-
-setGeneric(name="make_custom_request",
-           def=function(collection_object, data, api, version = NULL, apis = NULL, method = NULL, cloud = FALSE, ...) {
-              standardGeneric("make_custom_request")
+setGeneric(name = "make_custom_request",
+           def = function(collection_object, data, api, version = NULL, apis = NULL, method = NULL, cloud = FALSE, ...) {
+             standardGeneric("make_custom_request")
            }
-           )
-setMethod(f="make_custom_request",
-          signature="Collection",
-          definition=function(collection_object, data, api, version = NULL, apis = NULL, method = NULL, cloud = FALSE, ...) {
+)
+setMethod(f = "make_custom_request",
+          signature = "Collection",
+          definition = function(collection_object, data, api, version = NULL, apis = NULL, method = NULL, cloud = FALSE, ...) {
             make_request(
-              data, 'custom', version=version, collection = collection_object@name,
-              method = method, domain=collection_object@domain, shared=collection_object@shared, api_key = collection_object@api_key, ...
+              data, 'custom', version = version, collection = collection_object@name,
+              method = method, domain = collection_object@domain, shared = collection_object@shared, api_key = collection_object@api_key, ...
             )
           }
-          )
+)
 
 
-setGeneric(name="addData",
-           def=function(collection_object, data, version = NULL, domain = NULL, api_key = FALSE, ...) {
-              standardGeneric("addData")
+setGeneric(name = "addData",
+           def = function(collection_object, data, version = NULL, domain = NULL, api_key = FALSE, ...) {
+             standardGeneric("addData")
            }
-           )
+)
 
 #' This is the basic training endpoint. Given a piece of text and a score, either categorical
 #' or numeric, this endpoint will train a new model given the additional piece of information.
@@ -63,33 +63,33 @@ setGeneric(name="addData",
 #' @export
 #' @import httr rjson stringr
 #' @examples
-#' collection <- Collection(name='example')
+#' collection <- Collection(name = 'example')
 #' test_data <- list(list("I love my friends!", "extrovert"),
 #'                   list("I love to be alone", "introvert"),
 #'                   list("I have mixed feelings on people", "ambivert"))
 #' addData(collection, test_data)
-setMethod(f="addData",
-          signature="Collection",
-          definition=function(collection_object, data, version = NULL, domain=NULL, api_key = FALSE, ...) {
-                batch <- typeof(data[[1]]) == "list" || length(data[[1]]) > 1
-                if (batch) {
-                    image_process <- function(data_pair) {
-                        data_pair[1] = format_image(data_pair[[1]], 48)
-                        data_pair
-                    }
-                    data = lapply(data, image_process)
-                } else {
-                    data[1] = format_image(data[[1]], 48)
-                }
-                make_custom_request(collection_object, data, 'custom', version=version, method = "add_data", ...)
+setMethod(f = "addData",
+          signature = "Collection",
+          definition = function(collection_object, data, version = NULL, domain = NULL, api_key = FALSE, ...) {
+            batch <- typeof(data[[1]]) == "list" || length(data[[1]]) > 1
+            if (batch) {
+              image_process <- function(data_pair) {
+                data_pair[1] = format_image(data_pair[[1]], 48)
+                data_pair
+              }
+              data = lapply(data, image_process)
+            } else {
+              data[1] = format_image(data[[1]], 48)
+            }
+            make_custom_request(collection_object, data, 'custom', version = version, method = "add_data", ...)
           }
-          )
+)
 
-setGeneric(name="clear",
-           def=function(collection_object, data, version = NULL, ...) {
-              standardGeneric("clear")
+setGeneric(name = "clear",
+           def = function(collection_object, data, version = NULL, ...) {
+             standardGeneric("clear")
            }
-           )
+)
 
 #' This is an API made to remove all of the data associated from a given colletion. If there's been a data
 #' corruption issue, or a large amount of incorrect data has been fed into the API it is often difficult
@@ -104,20 +104,20 @@ setGeneric(name="clear",
 #' @export
 #' @import httr rjson stringr
 #' @examples
-#' collection <- Collection(name='example')
+#' collection <- Collection(name = 'example')
 #' clear(collection)
-setMethod(f="clear",
-          signature="Collection",
-          definition=function(collection_object, version = NULL, ...) {
-              make_custom_request(collection_object, NULL, 'custom', version=version, method = "clear_collection", ...)
+setMethod(f = "clear",
+          signature = "Collection",
+          definition = function(collection_object, version = NULL, ...) {
+            make_custom_request(collection_object, NULL, 'custom', version = version, method = "clear_collection", ...)
           }
-          )
+)
 
-setGeneric(name="train",
-           def=function(collection_object, version = NULL, domain=NULL, api_key = FALSE,  ...) {
-              standardGeneric("train")
+setGeneric(name = "train",
+           def = function(collection_object, version = NULL, domain = NULL, api_key = FALSE,  ...) {
+             standardGeneric("train")
            }
-           )
+)
 
 #' This is the basic training endpoint. Given an existing dataset this endpoint will train a model.
 #'
@@ -130,20 +130,20 @@ setGeneric(name="train",
 #' @export
 #' @import httr rjson stringr
 #' @examples
-#' collection <- Collection(name='example')
+#' collection <- Collection(name = 'example')
 #' train(collection)
-setMethod(f="train",
-          signature="Collection",
-          definition=function(collection_object, version = NULL, domain=NULL, api_key = FALSE, ...) {
-             make_custom_request(collection_object, NULL, 'custom', version=version, method = "train", ...)
+setMethod(f = "train",
+          signature = "Collection",
+          definition = function(collection_object, version = NULL, domain = NULL, api_key = FALSE, ...) {
+            make_custom_request(collection_object, NULL, 'custom', version = version, method = "train", ...)
           }
-          )
+)
 
-setGeneric(name="info",
-           def=function(collection_object, version = NULL, ...) {
-              standardGeneric("info")
+setGeneric(name = "info",
+           def = function(collection_object, version = NULL, ...) {
+             standardGeneric("info")
            }
-           )
+)
 
 #' Return the current state of the model associated with a given collection
 #'
@@ -155,24 +155,24 @@ setGeneric(name="info",
 #' @export
 #' @import httr rjson stringr
 #' @examples
-#' collection <- Collection(name='example')
+#' collection <- Collection(name = 'example')
 #' status = info(collection)
 #' cat(sprintf("This collection is a %s model trained on %s data with %i examples",
 #'             status[["model_type"]],
 #'             status[["input_type"]],
 #'             status[["number_of_examples"]]))
-setMethod(f="info",
-          signature="Collection",
-          definition=function(collection_object, version = NULL, ...) {
-              make_custom_request(collection_object, NULL, 'custom', version=version, method = "info", ...)
+setMethod(f = "info",
+          signature = "Collection",
+          definition = function(collection_object, version = NULL, ...) {
+            make_custom_request(collection_object, NULL, 'custom', version = version, method = "info", ...)
           }
-          )
+)
 
-setGeneric(name="rename",
-           def=function(collection_object, name, version = NULL, ...) {
-              standardGeneric("rename")
+setGeneric(name = "rename",
+           def = function(collection_object, name, version = NULL, ...) {
+             standardGeneric("rename")
            }
-           )
+)
 
 #' Rename the current model to a new name.
 #'
@@ -185,11 +185,11 @@ setGeneric(name="rename",
 #' @export
 #' @import httr rjson stringr
 #' @examples
-#' collection <- Collection(name='example')
+#' collection <- Collection(name = 'example')
 #' success = rename(collection, 'new-example')
-setMethod(f="rename",
-          signature="Collection",
-          definition=function(collection_object, name, version = NULL, ...) {
+setMethod(f = "rename",
+          signature = "Collection",
+          definition = function(collection_object, name, version = NULL, ...) {
             if (is.null(name)) {
               stop("NULL is not a valid collection name.")
             }
@@ -197,13 +197,13 @@ setMethod(f="rename",
             collection_object@name <- name
             collection_object
           }
-          )
+)
 
-setGeneric(name="register",
-           def=function(collection_object, version = NULL, ...) {
-              standardGeneric("register")
+setGeneric(name = "register",
+           def = function(collection_object, version = NULL, ...) {
+             standardGeneric("register")
            }
-           )
+)
 
 #' Register the current collection so that the collection can be shared with other users.
 #'
@@ -215,20 +215,20 @@ setGeneric(name="register",
 #' @export
 #' @import httr rjson stringr
 #' @examples
-#' collection <- Collection(name='example')
+#' collection <- Collection(name = 'example')
 #' success = register(collection)
-setMethod(f="register",
-          signature="Collection",
-          definition=function(collection_object, version = NULL, ...) {
-            make_custom_request(collection_object, NULL, 'custom', version=version, method = "register", ...)
+setMethod(f = "register",
+          signature = "Collection",
+          definition = function(collection_object, version = NULL, ...) {
+            make_custom_request(collection_object, NULL, 'custom', version = version, method = "register", ...)
           }
-          )
+)
 
-setGeneric(name="deregister",
-           def=function(collection_object, version = NULL, ...) {
-              standardGeneric("deregister")
+setGeneric(name = "deregister",
+           def = function(collection_object, version = NULL, ...) {
+             standardGeneric("deregister")
            }
-           )
+)
 
 #' Deregister the current collection so that the collection is no longer shared with other users.
 #'
@@ -240,20 +240,20 @@ setGeneric(name="deregister",
 #' @export
 #' @import httr rjson stringr
 #' @examples
-#' collection <- Collection(name='example')
+#' collection <- Collection(name = 'example')
 #' success = deregister(collection)
-setMethod(f="deregister",
-          signature="Collection",
-          definition=function(collection_object, version = NULL, ...) {
+setMethod(f = "deregister",
+          signature = "Collection",
+          definition = function(collection_object, version = NULL, ...) {
             make_custom_request(collection_object, NULL, 'custom', version = version, method = "deregister", ...)
           }
-          )
+)
 
-setGeneric(name="authorize",
-           def=function(collection_object, email, permission_type = 'read', version = NULL, ...) {
-              standardGeneric("authorize")
+setGeneric(name = "authorize",
+           def = function(collection_object, email, permission_type = 'read', version = NULL, ...) {
+             standardGeneric("authorize")
            }
-           )
+)
 
 #' Authorize a given user to access the current collection
 #'
@@ -267,21 +267,21 @@ setGeneric(name="authorize",
 #' @export
 #' @import httr rjson stringr
 #' @examples
-#' collection <- Collection(name='example')
+#' collection <- Collection(name = 'example')
 #' success = authorize(collection, 'contact@indico.io')
-setMethod(f="authorize",
-          signature="Collection",
-          definition=function(collection_object, email, permission_type = 'read', version = NULL, ...) {
-            make_custom_request(collection_object, NULL, 'custom', version=version, email = email, method = "authorize", permission_type = permission_type, ...)
+setMethod(f = "authorize",
+          signature = "Collection",
+          definition = function(collection_object, email, permission_type = 'read', version = NULL, ...) {
+            make_custom_request(collection_object, NULL, 'custom', version = version, email = email, method = "authorize", permission_type = permission_type, ...)
           }
-          )
+)
 
 
-setGeneric(name="deauthorize",
-           def=function(collection_object, email, version = NULL, ...) {
-              standardGeneric("deauthorize")
+setGeneric(name = "deauthorize",
+           def = function(collection_object, email, version = NULL, ...) {
+             standardGeneric("deauthorize")
            }
-           )
+)
 
 #' Remove a given user's access to the current collection
 #'
@@ -294,20 +294,20 @@ setGeneric(name="deauthorize",
 #' @export
 #' @import httr rjson stringr
 #' @examples
-#' collection <- Collection(name='example')
+#' collection <- Collection(name = 'example')
 #' success = deauthorize(collection, 'contact@indico.io')
-setMethod(f="deauthorize",
-          signature="Collection",
-          definition=function(collection_object, email, version = NULL, ...) {
-            make_custom_request(collection_object, NULL, 'custom', version=version, email = email, method = "deauthorize", ...)
+setMethod(f = "deauthorize",
+          signature = "Collection",
+          definition = function(collection_object, email, version = NULL, ...) {
+            make_custom_request(collection_object, NULL, 'custom', version = version, email = email, method = "deauthorize", ...)
           }
-          )
+)
 
-setGeneric(name="wait",
-           def=function(collection_object, interval = 1, timeout=60, version = NULL, ...) {
-              standardGeneric("wait")
+setGeneric(name = "wait",
+           def = function(collection_object, interval = 1, timeout = 60, version = NULL, ...) {
+             standardGeneric("wait")
            }
-           )
+)
 
 #' Block until the collection's model is completed training
 #'
@@ -322,36 +322,36 @@ setGeneric(name="wait",
 #' @export
 #' @import httr rjson stringr
 #' @examples
-#' collection <- Collection(name='example')
+#' collection <- Collection(name = 'example')
 #' test_data <- list(list("I love my friends!", "extrovert"),
 #'                   list("I love to be alone", "introvert"),
 #'                   list("I have mixed feelings on people", "ambivert"))
 #' addData(collection, test_data)
 #' train(collection)
 #' wait(collection)
-setMethod(f="wait",
-          signature="Collection",
-          definition=function(collection_object, interval = 1, timeout=60, version = NULL, ...) {
+setMethod(f = "wait",
+          signature = "Collection",
+          definition = function(collection_object, interval = 1, timeout = 60, version = NULL, ...) {
             for (i in 1:ceiling(timeout/interval)) {
-              status <- info(collection_object, version=version, ...)[['status']]
+              status <- info(collection_object, version = version, ...)[['status']]
               if (status == "ready") {
-                  return(TRUE)
+                return(TRUE)
               }
               if (status != "training") {
-                  stop(collection_object@name + " failed with error: " + status)
-                  return(FALSE)
+                stop(collection_object@name + " failed with error: " + status)
+                return(FALSE)
               }
               Sys.sleep(interval)
             }
             stop('Timeout error in wait')
           }
-          )
+)
 
-setGeneric(name="predict",
-           def=function(collection_object, data, version = NULL, domain = NULL, api_key = FALSE, ...) {
-              standardGeneric("predict")
+setGeneric(name = "predict",
+           def = function(collection_object, data, version = NULL, domain = NULL, api_key = FALSE, ...) {
+             standardGeneric("predict")
            }
-           )
+)
 #'  This is the prediction endpoint. This will be the primary interaction point for all predictive
 #'  analysis.
 #'
@@ -372,7 +372,7 @@ setGeneric(name="predict",
 #' @export
 #' @import httr rjson stringr
 #' @examples
-#' collection <- Collection(name='example')
+#' collection <- Collection(name = 'example')
 #' test_data <- list(list("I love my friends!", "extrovert"),
 #'                   list("I love to be alone", "introvert"),
 #'                   list("I have mixed feelings on people", "ambivert"))
@@ -382,25 +382,25 @@ setGeneric(name="predict",
 #' res <- predict(collection, "I love my friends!")
 #' cat(sprintf("The likelihood the author was an extrovert is \%0.4f.",
 #'             res[["extrovert"]]))
-setMethod(f="predict",
-          signature="Collection",
-          definition=function(collection_object, data, version = NULL, domain = NULL, api_key = FALSE, ...) {
-                data = format_image(data, 48)
-                if (! is.null(domain)) {
-                    collection_object@domain <- domain
-                }
-                if (!is.logical(api_key)) {
-                  collection_object@api_key <- api_key
-                }
-                make_custom_request(collection_object, data, 'custom', version=version, method='predict', ...)
+setMethod(f = "predict",
+          signature = "Collection",
+          definition = function(collection_object, data, version = NULL, domain = NULL, api_key = FALSE, ...) {
+            data = format_image(data, 48)
+            if (! is.null(domain)) {
+              collection_object@domain <- domain
+            }
+            if (!is.logical(api_key)) {
+              collection_object@api_key <- api_key
+            }
+            make_custom_request(collection_object, data, 'custom', version = version, method = 'predict', ...)
           }
-          )
+)
 
-setGeneric(name="remove_example",
-           def=function(collection_object, data, version = NULL, ...) {
-              standardGeneric("remove_example")
+setGeneric(name = "remove_example",
+           def = function(collection_object, data, version = NULL, ...) {
+             standardGeneric("remove_example")
            }
-           )
+)
 
 #'  This is an API made to remove a single instance of training data. This is useful in cases where a
 #'  single instance of content has been modified, but the remaining examples remain valid. For
@@ -417,19 +417,19 @@ setGeneric(name="remove_example",
 #' @export
 #' @import httr rjson stringr
 #' @examples
-#' collection <- Collection(name='example')
+#' collection <- Collection(name = 'example')
 #' test_data <- list(list("I love my friends!", "extrovert"),
 #'                   list("I love to be alone", "introvert"),
 #'                   list("I have mixed feelings on people", "ambivert"))
 #' addData(collection, test_data)
 #' remove_example(collection, test_data[[1]][[1]])
-setMethod(f="remove_example",
-          signature="Collection",
-          definition=function(collection_object, data, version = NULL, ...) {
-                data = format_image(data, 48)
-                make_custom_request(collection_object, data, 'custom', version=version, method='remove_example', ...)
+setMethod(f = "remove_example",
+          signature = "Collection",
+          definition = function(collection_object, data, version = NULL, ...) {
+            data = format_image(data, 48)
+            make_custom_request(collection_object, data, 'custom', version = version, method = 'remove_example', ...)
           }
-          )
+)
 
 
 #' This is a status report endpoint. It is used to get the status on all of the collections currently trained, as
@@ -446,5 +446,5 @@ setMethod(f="remove_example",
 #' cat(sprintf("There are currently %i collections",
 #'             length(collections)))
 collections <- function(version = NULL, ...) {
-  make_request("", 'custom', version=version, method="collections", ...)
+  make_request("", 'custom', version = version, method = "collections", ...)
 }
