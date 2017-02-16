@@ -5,16 +5,12 @@
 \alias{register,Collection-method}
 \title{Register the current collection so that the collection can be shared with other users.}
 \usage{
-\S4method{register}{Collection}(collection_object, version = NULL, ...)
+\S4method{register}{Collection}(collection_object, ...)
 }
 \arguments{
-\item{version}{for api version}
-
 \item{...}{additional arguments to passed to request}
 
 \item{collection}{the collection object for this model}
-
-\item{cloud}{subdomain for indico private cloud}
 }
 \value{
 Boolean that indicates success or failure
@@ -23,6 +19,6 @@ Boolean that indicates success or failure
 Register the current collection so that the collection can be shared with other users.
 }
 \examples{
-collection <- Collection(name='example')
+collection <- Collection(name = 'example')
 success = register(collection)
 }

@@ -5,19 +5,14 @@
 \alias{deauthorize,Collection-method}
 \title{Remove a given user's access to the current collection}
 \usage{
-\S4method{deauthorize}{Collection}(collection_object, email, version = NULL,
-  ...)
+\S4method{deauthorize}{Collection}(collection_object, email, ...)
 }
 \arguments{
 \item{email}{the email of the user you'd like to remove access from}
 
-\item{version}{for api version}
-
 \item{...}{additional arguments to passed to request}
 
 \item{collection}{the collection object for this model}
-
-\item{cloud}{subdomain for indico private cloud}
 }
 \value{
 Boolean that indicates success or failure
@@ -26,6 +21,6 @@ Boolean that indicates success or failure
 Remove a given user's access to the current collection
 }
 \examples{
-collection <- Collection(name='example')
+collection <- Collection(name = 'example')
 success = deauthorize(collection, 'contact@indico.io')
 }

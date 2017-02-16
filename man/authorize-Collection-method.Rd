@@ -6,20 +6,16 @@
 \title{Authorize a given user to access the current collection}
 \usage{
 \S4method{authorize}{Collection}(collection_object, email,
-  permission_type = "read", version = NULL, ...)
+  permission_type = "read", ...)
 }
 \arguments{
 \item{email}{the email of the user you'd like to give access to}
 
 \item{permission_type}{read / write -- the type of permission to give the authorized user}
 
-\item{version}{for api version}
-
 \item{...}{additional arguments to passed to request}
 
 \item{collection}{the collection object for this model}
-
-\item{cloud}{subdomain for indico private cloud}
 }
 \value{
 Boolean that indicates success or failure
@@ -28,6 +24,6 @@ Boolean that indicates success or failure
 Authorize a given user to access the current collection
 }
 \examples{
-collection <- Collection(name='example')
+collection <- Collection(name = 'example')
 success = authorize(collection, 'contact@indico.io')
 }

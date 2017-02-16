@@ -11,27 +11,31 @@ Collection <- setClass(
     name = "character",
     domain = "ANY",
     shared = "logical",
-    api_key = "ANY"
+    api_key = "ANY",
+    version = "ANY",
+    cloud = "ANY"
   ),
   # Set the default values for the slots. (optional)
   prototype = list(
     name = "custom_collection",
     domain = NULL,
     shared = FALSE,
-    api_key = FALSE
+    api_key = FALSE,
+    cloud = FALSE,
+    version = NULL
   )
 )
 
 setGeneric(name = "make_custom_request",
-           def = function(collection_object, data, api, version = NULL, apis = NULL, method = NULL, cloud = FALSE, ...) {
+           def = function(collection_object, data, api, apis = NULL, method = NULL, ...) {
              standardGeneric("make_custom_request")
            }
 )
 setMethod(f = "make_custom_request",
           signature = "Collection",
-          definition = function(collection_object, data, api, version = NULL, apis = NULL, method = NULL, cloud = FALSE, ...) {
+          definition = function(collection_object, data, api, apis = NULL, method = NULL, ...) {
             make_request(
-              data, 'custom', version = version, collection = collection_object@name,
+              data, 'custom', version = collection_object@version, collection = collection_object@name, cloud = collection_object@cloud,
               method = method, domain = collection_object@domain, shared = collection_object@shared, api_key = collection_object@api_key, ...
             )
           }
@@ -39,7 +43,7 @@ setMethod(f = "make_custom_request",
 
 
 setGeneric(name = "addData",
-           def = function(collection_object, data, version = NULL, domain = NULL, api_key = FALSE, ...) {
+           def = function(collection_object, data, ...) {
              standardGeneric("addData")
            }
 )
@@ -55,9 +59,6 @@ setGeneric(name = "addData",
 #' can be a string or float. This is the variable associated with the text. This can either be categorical
 #' (the tag associated with the post) or numeric (the number of Facebook shares the post
 #' received). However it can only be one or another within a given label.
-#' @param api_key your personal indico API key
-#' @param cloud subdomain for indico private cloud
-#' @param version for api version
 #' @param ... additional arguments to passed to request
 #' @return List with available collections
 #' @export
@@ -70,7 +71,7 @@ setGeneric(name = "addData",
 #' addData(collection, test_data)
 setMethod(f = "addData",
           signature = "Collection",
-          definition = function(collection_object, data, version = NULL, domain = NULL, api_key = FALSE, ...) {
+          definition = function(collection_object, data, ...) {
             batch <- typeof(data[[1]]) == "list" || length(data[[1]]) > 1
             if (batch) {
               image_process <- function(data_pair) {
@@ -81,12 +82,12 @@ setMethod(f = "addData",
             } else {
               data[1] = format_image(data[[1]], 48)
             }
-            make_custom_request(collection_object, data, 'custom', version = version, method = "add_data", ...)
+            make_custom_request(collection_object, data, 'custom', method = "add_data", ...)
           }
 )
 
 setGeneric(name = "clear",
-           def = function(collection_object, data, version = NULL, ...) {
+           def = function(collection_object, data, ...) {
              standardGeneric("clear")
            }
 )
@@ -97,8 +98,6 @@ setGeneric(name = "clear",
 #' reversible.
 #'
 #' @param collection the collection object for this model
-#' @param cloud subdomain for indico private cloud
-#' @param version for api version
 #' @param ... additional arguments to passed to request
 #' @return List with available collections
 #' @export
@@ -108,13 +107,13 @@ setGeneric(name = "clear",
 #' clear(collection)
 setMethod(f = "clear",
           signature = "Collection",
-          definition = function(collection_object, version = NULL, ...) {
-            make_custom_request(collection_object, NULL, 'custom', version = version, method = "clear_collection", ...)
+          definition = function(collection_object, ...) {
+            make_custom_request(collection_object, NULL, 'custom', method = "clear_collection", ...)
           }
 )
 
 setGeneric(name = "train",
-           def = function(collection_object, version = NULL, domain = NULL, api_key = FALSE,  ...) {
+           def = function(collection_object,  ...) {
              standardGeneric("train")
            }
 )
@@ -122,9 +121,6 @@ setGeneric(name = "train",
 #' This is the basic training endpoint. Given an existing dataset this endpoint will train a model.
 #'
 #' @param collection the collection object for this model
-#' @param api_key your personal indico API key
-#' @param cloud subdomain for indico private cloud
-#' @param version for api version
 #' @param ... additional arguments to passed to request
 #' @return List with available collections
 #' @export
@@ -134,13 +130,13 @@ setGeneric(name = "train",
 #' train(collection)
 setMethod(f = "train",
           signature = "Collection",
-          definition = function(collection_object, version = NULL, domain = NULL, api_key = FALSE, ...) {
-            make_custom_request(collection_object, NULL, 'custom', version = version, method = "train", ...)
+          definition = function(collection_object, ...) {
+            make_custom_request(collection_object, NULL, 'custom', method = "train", ...)
           }
 )
 
 setGeneric(name = "info",
-           def = function(collection_object, version = NULL, ...) {
+           def = function(collection_object, ...) {
              standardGeneric("info")
            }
 )
@@ -148,8 +144,6 @@ setGeneric(name = "info",
 #' Return the current state of the model associated with a given collection
 #'
 #' @param collection the collection object for this model
-#' @param cloud subdomain for indico private cloud
-#' @param version for api version
 #' @param ... additional arguments to passed to request
 #' @return List with available collections
 #' @export
@@ -163,13 +157,13 @@ setGeneric(name = "info",
 #'             status[["number_of_examples"]]))
 setMethod(f = "info",
           signature = "Collection",
-          definition = function(collection_object, version = NULL, ...) {
-            make_custom_request(collection_object, NULL, 'custom', version = version, method = "info", ...)
+          definition = function(collection_object, ...) {
+            make_custom_request(collection_object, NULL, 'custom', method = "info", ...)
           }
 )
 
 setGeneric(name = "rename",
-           def = function(collection_object, name, version = NULL, ...) {
+           def = function(collection_object, name, ...) {
              standardGeneric("rename")
            }
 )
@@ -178,8 +172,6 @@ setGeneric(name = "rename",
 #'
 #' @param collection the collection object for this model
 #' @param name the new name to be used to access this collection
-#' @param cloud subdomain for indico private cloud
-#' @param version for api version
 #' @param ... additional arguments to passed to request
 #' @return Boolean that indicates success or failure
 #' @export
@@ -189,18 +181,18 @@ setGeneric(name = "rename",
 #' success = rename(collection, 'new-example')
 setMethod(f = "rename",
           signature = "Collection",
-          definition = function(collection_object, name, version = NULL, ...) {
+          definition = function(collection_object, name, ...) {
             if (is.null(name)) {
               stop("NULL is not a valid collection name.")
             }
-            make_custom_request(collection_object, NULL, 'custom', version = version, name = name, method = "rename", ...)
+            make_custom_request(collection_object, NULL, 'custom', name = name, method = "rename", ...)
             collection_object@name <- name
             collection_object
           }
 )
 
 setGeneric(name = "register",
-           def = function(collection_object, version = NULL, ...) {
+           def = function(collection_object, ...) {
              standardGeneric("register")
            }
 )
@@ -208,8 +200,6 @@ setGeneric(name = "register",
 #' Register the current collection so that the collection can be shared with other users.
 #'
 #' @param collection the collection object for this model
-#' @param cloud subdomain for indico private cloud
-#' @param version for api version
 #' @param ... additional arguments to passed to request
 #' @return Boolean that indicates success or failure
 #' @export
@@ -219,13 +209,13 @@ setGeneric(name = "register",
 #' success = register(collection)
 setMethod(f = "register",
           signature = "Collection",
-          definition = function(collection_object, version = NULL, ...) {
-            make_custom_request(collection_object, NULL, 'custom', version = version, method = "register", ...)
+          definition = function(collection_object, ...) {
+            make_custom_request(collection_object, NULL, 'custom', method = "register", ...)
           }
 )
 
 setGeneric(name = "deregister",
-           def = function(collection_object, version = NULL, ...) {
+           def = function(collection_object, ...) {
              standardGeneric("deregister")
            }
 )
@@ -233,8 +223,6 @@ setGeneric(name = "deregister",
 #' Deregister the current collection so that the collection is no longer shared with other users.
 #'
 #' @param collection the collection object for this model
-#' @param cloud subdomain for indico private cloud
-#' @param version for api version
 #' @param ... additional arguments to passed to request
 #' @return Boolean that indicates success or failure
 #' @export
@@ -244,13 +232,13 @@ setGeneric(name = "deregister",
 #' success = deregister(collection)
 setMethod(f = "deregister",
           signature = "Collection",
-          definition = function(collection_object, version = NULL, ...) {
-            make_custom_request(collection_object, NULL, 'custom', version = version, method = "deregister", ...)
+          definition = function(collection_object, ...) {
+            make_custom_request(collection_object, NULL, 'custom', method = "deregister", ...)
           }
 )
 
 setGeneric(name = "authorize",
-           def = function(collection_object, email, permission_type = 'read', version = NULL, ...) {
+           def = function(collection_object, email, permission_type = 'read', ...) {
              standardGeneric("authorize")
            }
 )
@@ -260,8 +248,6 @@ setGeneric(name = "authorize",
 #' @param collection the collection object for this model
 #' @param email the email of the user you'd like to give access to
 #' @param permission_type read / write -- the type of permission to give the authorized user
-#' @param cloud subdomain for indico private cloud
-#' @param version for api version
 #' @param ... additional arguments to passed to request
 #' @return Boolean that indicates success or failure
 #' @export
@@ -271,14 +257,14 @@ setGeneric(name = "authorize",
 #' success = authorize(collection, 'contact@indico.io')
 setMethod(f = "authorize",
           signature = "Collection",
-          definition = function(collection_object, email, permission_type = 'read', version = NULL, ...) {
-            make_custom_request(collection_object, NULL, 'custom', version = version, email = email, method = "authorize", permission_type = permission_type, ...)
+          definition = function(collection_object, email, permission_type = 'read', ...) {
+            make_custom_request(collection_object, NULL, 'custom', email = email, method = "authorize", permission_type = permission_type, ...)
           }
 )
 
 
 setGeneric(name = "deauthorize",
-           def = function(collection_object, email, version = NULL, ...) {
+           def = function(collection_object, email, ...) {
              standardGeneric("deauthorize")
            }
 )
@@ -287,8 +273,6 @@ setGeneric(name = "deauthorize",
 #'
 #' @param collection the collection object for this model
 #' @param email the email of the user you'd like to remove access from
-#' @param cloud subdomain for indico private cloud
-#' @param version for api version
 #' @param ... additional arguments to passed to request
 #' @return Boolean that indicates success or failure
 #' @export
@@ -298,13 +282,13 @@ setGeneric(name = "deauthorize",
 #' success = deauthorize(collection, 'contact@indico.io')
 setMethod(f = "deauthorize",
           signature = "Collection",
-          definition = function(collection_object, email, version = NULL, ...) {
-            make_custom_request(collection_object, NULL, 'custom', version = version, email = email, method = "deauthorize", ...)
+          definition = function(collection_object, email, ...) {
+            make_custom_request(collection_object, NULL, 'custom', email = email, method = "deauthorize", ...)
           }
 )
 
 setGeneric(name = "wait",
-           def = function(collection_object, interval = 1, timeout = 60, version = NULL, ...) {
+           def = function(collection_object, interval = 1, timeout = 60, ...) {
              standardGeneric("wait")
            }
 )
@@ -314,9 +298,6 @@ setGeneric(name = "wait",
 #' @param collection the collection object for this model
 #' @param interval how reguarly to check if the model is done training
 #' @param timeout max time to wait before erroring
-#' @param collection the collection object for this model
-#' @param cloud subdomain for indico private cloud
-#' @param version for api version
 #' @param ... additional arguments to passed to request
 #' @return List with available collections
 #' @export
@@ -331,9 +312,9 @@ setGeneric(name = "wait",
 #' wait(collection)
 setMethod(f = "wait",
           signature = "Collection",
-          definition = function(collection_object, interval = 1, timeout = 60, version = NULL, ...) {
+          definition = function(collection_object, interval = 1, timeout = 60, ...) {
             for (i in 1:ceiling(timeout/interval)) {
-              status <- info(collection_object, version = version, ...)[['status']]
+              status <- info(collection_object, ...)[['status']]
               if (status == "ready") {
                 return(TRUE)
               }
@@ -348,7 +329,7 @@ setMethod(f = "wait",
 )
 
 setGeneric(name = "predict",
-           def = function(collection_object, data, version = NULL, domain = NULL, api_key = FALSE, ...) {
+           def = function(collection_object, data, ...) {
              standardGeneric("predict")
            }
 )
@@ -362,11 +343,6 @@ setGeneric(name = "predict",
 #' in different domains is used very differently the accuracy will generally drop as the
 #' difference between this text and the training text increases. Base64 encoded image data, image urls, and
 #' text content are all valid.
-#' @param domain String: This is an identifier that helps determine the appropriate techniques for indico
-#' to use behind the scenes to train your model.  One of {"standard", "topics"}
-#' @param api_key your personal indico API key
-#' @param cloud subdomain for indico private cloud
-#' @param version for api version
 #' @param ... additional arguments to passed to request
 #' @return List with available collections
 #' @export
@@ -384,20 +360,14 @@ setGeneric(name = "predict",
 #'             res[["extrovert"]]))
 setMethod(f = "predict",
           signature = "Collection",
-          definition = function(collection_object, data, version = NULL, domain = NULL, api_key = FALSE, ...) {
+          definition = function(collection_object, data, ...) {
             data = format_image(data, 48)
-            if (! is.null(domain)) {
-              collection_object@domain <- domain
-            }
-            if (!is.logical(api_key)) {
-              collection_object@api_key <- api_key
-            }
-            make_custom_request(collection_object, data, 'custom', version = version, method = 'predict', ...)
+            make_custom_request(collection_object, data, 'custom', method = 'predict', ...)
           }
 )
 
 setGeneric(name = "remove_example",
-           def = function(collection_object, data, version = NULL, ...) {
+           def = function(collection_object, data, ...) {
              standardGeneric("remove_example")
            }
 )
@@ -410,8 +380,6 @@ setGeneric(name = "remove_example",
 #' @param The exact text you wish to remove from the given collection. If the string
 #' provided does not match a known piece of text then this will fail. Again, this is required if
 #' an id is not provided, and vice-versa.
-#' @param cloud subdomain for indico private cloud
-#' @param version for api version
 #' @param ... additional arguments to passed to request
 #' @return List with available collections
 #' @export
@@ -425,9 +393,9 @@ setGeneric(name = "remove_example",
 #' remove_example(collection, test_data[[1]][[1]])
 setMethod(f = "remove_example",
           signature = "Collection",
-          definition = function(collection_object, data, version = NULL, ...) {
+          definition = function(collection_object, data, ...) {
             data = format_image(data, 48)
-            make_custom_request(collection_object, data, 'custom', version = version, method = 'remove_example', ...)
+            make_custom_request(collection_object, data, 'custom', method = 'remove_example', ...)
           }
 )
 
@@ -435,8 +403,6 @@ setMethod(f = "remove_example",
 #' This is a status report endpoint. It is used to get the status on all of the collections currently trained, as
 #' well as some basic statistics on their accuracies. See docs for more information
 #'
-#' @param cloud subdomain for indico private cloud
-#' @param version for api version
 #' @param ... additional arguments to passed to request
 #' @return List with available collections
 #' @export
@@ -445,6 +411,6 @@ setMethod(f = "remove_example",
 #' collections <- collections()
 #' cat(sprintf("There are currently %i collections",
 #'             length(collections)))
-collections <- function(version = NULL, ...) {
-  make_request("", 'custom', version = version, method = "collections", ...)
+collections <- function(...) {
+  make_request("", 'custom', method = "collections", ...)
 }

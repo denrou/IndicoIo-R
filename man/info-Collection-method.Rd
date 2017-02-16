@@ -5,16 +5,12 @@
 \alias{info,Collection-method}
 \title{Return the current state of the model associated with a given collection}
 \usage{
-\S4method{info}{Collection}(collection_object, version = NULL, ...)
+\S4method{info}{Collection}(collection_object, ...)
 }
 \arguments{
-\item{version}{for api version}
-
 \item{...}{additional arguments to passed to request}
 
 \item{collection}{the collection object for this model}
-
-\item{cloud}{subdomain for indico private cloud}
 }
 \value{
 List with available collections
@@ -23,7 +19,7 @@ List with available collections
 Return the current state of the model associated with a given collection
 }
 \examples{
-collection <- Collection(name='example')
+collection <- Collection(name = 'example')
 status = info(collection)
 cat(sprintf("This collection is a \%s model trained on \%s data with \%i examples",
             status[["model_type"]],

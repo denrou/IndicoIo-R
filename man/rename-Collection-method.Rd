@@ -5,18 +5,14 @@
 \alias{rename,Collection-method}
 \title{Rename the current model to a new name.}
 \usage{
-\S4method{rename}{Collection}(collection_object, name, version = NULL, ...)
+\S4method{rename}{Collection}(collection_object, name, ...)
 }
 \arguments{
 \item{name}{the new name to be used to access this collection}
 
-\item{version}{for api version}
-
 \item{...}{additional arguments to passed to request}
 
 \item{collection}{the collection object for this model}
-
-\item{cloud}{subdomain for indico private cloud}
 }
 \value{
 Boolean that indicates success or failure
@@ -25,6 +21,6 @@ Boolean that indicates success or failure
 Rename the current model to a new name.
 }
 \examples{
-collection <- Collection(name='example')
+collection <- Collection(name = 'example')
 success = rename(collection, 'new-example')
 }
