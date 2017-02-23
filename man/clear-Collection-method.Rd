@@ -13,6 +13,8 @@ reversible.}
 \arguments{
 \item{collection_object}{the collection object for this model}
 
+\item{data}{A list}
+
 \item{...}{additional arguments to passed to request}
 }
 \value{

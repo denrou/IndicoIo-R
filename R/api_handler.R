@@ -110,7 +110,7 @@ request_url <- function(cloud, api, batch, api_key, version=NULL, apis=NULL, met
 #' @param size Size of image to resize to
 #' @param min_axis Whether or not to keep aspect ratio '
 #' @return string base64 encoding of resized image
-#' @import httr rjson stringr base64enc EBImage
+#' @import httr rjson stringr base64enc
 format_image <- function(img, size, min_axis=FALSE) {
   # Converts to anonymous data.frame
   if (typeof(img) == "list" || length(img) > 1) {
@@ -170,7 +170,7 @@ format_image <- function(img, size, min_axis=FALSE) {
 #' @param size Size of image to resize to
 #' @param min_axis Whether or not to keep aspect ratio
 #' @return `String`s constructed from list of images as base64 encoded
-#' @import httr rjson stringr base64enc EBImage
+#' @import httr rjson stringr base64enc
 format_images <- function(imgs, size, min_axis=FALSE) {
   img_list = list()
   for (i in 1:length(imgs)) {

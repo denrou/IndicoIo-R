@@ -9,6 +9,8 @@ or numeric, this endpoint will train a new model given the additional piece of i
 \S4method{addData}{Collection}(collection_object, data, ...)
 }
 \arguments{
+\item{collection_object}{the collection object for this model}
+
 \item{data}{the text and collection/score associated with it. The length of the text (string) should ideally
 be longer than 100 characters and contain at least 10 words. While the API will support
 shorter text, you will find that the accuracy of results improves significantly with longer
@@ -18,8 +20,6 @@ can be a string or float. This is the variable associated with the text. This ca
 received). However it can only be one or another within a given label.}
 
 \item{...}{additional arguments to passed to request}
-
-\item{collection}{the collection object for this model}
 }
 \value{
 List with available collections
