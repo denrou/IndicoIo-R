@@ -9,13 +9,13 @@
   ...)
 }
 \arguments{
+\item{collection_object}{the collection object for this model}
+
 \item{interval}{how reguarly to check if the model is done training}
 
 \item{timeout}{max time to wait before erroring}
 
 \item{...}{additional arguments to passed to request}
-
-\item{collection}{the collection object for this model}
 }
 \value{
 List with available collections

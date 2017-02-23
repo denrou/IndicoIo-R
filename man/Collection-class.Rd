@@ -8,3 +8,9 @@
 \value{
 Collection object
 }
+\description{
+Collection class
+}
+\details{
+Create a custom collection object.
+}

@@ -1,3 +1,7 @@
+#' Collection class
+#' 
+#' Create a custom collection object.
+#' 
 #' @return Collection object
 #' @import httr rjson stringr
 #' @title A class description
@@ -51,7 +55,7 @@ setGeneric(name = "addData",
 #' This is the basic training endpoint. Given a piece of text and a score, either categorical
 #' or numeric, this endpoint will train a new model given the additional piece of information.
 #'
-#' @param collection the collection object for this model
+#' @param collection_object the collection object for this model
 #' @param data the text and collection/score associated with it. The length of the text (string) should ideally
 #' be longer than 100 characters and contain at least 10 words. While the API will support
 #' shorter text, you will find that the accuracy of results improves significantly with longer
@@ -97,7 +101,8 @@ setGeneric(name = "clear",
 #' to correct. This allows you to clear a colletion and start from scratch. Use with caution! This is not
 #' reversible.
 #'
-#' @param collection the collection object for this model
+#' @param collection_object the collection object for this model
+#' @param data A list
 #' @param ... additional arguments to passed to request
 #' @return List with available collections
 #' @export
@@ -120,7 +125,7 @@ setGeneric(name = "train",
 
 #' This is the basic training endpoint. Given an existing dataset this endpoint will train a model.
 #'
-#' @param collection the collection object for this model
+#' @param collection_object the collection object for this model
 #' @param ... additional arguments to passed to request
 #' @return List with available collections
 #' @export
@@ -143,7 +148,7 @@ setGeneric(name = "info",
 
 #' Return the current state of the model associated with a given collection
 #'
-#' @param collection the collection object for this model
+#' @param collection_object the collection object for this model
 #' @param ... additional arguments to passed to request
 #' @return List with available collections
 #' @export
@@ -170,7 +175,7 @@ setGeneric(name = "rename",
 
 #' Rename the current model to a new name.
 #'
-#' @param collection the collection object for this model
+#' @param collection_object the collection object for this model
 #' @param name the new name to be used to access this collection
 #' @param ... additional arguments to passed to request
 #' @return Boolean that indicates success or failure
@@ -199,7 +204,7 @@ setGeneric(name = "register",
 
 #' Register the current collection so that the collection can be shared with other users.
 #'
-#' @param collection the collection object for this model
+#' @param collection_object the collection object for this model
 #' @param ... additional arguments to passed to request
 #' @return Boolean that indicates success or failure
 #' @export
@@ -222,7 +227,7 @@ setGeneric(name = "deregister",
 
 #' Deregister the current collection so that the collection is no longer shared with other users.
 #'
-#' @param collection the collection object for this model
+#' @param collection_object the collection object for this model
 #' @param ... additional arguments to passed to request
 #' @return Boolean that indicates success or failure
 #' @export
@@ -245,7 +250,7 @@ setGeneric(name = "authorize",
 
 #' Authorize a given user to access the current collection
 #'
-#' @param collection the collection object for this model
+#' @param collection_object the collection object for this model
 #' @param email the email of the user you'd like to give access to
 #' @param permission_type read / write -- the type of permission to give the authorized user
 #' @param ... additional arguments to passed to request
@@ -271,7 +276,7 @@ setGeneric(name = "deauthorize",
 
 #' Remove a given user's access to the current collection
 #'
-#' @param collection the collection object for this model
+#' @param collection_object the collection object for this model
 #' @param email the email of the user you'd like to remove access from
 #' @param ... additional arguments to passed to request
 #' @return Boolean that indicates success or failure
@@ -295,7 +300,7 @@ setGeneric(name = "wait",
 
 #' Block until the collection's model is completed training
 #'
-#' @param collection the collection object for this model
+#' @param collection_object the collection object for this model
 #' @param interval how reguarly to check if the model is done training
 #' @param timeout max time to wait before erroring
 #' @param ... additional arguments to passed to request
@@ -336,7 +341,7 @@ setGeneric(name = "predict",
 #'  This is the prediction endpoint. This will be the primary interaction point for all predictive
 #'  analysis.
 #'
-#' @param collection the collection object for this model
+#' @param collection_object the collection object for this model
 #' the response format for the given label will match the format of the training examples
 #' @param data the text example being provided to the API. As a general rule, the data should be as
 #' similar to the examples given to the train function (above) as possible. Because language
@@ -376,8 +381,8 @@ setGeneric(name = "remove_example",
 #'  single instance of content has been modified, but the remaining examples remain valid. For
 #'  example, if a piece of content has been retagged.
 #'
-#' @param collection the collection object for this model
-#' @param The exact text you wish to remove from the given collection. If the string
+#' @param collection_object the collection object for this model
+#' @param data The exact text you wish to remove from the given collection. If the string
 #' provided does not match a known piece of text then this will fail. Again, this is required if
 #' an id is not provided, and vice-versa.
 #' @param ... additional arguments to passed to request

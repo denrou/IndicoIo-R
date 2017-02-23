@@ -12,10 +12,6 @@ political(text, version = 2, ...)
 \item{version}{for api version}
 
 \item{...}{additional arguments to passed to request}
-
-\item{api_key}{your personal indico API key}
-
-\item{cloud}{subdomain for indico private cloud}
 }
 \value{
 List with party probability pairs

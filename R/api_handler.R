@@ -3,6 +3,8 @@
 #' Given input data, return the response from the indico API endpoint specified
 #' @param data data for analysis
 #' @param api api to call
+#' @param apis A string
+#' @param method A string
 #' @param api_key your personal indico API key
 #' @param cloud subdomain for indico private cloud
 #' @param version for api version
@@ -66,6 +68,7 @@ make_request <- function(data, api, version = NULL, apis = NULL, method = NULL, 
 #' @param version for api version
 #' @param api_key your personal indico API key
 #' @param apis possible list of apis url paramater for multi qpi requests
+#' @param method A string
 #' @param ... additional possible arguments to passed as url parameters
 #' @return url for API request
 #' @import httr rjson stringr

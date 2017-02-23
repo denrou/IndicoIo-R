@@ -9,6 +9,8 @@ relevance(text, queries, version = NULL, ...)
 \arguments{
 \item{text}{text for analysis}
 
+\item{queries}{A string}
+
 \item{version}{for api version}
 
 \item{...}{additional arguments to passed to request}

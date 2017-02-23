@@ -11,9 +11,9 @@ reversible.}
 \S4method{clear}{Collection}(collection_object, data, ...)
 }
 \arguments{
-\item{...}{additional arguments to passed to request}
+\item{collection_object}{the collection object for this model}
 
-\item{collection}{the collection object for this model}
+\item{...}{additional arguments to passed to request}
 }
 \value{
 List with available collections

@@ -3,8 +3,6 @@
 #' Given input text, returns a probability distribution over the political
 #' alignment of the speaker.
 #' @param text text for analysis
-#' @param api_key your personal indico API key
-#' @param cloud subdomain for indico private cloud
 #' @param version for api version
 #' @param ... additional arguments to passed to request
 #' @return List with party probability pairs

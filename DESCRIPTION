@@ -8,7 +8,7 @@ Description: R-based client for Machine Learning APIs at
         Positive/Negative Sentiment Analysis, Political Sentiment
         Analysis, Image Feature Extraction, Facial Emotion Recognition,
         Facial Feature Extraction, Language Detection.
-Depends: R (>= 3.0.2), httr, rjson, stringr, png, base64enc, EBImage
+Depends: R (>= 3.0.2), httr, rjson, stringr, png, base64enc, EBImage, utils
 License: file LICENSE
 LazyData: true
 Suggests: testthat, jpeg

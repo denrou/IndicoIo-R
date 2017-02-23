@@ -9,13 +9,13 @@
   permission_type = "read", ...)
 }
 \arguments{
+\item{collection_object}{the collection object for this model}
+
 \item{email}{the email of the user you'd like to give access to}
 
 \item{permission_type}{read / write -- the type of permission to give the authorized user}
 
 \item{...}{additional arguments to passed to request}
-
-\item{collection}{the collection object for this model}
 }
 \value{
 Boolean that indicates success or failure

@@ -4,8 +4,6 @@
 #' Input should be a two-dimensional structure (like data.frame or matrix), resizing will be attempted internally but for best
 #' performance, images should be already sized at 48x48 pixels.
 #' @param img image data
-#' @param api_key your personal indico API key
-#' @param cloud subdomain for indico private cloud
 #' @param version for api version
 #' @param ... additional arguments to passed to request
 #' @return List with face emotions probability pairs

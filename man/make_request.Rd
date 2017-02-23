@@ -14,6 +14,10 @@ make_request(data, api, version = NULL, apis = NULL, method = NULL,
 
 \item{version}{for api version}
 
+\item{apis}{A string}
+
+\item{method}{A string}
+
 \item{api_key}{your personal indico API key}
 
 \item{cloud}{subdomain for indico private cloud}

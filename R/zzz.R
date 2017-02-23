@@ -104,7 +104,7 @@ Parse.INI <- function(Lines)
   Lines <- chartr("[]", "==", Lines)
 
   connection <- textConnection(Lines)
-  d <- read.table(connection, as.is = TRUE, sep = "=", fill = TRUE)
+  d <- utils::read.table(connection, as.is = TRUE, sep = "=", fill = TRUE)
   close(connection)
 
   # location of section breaks

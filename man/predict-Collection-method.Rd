@@ -9,6 +9,9 @@
 \S4method{predict}{Collection}(collection_object, data, ...)
 }
 \arguments{
+\item{collection_object}{the collection object for this model
+the response format for the given label will match the format of the training examples}
+
 \item{data}{the text example being provided to the API. As a general rule, the data should be as
 similar to the examples given to the train function (above) as possible. Because language
 in different domains is used very differently the accuracy will generally drop as the
@@ -16,9 +19,6 @@ difference between this text and the training text increases. Base64 encoded ima
 text content are all valid.}
 
 \item{...}{additional arguments to passed to request}
-
-\item{collection}{the collection object for this model
-the response format for the given label will match the format of the training examples}
 }
 \value{
 List with available collections

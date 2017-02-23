@@ -8,11 +8,11 @@
 \S4method{deauthorize}{Collection}(collection_object, email, ...)
 }
 \arguments{
+\item{collection_object}{the collection object for this model}
+
 \item{email}{the email of the user you'd like to remove access from}
 
 \item{...}{additional arguments to passed to request}
-
-\item{collection}{the collection object for this model}
 }
 \value{
 Boolean that indicates success or failure

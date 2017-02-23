@@ -10,13 +10,13 @@
 \S4method{remove_example}{Collection}(collection_object, data, ...)
 }
 \arguments{
-\item{...}{additional arguments to passed to request}
+\item{collection_object}{the collection object for this model}
 
-\item{collection}{the collection object for this model}
-
-\item{The}{exact text you wish to remove from the given collection. If the string
+\item{data}{The exact text you wish to remove from the given collection. If the string
 provided does not match a known piece of text then this will fail. Again, this is required if
 an id is not provided, and vice-versa.}
+
+\item{...}{additional arguments to passed to request}
 }
 \value{
 List with available collections

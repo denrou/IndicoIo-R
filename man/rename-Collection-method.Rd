@@ -8,11 +8,11 @@
 \S4method{rename}{Collection}(collection_object, name, ...)
 }
 \arguments{
+\item{collection_object}{the collection object for this model}
+
 \item{name}{the new name to be used to access this collection}
 
 \item{...}{additional arguments to passed to request}
-
-\item{collection}{the collection object for this model}
 }
 \value{
 Boolean that indicates success or failure

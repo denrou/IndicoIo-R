@@ -61,8 +61,6 @@ convert_results <- function(results, apis) {
 #'
 #' Given an array of data and a vector of apis, returns a nested associate array of correlation strengths
 #' @param data input data
-#' @param api_key your personal indico API key
-#' @param cloud subdomain for indico private cloud
 #' @param apis vector of provided string api names
 #' @param version - api version
 #' @param ... additional arguments to passed to request

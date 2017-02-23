@@ -20,7 +20,10 @@ array of dicts, each with 'text', 'confidence', and 'position' fields
 Finds the names of organizations in the input text
 }
 \examples{
-result <- organizations("A year ago, the New York Times published confidential comments about ISIS' ideology by Major General Michael K. Nagata, then U.S. Special Operations commander in the Middle East.")
+result <- organizations(
+  cat("A year ago, the New York Times published confidential comments about",
+      "ISIS' ideology by Major General Michael K. Nagata, then U.S. Special",
+      "Operations commander in the Middle East.")
 cat(sprintf("\%s is mentioned in the input text", result[[1]]["text"]))
 
 }

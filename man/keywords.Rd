@@ -11,6 +11,8 @@ keywords(text, version = 2, language = "english", ...)
 
 \item{version}{for api version}
 
+\item{language}{A string}
+
 \item{...}{additional arguments to passed to request}
 }
 \value{

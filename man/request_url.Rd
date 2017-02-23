@@ -20,6 +20,8 @@ request_url(cloud, api, batch, api_key, version = NULL, apis = NULL,
 
 \item{apis}{possible list of apis url paramater for multi qpi requests}
 
+\item{method}{A string}
+
 \item{...}{additional possible arguments to passed as url parameters}
 }
 \value{

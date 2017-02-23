@@ -8,9 +8,9 @@
 \S4method{register}{Collection}(collection_object, ...)
 }
 \arguments{
-\item{...}{additional arguments to passed to request}
+\item{collection_object}{the collection object for this model}
 
-\item{collection}{the collection object for this model}
+\item{...}{additional arguments to passed to request}
 }
 \value{
 Boolean that indicates success or failure

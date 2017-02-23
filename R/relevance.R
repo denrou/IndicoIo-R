@@ -2,6 +2,7 @@
 #'
 #' Determines how relevant a query string is to a given document
 #' @inheritParams political
+#' @param queries A string
 #' @return float or array of floats
 #' @people indico.io machine learning API people NER
 #' @seealso \code{\link{keywords}}

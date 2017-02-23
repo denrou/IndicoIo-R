@@ -2,6 +2,7 @@
 #'
 #' Given input text, returns a series of keywords and associated scores
 #' @inheritParams political
+#' @param language A string
 #' @return List with keyword score pairs
 #' @keywords indico.io machine learning API classification tagging
 #' @seealso \code{\link{political}}, \code{\link{sentiment}}, \code{\link{text_tags}}
